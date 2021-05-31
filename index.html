@@ -77,8 +77,7 @@
 							<section id="three">
 								<div class="container">
 									<h3>Demo</h3>
-
-									<h5 id="snowflake">Snowflake:</h5>
+									<h5>Snowflake architecture</h5>
 									<ul>
 										<li>In Snowflake's architecture, the key is a separation of storage, compute and services:
 											<br><br>
@@ -93,6 +92,18 @@
 											<img src="images/snowflake_pipeline.JPG">
 											<span style="font-size:12px">soruce: snowflake</span>
 										</li>
+										<li>Snowflake main elements:
+												<br>
+												- Database - containing schemas, tables, views, stages, file formats, sequences. All the tables are created in PUBLIC schema by default.<br>
+												- Stage - a data lake like place from which data files are being copied into the tables.<br>
+												- File format - we need to define fomrat of the files bieng stored at stage.<br>
+												- Warehouse - computing enginge.<br>
+												- Worksheet - a place where we can proceed with writing or loading ready SQL scripts.<br>
+										</li>
+									</ul>
+
+									<h5>Snowflake mechanizm:</h5>
+									<ul>
 										<li>Snowflake for OLAP:
 											<br>
 											- snowflake supports <b>Online Analytical Processing (OLAP)</b> for scanning all of the data in columns in order to get aggregated values as opposed to <b>Online Transactional Processing (OLTP)</b> where we want to retrieve one or many rows from database.
@@ -116,14 +127,6 @@
 											- When query comes in, metadata layer knows which micropartition in S3 belongs to the queried table.<br>
 											- Reading a S3 file, it searches for a specific header first and then reads the only column we specified in the query.<br>
 											- It reads the only queried data ingnoring the rest of S3 files.
-										</li>
-										<li>Snowflake architecture:
-											<br>
-											- Database - containing schemas, tables, views, stages, file formats, sequences. All the tables are created in PUBLIC schema by default.<br>
-											- Stage - a data lake like place from which data files are being copied into the tables.<br>
-											- File format - we need to define fomrat of the files bieng stored at stage.<br>
-											- Warehouse - computing enginge.<br>
-											- Worksheet - a place where we can proceed with writing or loading ready SQL scripts.<br>
 										</li>
 										<li>Every action on db can be performed with sql script along with setting up stages, file formats,
 												configuring warehouse, copying data to a table from a stage.
