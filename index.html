@@ -96,13 +96,13 @@
 												<br>
 												- Database - containing schemas, tables, views, stages, file formats, sequences. All the tables are created in PUBLIC schema by default.<br>
 												- Stage - a data lake like place from which data files are being copied into the tables.<br>
-												- File format - we need to define fomrat of the files bieng stored at stage.<br>
+												- File format - we need to define format of the files bieng stored at stage.<br>
 												- Warehouse - computing enginge.<br>
 												- Worksheet - a place where we can proceed with writing or loading ready SQL scripts.<br>
 										</li>
 									</ul>
 
-									<h5>Snowflake mechanizm:</h5>
+									<h5>Snowflake mechanism:</h5>
 									<ul>
 										<li>Snowflake for OLAP:
 											<br>
@@ -119,7 +119,7 @@
 										</li>
 										<li>Snowflake workflow:
 											<br>
-											- Dividig big tabular data into x-consecutive rows segments called micropartitions.<br>
+											- Dividing big tabular data into x-consecutive rows segments called micropartitions.<br>
 											- Reorganizing the data of each micropartition by flipping row store into columnar - column values of each row get stored together.<br>
 											- Adding a header to each micropartition. Header contains metadata of given micropartition and columns it contains.<br>
 											- Micropartitions are being stored in S3 as the immutable files.<br>
@@ -137,7 +137,7 @@
 										</li>
 										<li>Data Loading consists of two parts:
 											<br>
-											1. Staging the files into the place where Snowflake can retrieve data files from. We cam have both internal and exteranl (S3, GSP) storages.<br>
+											1. Staging the files into the place where Snowflake can retrieve data files from. We can have both internal and exteranl (S3, GSP) storages.<br>
 											2. Loding the data into a specific table.
 										</li>
 										<li>SnowSQL:
