@@ -1,0 +1,411 @@
+	<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Portfolio Artur Skrzeta</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<section id="header">
+				<header>
+					<span class="image avatar"><a href="https://arturskrzeta.github.io/"><img src="images/avatar.png" alt="" style="margin-bottom:0px"/></a></span>
+					<h1 id="logo"><a href="https://arturskrzeta.github.io/">Artur Skrzeta</a></h1>
+					<p>Data Analyst<br />
+					+4 years experience</p>
+				</header>
+				<nav id="nav">
+					<ul>
+						<li><a href="#one" class="active">Intro</a></li>
+						<li><a href="#two">Features</a></li>
+						<li><a href="#three">Demo</a></li>
+						<li><a href="#four">Setup</a></li>
+						<li><a href="#five">Source Code</a></li>
+					</ul>
+				</nav>
+				<footer>
+					<ul class="icons">
+						<li><a href="https://www.linkedin.com/in/artur-skrz%C4%99ta-010b23187/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						<li><a href="https://www.instagram.com/arturskrrr/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="https://github.com/ArturSkrzeta" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="mailto: arturskrzeta@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li
+					</ul>
+				</footer>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- One -->
+							<section id="one">
+								<div class="container">
+									<header class="major">
+
+										<h2>My Comprehension of Clouds</h2>
+
+										<h3>Intro</h3>
+
+										<p>In order to learn clouds, I choose AWS Web Services as the example to explore.</p>
+
+										<h5>Cloud Computing:</h5>
+										<ul>
+											<li>Common opinion on cloud computing is that it concerns System Administrators or DevOps Engineers because of solutions it provides on servers provsion, networking etc.
+												In fact, It also concerns Software Developers, Security Engineers, Program Managers and so on as there are services related to computing, storage, database, analytics, encryption, deployment and more	.</li>
+											<li>Cloud computing is basically a model in which computing resources are available as a service.</li>
+											<li>Important characteristics of cloud computing:
+												<br>
+												- <u>On-demand and self-serviced</u>: we can launch it at any time with no manual intervention.
+													What that means is we can provison resources whenever needed without requireing any human's action from provider's side.<br>
+												- <u>Elasticity</u>: we can scale it up or down at any time due to our needs.
+													This property is strictly related to scalability that can be horizontal (adding or removing servers in a cluster) or vertical (adding or removing resources in existing server).<br>
+												- <u>Measuread</u>: we pay as many as much resources we use.<br>
+												- <u>High-Availability</u>: making backups and accommodating failure of a single component. I case of a server's failure there is another instance to back it up.
+											</li>
+											<li>There are 3 types of cloud computing:
+												<br>
+												- <b>Software as a Service (Saas)</b> - an application typically accessivle via a browser. Provider takes responsibility for upgrading, security, error handlin etc.<br>
+												- <b>Platform as a Service (PaaS)</b> - deploying Python application on server along with all dependencies.<br>
+												- <b>Infrastructure as a Service (Iaas)</b> - ... .<br>
+												<br>
+												<img src="images/service_models.png" width="600"><span style="font-size:12px">source: wp-includes.com</span>
+											</li>
+											<li>Cloud Architecture:
+												<br>
+												1. Clouds is actually a real Data Center with X servers already set up.<br>
+												2. Data Center provides Virtualization layer (in case of AWS  it's mainly XEN).<br>
+												3. On top of virtualization layer there are multiple Virtual servers.<br>
+												<br>
+												<img src="images/architecture.JPG" width="400">
+											</li>
+											<li>Data centers are organized into availability zones that are separated by geograpic region. They play a role of backups in case of one of the Data Centers failure.</li>
+											<li>Each AWS region contains at least 2 availability zones.</li>
+										</ul>
+
+										<h5>Server Connection:</h5>
+										<ul>
+											<li>For server connection we need to get:
+												<br>
+												- <u>SSH Client</u> for Linux Server or<br>
+												- <u>RDP Client</u> for Windows Server<br>
+												which allows us to get connected with the server.
+											</li>
+											<li>To get SSH client for windows on local machine I use MobaXterm.</li>
+											<li>MAC and Linux has its own terminal with already built-in SHH client.</li>
+											<li>There is also a way of connecting to server from a browser using <b>Broweser Based SSH Connection</b>.
+													Then you don'y have to have any SSG client. It can be done from AWS console directly.</li>
+											<li>There is also a need for establishing the <b>Key Based Authentication</b>.
+												<br>
+												- it replaces the password based authentication as using password for authentication is less secure,<br>
+												- in key based authentication there are two special keys: public key and private key,<br>
+												- when public key is stored in a server then only corresponding private key can authenticate successfully,<br>
+												- we can simply create a key pair for exampple in EC2 in the AWS console.
+													We can choose its format as pem (when using OpenSSH) or ppk (when using PuTTY).
+													Once created, key gets downloaded to local machine as the private key.<br>
+											</li>
+										</ul>
+
+										<h5>Infrastructure as a Code (IaaC):</h5>
+										<ul>
+											<li>There are two ways of building the infrastructure: manually or with script's automation.</li>
+											<li>Automation with Iaac helps to autmate infrastrucutre building on every stage of app's service:
+												<br>
+												1. As every time a new app's service comes up, its infrastructure needs to be first built up in the development environment.<br>
+												2. Then app's service comes to the staging area for testing where the same infrastructure needs to be built once again.<br>
+												3. Moving to the production environment where all the infrastructure has to be replicated.
+											</li>
+											<li>It's getting even more helpful when deploying multiple app's services.</li>
+											<br>
+											<img src="images/iaac.JPG" width="610"><span style="font-size:12px;">source: udemy</span>
+											<li>One IaaC template can be reused for building infrastructure for different stages of different app's services during deployment.</li>
+											<li>Tools for IaaC: Terraform or AWS CloudFormation.</li>
+										</ul>
+
+										<h5>AWS Storage types:</h5>
+										<table>
+											<thead>
+												<tr>
+													<th>Block Storage</th>
+													<th>Object Storage</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Data (files) is split into smaller chunks of a fixed size (blocks).</td>
+													<td>Each store fiels is an object.</td>
+												</tr>
+												<tr>
+													<td>Each block has its own address.</td>
+													<td>Each object has unique identifier.</td>
+												</tr>
+												<tr>
+													<td>No metadata about blocks.</td>
+													<td>Metadata with contextual information about single object.</td>
+												</tr>
+												<tr>
+													<td>Supports read/write operations.</td>
+													<td>Data is mostly read (rather than written to).</td>
+												</tr>
+												<tr>
+													<td>Easy data modification accessing specific block.</td>
+													<td>Modifying a file means uploading a new revision.</td>
+												</tr>
+												<tr>
+													<td>Accessing blocks on server with underlying file system protocol (NFS, CIFS, ext3/ext4).</td>
+													<td>Accessing objects relies on HTTP protocol.</td>
+												</tr>
+											</tbody>
+										</table>
+
+										<!-- <h5>6. Continuous monitoring:</h5>
+										<ul>
+											<li>...</li>
+										</ul> -->
+
+									</header>
+								</div>
+							</section>
+
+						<!-- Two -->
+							<section id="two">
+								<div class="container">
+									<h3>Features</h3>
+									<p>App includes following features:</p>
+									<ul class="feature-icons">
+										<li class="icon solid fa-check">AWS</li>
+									</ul>
+								</div>
+							</section>
+
+						<!-- Three -->
+							<section id="three">
+								<div class="container">
+									<h3>Demo</h3>
+
+									<h5>EC2:</h5>
+									<ul>
+										<li>It stands for Elastic Computing Cloud.</li>
+										<li>Actually, it's a name for a server that we can launch in AWS.</li>
+										<li>Elastic means that we can resize the server's capacity at any time.</li>
+										<li>AWS ensures high-availablity so when on EC2 server goes downm the hosted application can be still served on another EC2 server.</li>
+										<li>Launching server is as easy as hitting a button and going through a configuration
+											<br>
+											<img src="images/ec2.JPG" width="780">
+										</li>
+										<li>When launching a new instance of EC2 on AWS we need to configure following things:
+											<br>
+											- region,<br>
+											- server OS which is Amazon Machine Image (AMI),<br>
+											- CPU and memory size of EC2 instance,<br>
+											- num of instances,<br>
+											- storage capacity,<br>
+											- authentication key,<br>
+											- security (firewall).
+										</li>
+										<li>Once instance created, we can connect server with SSH:
+											<br>
+											- connecting to EC2 server:<br>
+											<code>ssh -i ec2-key.pem ec2-user@{Public IP}</code><br>
+											- getting admin rights:<br>
+											<code>sudo su -</code><br>
+											- intalling some stuff:<br>
+											<code>yum -y install nginx</code><br>
+											<code>yum -y install mysql</code><br>
+											- cd to location:<br>
+											<code>cd /usr/share/nginx/html/</code><br>
+											- modifying a file:<br>
+											<code>echo "Hello World" > index.html</code><br>
+											- running service:<br>
+											<code>service nginx start</code>
+										</li>
+										<li>OS for EC2 instance is the <b>Amazon Machine Image (AMI)</b>. We can run multiple instances from a single AMI.</li>
+										<li>There are also a persistent block storage volumes for AWS EC2 instances. We call it <b>Elastic Block Store (EBS)</b>:
+											<br>
+											- It's available under Root device property of the EC2 instance:<br>
+											<br>
+											<img src="images/ebs.jpg" width="700">
+											<br>
+											- Persistent means that the data will remain even when we stop the EC2 instance.<br>
+											- The volumes are replicated, backed up and connected to EC2 instances with the network.<br>
+											<br>
+											<img src="images/datacenter.JPG" width="700">
+											<br>
+											- We can still ustilize the instance's store which gives fast performance, however the data will be lost if you EC2 instance stops or terminates or the underlying hosting disk fails.
+												The recompensation might be the fact it's quite cost-effecitve, however, we need to make sure to back up the data in S3 for example.<br>
+											- What kind of storage we want to use, we need to specify on AMI configuration step:<br>
+												<br>
+												<img src="images/instance_storage.JPG" width="700">
+										</li>
+										<li>EC2 is equipped with <b>Elastic Load Balancer (ELB)</b> so that traffic can be distributed across multiple EC2 instances.</li>
+										<li>EC2 has <b>Auto-Scaling</b> built in which autoatically add or remove EC2 instances according to conditions we define e.g.:
+											<br>
+											- if average CPU utilization > 60 % then add two more instances,<br>
+											- if average CPU utilization < 30 % then remove two instances.
+										</li>
+									</ul>
+
+									<h5>AWS Relational Database Service (RDS)</h5>
+									<ul>
+										<li>AWS RDS supports various database engines like MySQL, PostgreSQL, Microsoft SQL Serverm Oracle that can be hosted on EC2.</li>
+										<li>AWS offers also the noSQL databse in DynamoDB that stores key-value pairs.</li>
+										<li>Like in other services AWS provides:
+											<br>
+											- database provisioning via GUI,<br>
+											- security,<br>
+											- patching,<br>
+											- backup,<br>
+											- high-availablity.
+										</li>
+										<li>We are able to pick up the engine while creating database
+											<br><br>
+											<img src="images/rds.JPG" width="550">
+										</li>
+										<li>Amazon Aurora is a compromise between performance of traditional enterprise databases and simplicity and cost-effectiveness of open-source databases.
+												Once creating we don't have to specify the storage as it grows along with the size of it.
+										</li>
+									</ul>
+
+									<h5>Serverless Services:</h5>
+									<ul>
+										<li>In fact, it doesn't mean that there is no server being present.
+												There are server to host your application, however is completely managed by the provider.
+												You only care about the app's code.</li>
+										<li>Very popular way of having serverless service is a PaaS model where only need is to upload the the application.
+												PaaS provider takes care of the rest which is setting up the capacity, launching servers in high-availability and auto-scaling mode, installing technology-specifc packages and dependencies, security, patching, monitoring.
+										<li>There are AWS Services that can be used without any server instantiation.
+												There is no need for any capacity planning or how much resources we might need.
+												We are being charged only for the computing time we consume.
+												Example serverless services:
+											<br>
+											- AWS Lmabda for computing,<br>
+											- AWS S3 for storage,<br>
+											- DynamoDB for Database, <br>
+											- SQS, SNS for an app integration.
+										</li>
+									</ul>
+
+									<h5>S3:</h5>
+									<ul>
+										<li>S3 is the durable storage system and is based on object storage.</li>
+										<li>In S3 we have buckets that are like folders where we can store multiple objects (files).
+												Bucket names are unique across enitre AWS namespace.
+												Buckets can have subfolders.
+										</li>
+										<li>Can be used for storing simple websites at the lower costs. With that solution there is no need for instantiating EC2 server.</li>
+										<li>When you upload some file to the cloud storage it back file up automatically.</li>
+									</ul>
+
+									<h5>AWS Lambda:</h5>
+									<ul>
+										<li>It's a fully managed compute service that runs our code when event appears (for instance uploading objects to S3 can trigger Lambda function)or on the time base.</li>
+										<li>AWS Lambda provides:
+											<br>
+											- servers,<br>
+											- capacity,<br>
+											- deployment,<br>
+											- scaling,<br>
+											- high-availability,<br>
+											- os updates,<br>
+											- security.
+										</li>
+										<li>What we provide:
+											<br>
+											- code,<br>
+											- money - as much as we use it.
+										</li>
+										<li>There are many AWS-related events that can trigger a lambda function:
+											<br><br>
+											<img src="images/lambda_triggers.png" width="550">
+										</li>
+										<li>We can specify Runtime while configuration:
+											<br><br>
+											<img src="images/runtime.JPG" width="550">
+										</li>
+									</ul>
+
+									<h5>CloudFront:</h5>
+									<ul>
+										<li>Service for Content Delivery Network (CDN) which acts like a proxy that receives requests and forward those requests to the backend systems.</li>
+										<li>CDN caches website or application files, HTML, CSS, JS, images or videos at data centers around the world.
+												Even when backend server goes down, CDN is able to server the content of a static web-site back to the end user..</li>
+										<li>When setting up the CloudFront service we define amount of data centers - <b>the edge locations</b>.
+												The more edge locations, the higher perfomrance and the lower latency of getting server's content as reposnse on user's request.</li>
+										<li>The edge locations allow users to download the app content much faster from the nearest edge location
+												rather than when request would need to go all the way to the origin server.
+										</li>
+										<li>User request may need to go to the origin server in case when the content at the closest edge location is not present at the moment.</li>
+										<li>Content is being cached at the edge location for a specific period of time - <b>Time To Live (TTL)</b>.</li>
+									</ul>
+
+									<h5>AWS Storage Gateway:</h5>
+									<ul>
+										<li>A service that lets the on-premise application to access and use the cloud storage.</li>
+										<br>
+										<img src="images/storage_gateway.JPG" width="600"><span style="font-size:12px;">source: AWS</span>
+										<br>
+										<li>In <b>Gateway Stored Volumes</b> configuration, there is on-premise storage for an application server.
+												Whenever a file added to that special local storage, it's being uploaded asynchronously to the AWS S3 or AWS EBS in a compressed manner.
+										</li>
+										<li>In <b>Gateway Cached Volumes</b> configuration, there is no on-premises storage.
+												Data is stored primarly on AWS S3, what we have locally on-premise server is a cache of recently read or writthen data.
+										</li>
+									</ul>
+
+									<h5>Remaining AWS services:</h5>
+									<ul>
+										<li>AWS Athena - a service that allows us to analyze various log files from S3 using standard SQL.</li>
+										<li>AWS Inspecotr - </li>
+									</ul>
+
+								</div>
+							</section>
+
+
+						<!-- Four -->
+							<section id="four">
+								<div class="container">
+									<h3>Setup</h3>
+
+									<h5>Following installation required:</h5>
+									<ul>
+										<li>MobaXterm from https://mobaxterm.mobatek.net/download-home-edition.html</li>
+									</ul>
+
+								</div>
+							</section>
+
+							<section id="five">
+								<div class="container">
+									<h3>Source Code</h3>
+									<p>You can view the source code: <a href="#">HERE</a></p>
+									<p>&nbsp</p>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="container">
+							<a href="https://arturskrzeta.github.io/" style="padding-bottom:10px;">Back to Portfolio</a>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
