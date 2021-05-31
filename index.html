@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+	<!DOCTYPE HTML>
 
 <html>
 	<head>
@@ -6,24 +6,24 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-
 	</head>
 	<body class="is-preload">
 
 		<!-- Header -->
 			<section id="header">
 				<header>
-					<span class="image avatar"><a href="https://arturskrzeta.github.io"><img src="images/avatar.png" alt="" /></a></span>
-					<h1 id="logo"><a href="https://arturskrzeta.github.io">Artur Skrzeta</a></h1>
+					<span class="image avatar"><a href="https://arturskrzeta.github.io/"><img src="images/avatar.png" alt="" style="margin-bottom:0px"/></a></span>
+					<h1 id="logo"><a href="https://arturskrzeta.github.io/">Artur Skrzeta</a></h1>
 					<p>Data Analyst<br />
 					+4 years experience</p>
 				</header>
 				<nav id="nav">
 					<ul>
-						<li><a href="#one" class="active">About</a></li>
-						<li><a href="#two">Skills</a></li>
-						<li><a href="#three">Projects</a></li>
-						<li><a href="#four">Me</a></li>
+						<li><a href="#one" class="active">Intro</a></li>
+						<li><a href="#two">Features</a></li>
+						<li><a href="#three">Demo</a></li>
+						<li><a href="#four">Setup</a></li>
+						<li><a href="#five">Source Code</a></li>
 					</ul>
 				</nav>
 				<footer>
@@ -46,19 +46,18 @@
 							<section id="one">
 								<div class="container">
 									<header class="major">
-										<h2>Welcome to my Portfolio</h2>
-										<h3>About</h3>
-										<p>My Portfolio is the set of real business case solutions.
-											Each project provides a detailed concept understanding along with the business problem description, way to reach the solution and the source code of applied technology. Areas it covers:
-										</p>
-											<ul class="feature-icons">
-												<li class="icon solid fa-check">Data Analytics</li>
-												<li class="icon solid fa-check">Data Engineering</li>
-												<li class="icon solid fa-check">Data Management</li>
-												<li class="icon solid fa-check">Process Automation</li>
-												<li class="icon solid fa-check">Machine Learning</li>
-												<li class="icon solid fa-check">Big Data</li>
-											<ul>
+
+										<h2>OLAP in Snowflake</h2>
+										<h3>Intro</h3>
+										<p style="text-align: justify">Snowflake is the platform delivered as a service which means we don't have to worry about patches, upgrades or maintenance.
+										I like the way they describe it: <i>combines the power of data warehousing, the flexibility of big data platforms, and the elasticity of the cloud</i>.</p>
+
+										<!-- <h5>6. Continuous monitoring:</h5>
+										<ul>
+											<li>...</li>
+											firewall configures some security rules. Accepting connection from trusted network and blocking connection from untrusted network.
+										</ul> -->
+
 									</header>
 								</div>
 							</section>
@@ -66,27 +65,10 @@
 						<!-- Two -->
 							<section id="two">
 								<div class="container">
-									<h3>Skills</h3>
-									<p>In this section, you can see a brief overview of the skillset used for the portfolio building. Please view my CV for the complete skillset.</p>
-									<p>Programming and data analysis:</p>
+									<h3>Features</h3>
+									<p>App includes following features:</p>
 									<ul class="feature-icons">
-										<li class="icon brands fa-python">Python</li>
-										<li class="icon solid fa-flask">Flask and Django</li>
-										<li class="icon brands fa-node-js">NodeJS</li>
-										<li class="icon solid fa-file-code">HTML, CSS, JS, PHP</li>
-										<li class="icon brands fa-java">Java and C++</li>
-										<li class="icon solid fa-database">SQL, noSQL</li>
-										<li class="icon solid fa-file-excel">Excel, PQ, VBA</li>
-										<li class="icon solid fa-chart-bar">Tableau</li>
-									</ul>
-									<p>Methodology:</p>
-									<ul class="feature-icons">
-										<li class="icon solid fa-cubes">Object Oriented Programming</li>
-										<li class="icon solid fa-project-diagram">Unified Modeling Language</li>
-										<li class="icon solid fa-code">Functional Programming</li>
-										<li class="icon solid fa-pencil-alt">UI and UX design</li>
-										<li class="icon solid fa-robot">Machine Learning</li>
-										<li class="icon solid fa-cogs">ETL</li>
+										<li class="icon solid fa-check">Snowflake</li>
 									</ul>
 								</div>
 							</section>
@@ -94,963 +76,139 @@
 						<!-- Three -->
 							<section id="three">
 								<div class="container">
+									<h3>Demo</h3>
 
-									<h3 id="navi">Projects Navigation</h3>
+									<h5 id="snowflake">Snowflake:</h5>
+									<ul>
+										<li>In Snowflake's architecture, the key is a separation of storage, compute and services:
+											<br><br>
+											<img src="images/snowflake_architecture.png" width="640"><span style="font-size:12px">soruce: snowflake</span>
+											<br>
+											- S3 as a storage layer (Google Cloud Storage or Azure Blob Storage),<br>
+											- EC2 Virtual Warehouse as a compute layer .<br>
+											- metadata, security, transactions and concurrency management as service layer.
+										</li>
+										<li>Building pipelines with Snowflake:
+											<br><br>
+											<img src="images/snowflake_pipeline.JPG">
+											<span style="font-size:12px">soruce: snowflake</span>
+										</li>
+										<li>Snowflake for OLAP:
+											<br>
+											- snowflake supports <b>Online Analytical Processing (OLAP)</b> for scanning all of the data in columns in order to get aggregated values as opposed to <b>Online Transactional Processing (OLTP)</b> where we want to retrieve one or many rows from database.
+												The main purpose of OLAP is data analysis and when it comes to OLTP then main purpose is data processing (inserting, updating).
+											<br><br>
+											<img src="images/olap.JPG" style="border: 1px solid gray;" width="420"><span style="font-size:12px">soruce: Data Council</span>
+											<br>
+											- while a classic databases like PostgreSQL or MySQL are type of <b>raw store</b> (OLTP) that keeps data linearly row by row, from left to right, from top to bottom, Snowflake supports <b>columnar store</b> (OLAP) which allows to traverse entire columns one by one.
+											<br><br>
+											<img src="images/columnstore.JPG" style="border: 1px solid gray;" width="640"><span style="font-size:12px">soruce: Data Council</span>
+											<br>
+											- using columnar storage makes sense when we want to analyze one or two specific columns and skip reading other ones.
+										</li>
+										<li>Snowflake workflow:
+											<br>
+											- Dividig big tabular data into x-consecutive rows segments called micropartitions.<br>
+											- Reorganizing the data of each micropartition by flipping row store into columnar - column values of each row get stored together.<br>
+											- Adding a header to each micropartition. Header contains metadata of given micropartition and columns it contains.<br>
+											- Micropartitions are being stored in S3 as the immutable files.<br>
+											- All the information about micropartitions are being stored in Sknowflake's metadata layer.<br>
+											- When query comes in, metadata layer knows which micropartition in S3 belongs to the queried table.<br>
+											- Reading a S3 file, it searches for a specific header first and then reads the only column we specified in the query.<br>
+											- It reads the only queried data ingnoring the rest of S3 files.
+										</li>
+										<li>Snowflake architecture:
+											<br>
+											- Database - containing schemas, tables, views, stages, file formats, sequences. All the tables are created in PUBLIC schema by default.<br>
+											- Stage - a data lake like place from which data files are being copied into the tables.<br>
+											- File format - we need to define fomrat of the files bieng stored at stage.<br>
+											- Warehouse - computing enginge.<br>
+											- Worksheet - a place where we can proceed with writing or loading ready SQL scripts.<br>
+										</li>
+										<li>Every action on db can be performed with sql script along with setting up stages, file formats,
+												configuring warehouse, copying data to a table from a stage.
+												<br><br>
+												<img src="images/sql_script.JPG">
+												<br>
+												<img src="images/sql_script2.JPG">
+										</li>
+										<li>Data Loading consists of two parts:
+											<br>
+											1. Staging the files into the place where Snowflake can retrieve data files from. We cam have both internal and exteranl (S3, GSP) storages.<br>
+											2. Loding the data into a specific table.
+										</li>
+										<li>SnowSQL:
+											<br>
+											- the command line interface client for connecting to Snowflake,<br>
+											- allows to execute SQL queries to perform DDL and DML operations,<br>
+											- we can install it from Snowflake UI and there is info on how to connect at the end:
+											<br><br>
+											<img src="images/snowsql_installation.JPG">
+											<br>
+											- example:
+											<br>
+											<code>USE DATABASE my_db;</code><br>
+											<code>CREATE OR REPLACE TABLE my_tbl {</code><br>&nbsp&nbsp&nbsp&nbsp
+												<code>...</code><br>
+											<code>};</code><br>
+											<code>CREATE STAGE csvfiles;</code><br>
+											<code>PUT file:///tmp/load/abc*.csv @csvfiles;</code><br>
+											<code>LIST @csvfiles;</code><br>
+											<code>CREATE WAREHOUSE IF NOT EXISTS "dataload" WAREHOUSE.SIZE = "Large"</code><br>&nbsp&nbsp&nbsp&nbsp
+												<code>AUTOSUSPEND = 300 AUTO_RESUME = TRUE;</code><br>
+											<code>USE WAREHUSE dataload;</code><br>
+											<code>COPY INTO my_tbl</code><br>&nbsp&nbsp&nbsp&nbsp
+												<code>FROM @csvfiles</code><br>&nbsp&nbsp&nbsp&nbsp
+												<code>PATTERN = '.*file0[1-4].csv.gz'</code><br>&nbsp&nbsp&nbsp&nbsp
+												<code>ON_ERROR = 'skip_file';</code><br>
+											<code>SELECT * FROM my_tbl LIMIT 10;</code>
+										</li>
+										<li>We can learn a lot from the documentation:
+												<u><a href="https://docs.snowflake.com/en/">Snowflake documentation</a></u>
+										</li>
+									</ul>
 
-									<nav id="nav">
-										<ul>
-											<a href="#full_stack_applications"><li>Full Stack Applications (10)</li></a>
-											<a href="#excel_application"><li>Excel Applications (3)</li></a>
-											<a href="#machine_learning"><li>Machine Learning (10)</li></a>
-											<a href="#data_analytics"><li>Data Analytics (5)</li></a>
-											<a href="#data_structures"><li>Data Structures (6)</li></a>
-											<a href="#process_automation"><li>Process Automation (6)</li></a>
-											<a href="#algorithm"><li>Algorithms (2)</li></a>
-											<a href="#data_workflow"><li>Data Workflow (6)</li></a>
-											<a href="#user_interface"><li>User Interface (2)</li></a>
-											<a href="#devops"><li>DevOps (4)</li></a>
-											<a href="#programming_practices"><li>Programming practices (4)</li></a>
-											<a href="#cloud_services"><li>Cloud Services (2)</li></a>
-										</ul>
-									</nav>
+									<!-- <h5>Message Broker:</h5>
+									<ul>
+										<li></li>
+									</ul>-->
 
-									<h3 style="border-bottom: 3px solid #f4f4f4; margin-bottom: 40px; padding-bottom: 10px;" id="full_stack_applications">Full Stack Applications (10)</h3>
-									<div class="recent">
-										<article>
-											<a href="https://arturskrzeta.github.io/Progress-Tracking-Dashboard-Full-Stack-with-Flask/."><h4>Progress Tracking Dashboard</h4></a>
-											<ul class="features">
-												<li class="icon brands fa-python">&nbsp&nbsp<b>Full Stack Application</b></li>
-												<li>Python</li>
-												<li>Flask</li>
-												<li>SQLAlchemy</li>
-												<li>HTML</li>
-												<li>CSS</li>
-												<li>JavaScript</li>
-											</ul>
-											<p style="margin-bottom:0.5em">Dashboard allows user to track the progress of the 3 main lifts id est: bench press, squat and deadlift.
-																											User is able to provide its one-rep max lifts per each week to see the overall tendency of its strength.</p>
-											<a href="https://arturskrzeta.github.io/Progress-Tracking-Dashboard-Full-Stack-with-Flask/" class="image">
-												<img src="images/flask.JPG" alt=""/>
-											</a>
-										</article>
-									</div>
-									<div class="features">
-										<article>
-											<a href="https://arturskrzeta.github.io/Stock-Portfolio-Management-System-with-Flask/" class="image"><img src="images/stock.gif" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Stock-Portfolio-Management-System-with-Flask/"><h4>Stock Portfolio Management System</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Full Stack Application</b></li>
-													<li>Python</li>
-													<li>Flask</li>
-													<li>SQLAlchemy</li>
-													<li>HTML</li>
-													<li>CSS</li>
-													<li>JS</li>
-												</ul>
-												<p>Making good investemnt decisions requires you to keep all investing product details in one place.
-													Portfolio enables you to follow your stock exchange transactions along with their parameters as well as your private comments or insights.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Desk-Booking-App/" class="image"><img src="images/booking-icon.gif" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Desk-Booking-App/"><h4>Desk Booking Application</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Full Stack Application</b></li>
-													<li>Python</li>
-													<li>Flask</li>
-													<li>SQLAlchemy</li>
-													<li>HTML</li>
-													<li>CSS</li>
-													<li>JS</li>
-												</ul>
-												<p>In the world of remote work, the most of employees have to work at home.
-													However, when it's necessary for you to be present in an office on a specific day, book a hot desk using the application so that you can be sure no one occupies it.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Smart-Contracts-on-Blockchain-Infrastructure/p" class="image"><img src="images/blockchain-app.gif" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Smart-Contracts-on-Blockchain-Infrastructure/"><h4>Smart Contracts on Blockchain</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Full Stack Application</b></li>
-													<li>Python</li>
-													<li>Flask</li>
-													<li>SQLAlchemy</li>
-													<li>HTML</li>
-													<li>CSS</li>
-													<li>JS</li>
-												</ul>
-												<p>Application makes usage of blockchain's security mechanism to store and keep track of contracts insertion.
-													Each contract insertion to the system leaves tracks to the contract that was inserted before.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Purchase-Request-Management-System/" class="image"><img src="images/django.gif" alt="" style="border: 1px solid #8bbeb187; padding-bottom: 8px;"/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Purchase-Request-Management-System/"><h4>Purchase Request Management System</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Full Stack Application</b></li>
-													<li>Python</li>
-													<li>Django</li>
-													<li>SQLAlchemy</li>
-													<li>HTML</li>
-													<li>CSS</li>
-												</ul>
-												<p>Web application for the Purchase Requests management (non-commercial).
-													Enough of shared excel trackers, now it's time for having fully manageable, relying on a database, issues tracking web application.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/PO-Generator/" class="image"><img src="images/pogenerator.gif"/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/PO-Generator/"><h4>Purchase Order Generator</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Full Stack Application</b></li>
-													<li>Python</li>
-													<li>Flask</li>
-													<li>HTML</li>
-													<li>CSS</li>
-												</ul>
-												<p>Application takes JSON file with data on company, supplier and products and matches all the details into HTML template.
-													Usign special library, the final output is a PDF file being converted from a ready HTML template.
-													In Procurement, PDF file serves as the main form of ordering document that is send over to supplier.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Requester-Procurement-Channel" class="image"><img src="images/procyou.gif" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Requester-Procurement-Channel"><h4>PHP Full Stack Web App</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-php">&nbsp&nbsp<b>Full Stack Application</b></li>
-													<li>PHP</li>
-													<li>HTML</li>
-													<li>CSS</li>
-													<li>JS</li>
-													<li>MySQL</li>
-												</ul>
-												<p>Web application to make communication between Requesters and Buyers much easier.
-													Everyone can post his or her question/issue and be answered by procurement representative.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/REST-API-with-Django-and-REST-Framework/" class="image"><img src="images/django_rest.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/REST-API-with-Django-and-REST-Framework/"><h4>REST Framework in Django App</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Full Stack Application</b></li>
-													<li>Django</li>
-													<li>Rest Framework</li>
-													<li>JSON</li>
-												</ul>
-												<p>Django offers library for REST API implementation which pre-defines the rules on how user can communicate with server,
-													 how user can access resources and what is the form of getting them.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/JS-Beyond-a-Browser-with-NodeJS/" class="image"><img src="images/node.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/JS-Beyond-a-Browser-with-NodeJS/"><h4>Rest API with NodeJs on Heroku</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-node-js">&nbsp&nbsp<b>Full Stack Application</b></li>
-													<li>NodeJS</li>
-													<li>ReactJS</li>
-													<li>Heroku</li>
-													<li>MongoDB</li>
-												</ul>
-												<p>NodeJS creates conditions to use JavaScript outside of a browser.
-													Simply put, it is an open-source runtime system for making server to run JS applications.
-													In the project, I build and deploy the REST API application to Heroku which is the cloud platform in the PaaS model.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Learn-SQL-Application/" class="image"><img src="images/sql_learn.gif" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Learn-SQL-Application/"><h4>Learn SQL Application</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-node-js">&nbsp&nbsp<b>Full Stack Application</b></li>
-													<li>NodeJS</li>
-													<li>ReactJS</li>
-													<li>ExpressJS</li>
-													<li>MongoDB</li>
-												</ul>
-												<p>Applying for Data Scientist position, we need to be prepared for SQL-related questions.
-													Learn SQL app provides you with the set of questions related mostly to writing SQL queries without digging into theory too much.
-													Just switch to question, write down your query and check if it's correct.
-												</p>
-											</div>
-										</article>
-
-								<!-- NEW SECTION -->
-
-										<h3 id="excel_application">Excel Applications (3)</h3>
-										<article>
-											<a href="https://arturskrzeta.github.io/Decision-Robot" class="image"><img src="images/robot.jpg" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Decision-Robot"><h4>Decision Robot</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-file-excel">&nbsp&nbsp<b>Excel Application</b></li>
-													<li>VBA</li>
-												</ul>
-												<p>Robot gives the best possible option based on the answers given by user in a questionnaire.
-													 User can either rely on the robot in 100% for having decision process fully automated or take it into account during decsion making..</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Excel-User-Interface-for-Quering-SQLite-Database/" class="image"><img src="images/excel-db.jpg" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Excel-User-Interface-for-Quering-SQLite-Database/"><h4>Excel UI for quering SQL database</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-file-excel">&nbsp&nbsp<b>Excel Application</b></li>
-													<li>VBA</li>
-													<li>SQLite</li>
-												</ul>
-												<p>Using Excel and restrictive programmed logic to interact with SQL database.
-													With that solution we can protect the database and prevent user from sending undesirable queries.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Recursion-in-System-Files-Management-VBA" class="image"><img src="images/stack_schema.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Recursion-in-System-Files-Management-VBA"><h4>Recursion in System Files Management</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-file-excel">&nbsp&nbsp<b>Excel Application</b></li>
-													<li>VBA</li>
-												</ul>
-												<p>Being tried of figuring theoretical examples out of recursion application, I decided to go ahead with applying recursion for walking through folders and processing files as needed.</p>
-											</div>
-										</article>
-
-							<!-- NEW SECTION -->
-
-										<h3 id="machine_learning">Machine Learning (10)</h3>
-										<article>
-											<a href="https://arturskrzeta.github.io/CV-for-Processing-Digital-Images/" class="image"><img src="images/cv_image.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/CV-for-Processing-Digital-Images/"><h4>CV for Prosessing Digital Images</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Algorithmic Machine Learning</b></li>
-													<li>OpenCV</li>
-													<li>Computer Vision</li>
-												</ul>
-												<p>Computer Vision (CV) is the part of artificial intelligence that trains computer to understand and interpret digital images.
-													 Application using CV can accurately locate and identify objects on the image/video and react on what it sees in a programmed way.</p>
-											</div>
-										</article>
-										<article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Objects-Recognition-with-OpenCV-and-Python" class="image"><img src="images/cv.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Objects-Recognition-with-OpenCV-and-Python"><h4>Objects Recognition with OpenCV</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Algorithmic Machine Learning</b></li>
-													<li>Tesseract</li>
-													<li>OCR</li>
-												</ul>
-												<p>OpenCV library for Python allows to process images in the real time. Using trained model we can recognize any objects that model was trained for.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Linear-Regression-with-Numpy-and-Python/" class="image"><img src="images/lr.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Linear-Regression-with-Numpy-and-Python/"><h4>Linear Regression with Pure Math</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Algorithmic Machine Learning</b></li>
-													<li>Numpy</li>
-													<li>Matplotlib</li>
-												</ul>
-												<p>Building Linear Regression Model to find the linear relationship between two variables
-													(dependent and independent - y and x) and using it for forecasting future values of y while new set of sample X features given.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Finding-Sentiment-among-Cutomers-with-Naive-Bayes/" class="image"><img src="images/nb.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Finding-Sentiment-among-Cutomers-with-Naive-Bayes/"><h4>Finding Sentiment among Customers</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Algorithmic Machine Learning</b></li>
-													<li>SkLearn</li>
-													<li>Multinomial Naive Bayes</li>
-												</ul>
-												<p>Naive Bayes is algorithm that works on theorem of probabilty what allows to predict the classification of unknown dataset.
-													Due to some simplifications, it outperforms other algorithms with speed, accuracy and simplicity.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Decision-Tree-as-Supervised-Learning/" class="image"><img src="images/dtree.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Decision-Tree-as-Supervised-Learning/"><h4>Decision Maker with Decision Tree</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Algorithmic Machine Learning</b></li>
-													<li>SkLearn</li>
-													<li>DecisionTreeClassifier</li>
-												</ul>
-												<p>Decision Tree is a method that supports decision making process. It's used also for supervised learning in ML for gaining knowledge based on the examples input.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Machine-Learning-for-Procurement/" class="image"><img src="images/ml.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Machine-Learning-for-Procurement/"><h4>Machine Learning in Procurement</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Algorithmic Machine Learning</b></li>
-													<li>Sklearn</li>
-													<li>LinearSVC</li>
-												</ul>
-												<p>Spend analysis is necessary for reviewing procurement spend to decrease costs, increase efficiency or improve supplier relationships.
-													 ML model allows to recognize a spend type based on its specification.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/AI-Procurement-Bot/" class="image"><img src="images/bot_chat.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/AI-Procurement-Bot/"><h4>AI Procurement Chat Bot</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Neural Deep Learning</b></li>
-													<li>Tensorflow</li>
-													<li>TFLearn</li>
-													<li>NLTK</li>
-												</ul>
-												<p>Utilizing Deep Learning for procurement bot that is able to answer most frequently asked questions regarding corporate internal web-shop.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Support-Vector-Machine-with-Numpy-and-Python/" class="image"><img src="images/chart.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Support-Vector-Machine-with-Numpy-and-Python/"><h4>SVM with Pure Math</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Algorithmic Machine Learning</b></li>
-													<li>Numpy</li>
-													<li>Matplotlib</li>
-													<li>Sklearn</li>
-												</ul>
-												<p>Support Vector Machine is one of the machine learning algorithm that helps predict values for new data samples.
-													Training model is performed doing mathematical calculation based on the historical data</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/K-Nearest-Neighbors-with-Pure-Math/" class="image"><img src="images/knn.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/K-Nearest-Neighbors-with-Pure-Math/"><h4>K Nearest Neighbors with Pure Math</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Algorithmic Machine Learning</b></li>
-													<li>Numpy</li>
-													<li>Matplotlib</li>
-												</ul>
-												<p>K Nearest Neighbors is the algorithm that uses all of available classified cases for a model learning.
-													Thanks to that, when new case comes in, we can quickly classify it based on a similarity measurements.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/ML-with-JavaScript/" class="image"><img src="images/brainjs.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/ML-with-JavaScript/"><h4>ML with JavaScript</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-node-js">&nbsp&nbsp<b>Neural Deep Learning</b></li>
-													<li>NodeJS</li>
-													<li>Brain.js</li>
-												</ul>
-												<p>I been have associating JS with dynamic web-app's features so far.
-													To my surprise, with JS and brain.js library we can also build a neural networks that learn patterns and input-output relationships
-													for making future guesses when dealing with new realted issues.</p>
-											</div>
-										</article>
-
-							<!-- NEW SECTION -->
-
-										<h3 id="data_analytics">Data Analytics (5)</h3>
-										<article>
-											<a href="https://arturskrzeta.github.io/Best-Offer-Picker/" class="image"><img src="images/best_offer.jpg" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Best-Offer-Picker/"><h4>Best Supplier Offer Picker</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Pandas</li>
-													<li>Numpy</li>
-												</ul>
-												<p>Having 5 offers from 5 suppliers on 1000 products and services can pose a challenge.
-													 Python helps to automate choosing a supplier with the best offer and to perform the analysis like percentage differences, achieved savings and more.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/KPI-Anomaly-Detection/" class="image"><img src="images/kpi.jpg" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/KPI-Anomaly-Detection/"><h4>KPI Anomaly Detection</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Pandas</li>
-													<li>Numpy</li>
-													<li>Matplotlib</li>
-												</ul>
-												<p>Catching bad signals with anomaly detection allows to react on time.
-													Python script has algorithm built for detecting outliers based on mean, standard deviation and z-score calculation.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Regular-Expression-with-Python/" class="image"><img src="images/regex.jpg" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Regular-Expression-with-Python/"><h4>Spend Classification with RegEx</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Regular Expression</li>
-												</ul>
-												<p>I'm using Regular Expression to convert SAP commodity code to classify the spend.
-													For example 123-XXX-XXX code needs to be classified to Information Technology but 124-XXX-XXX needs to be classified to Office Supplies.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Spark-for-Handling-Big-Data/" class="image"><img src="images/pyspark.jpg" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Spark-for-Handling-Big-Data/"><h4>Spark for Big Data</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Jupyter Notebook</b></li>
-													<li>Python</li>
-													<li>PySpark</li>
-												</ul>
-												<p>I utilise PySpark API to handle big data with Python.
-													The core idea behind Spark is MapReduce model which maps the data set into a collection of key-value pairs, and then reducing over all pairs with the same key getting aggregated values.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/From-Hadoop-to-PyDoop-for-Big-Data/" class="image"><img src="images/pydoop.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/From-Hadoop-to-PyDoop-for-Big-Data/"><h4>MapReduce with Hadoop</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Hadoop</li>
-													<li>MapReduce</li>
-												</ul>
-												<p>Big Data can be characterized by 3 words: volume, velocity and variety.
-													Hadoop offers distributed storage and distributed processing of Big Data sets on computer cluster(s).
-													In the Project, I use PyDoop API for writing Hadoop MapReduce applications in Python.</p>
-											</div>
-										</article>
-
-								<!-- NEW SECTION -->
-
-										<h3 id="data_structures">Data Structures (6)</h3>
-										<article>
-											<a href="https://arturskrzeta.github.io/Managing-PostgreSQL-Objectively/" class="image"><img src="images/postgresql.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Managing-PostgreSQL-Objectively/"><h4>Managing PostgreSQL DB Objectively</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>PostgreSQL</li>
-												</ul>
-												<p>I apply Object Oriented Programming for managing PostgreSQL database where database has its own class along with methods of creating table, inserting data or selecting row(s).</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Key-Document-Database-in-MongoDB/." class="image"><img src="images/mongo.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Key-Document-Database-in-MongoDB/."><h4>Key-Document Database in MongoDB</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>MongoDB Atlas</li>
-													<li>MongoEngine</li>
-													<li>Cloud database</li>
-												</ul>
-												<p>MongoDB is a database that stores data as JSON-like documents with no defined schema in advance.
-													Documents which plays roles of rows aren't restricted to the same number of columns. That gives a big flexibility in both retrieving and inserting data.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/LinkedList-for-Sequencing-User-Actions/" class="image"><img src="images/linkedlist.jpg" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/LinkedList-for-Sequencing-User-Actions/"><h4>Linked List for Sequencing User Actions</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Data Structures</li>
-												</ul>
-												<p>Linked list is a data structure which is used when size of data is not fixed and we want to efficiently utilize our memory space.
-													In addition, linkage between list nodes is persistent what means we can simply identify their sequence.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Modeling-Blockchain-with-Python/" class="image"><img src="images/blockchain.jpg" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Modeling-Blockchain-with-Python/"><h4>Blockchain Modeling with Python</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-												</ul>
-												<p>Modeling blockchain architecture along with its properties of hashing blocks and establishing dependencies between following blocks. Model built according to OOP.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Object-Oriented-Design-with-UML-and-Python-Implementation/" class="image"><img src="images/uml.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Object-Oriented-Design-with-UML-and-Python-Implementation/"><h4>Object Oriented Design with UML</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>SQLite</li>
-												</ul>
-												<p>Translating UML diagram into Python code.
-													I'm feeding the sqlite3 database with objects data at the end.</p>
-											</div>
-										</article>
-
-										<article>
-												<a href="https://arturskrzeta.github.io/Hash-Table-with-Python/" class="image"><img src="images/hashtable.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Hash-Table-with-Python/"><h4>Hash Table Implementation in Python</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-												</ul>
-												<p>Data structure that maps a key to a value in the memeory slot.
-													 It uses hash function that converts a key into a hashed code wich is used for the index computing.
-													 Received index indicates a memeory slot where we can get a value from.</p>
-											</div>
-										</article>
-
-
-								<!-- NEW SECTION -->
-
-										<h3 id="process_automation">Process Automation (6)</h3>
-										<article>
-											<a href="https://arturskrzeta.github.io/RESTful-API-with-FLASK-and-SQLAlchemy/" class="image"><img src="images/restfulapi.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/RESTful-API-with-FLASK-and-SQLAlchemy/"><h4>RESTful API and HTTP Automated Tests</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Flask</li>
-													<li>RESTful API</li>
-													<li>Pytest</li>
-													<li>SQLite</li>
-												</ul>
-												<p>RESTful API uses HTTP requests to help a client (web, mobile app, or client.py in the project) to interact with server's database.
-													Project has been written along with automated tests checking the Client-API-Server performance.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Unit-and-Integration-Tests-in-Python/" class="image"><img src="images/tests.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Unit-and-Integration-Tests-in-Python/"><h4>Unit and Integration Testing</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Unittest</li>
-													<li>Mock</li>
-												</ul>
-												<p>Writing code to a code that already exists in order to verify correctness of function's work.
-													That makes us sure the code works in accordance to programmer assumptions and software requirements.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Asynchronous-Execution-with-Celery-and-Python/" class="image"><img src="images/asynchro.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Asynchronous-Execution-with-Celery-and-Python/"><h4>Asynchronous Selenium Tasking</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Selenium</li>
-													<li>Pandas</li>
-													<li>Redis</li>
-													<li>Celery</li>
-												</ul>
-												<p>Running time-consuming tasks asynchronously means running them at the same time in parallel.
-													Long-time processing tasks being exeuted at once save a lot of time as opposed to launching them one by one (next starts once previous finishes).</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Scraping-Data-from-Web-sites/" class="image"><img src="images/web-scraper.jpg" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Scraping-Data-from-Web-sites/"><h4>Scraping Data from Web-sites</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>BeatifulSoup</li>
-													<li>Matplotlib</li>
-												</ul>
-												<p>If bussines travelling is your regular thing, You probably pay more attention to currency rates.
-													With this script you can literally scrape a webpage from currencies you need.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Bulk-Mailing-in-Outlook/" class="image"><img src="images/outlook.jpg" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Bulk-Mailing-in-Outlook/"><h4>Bulk Mailing in Outlook</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-												</ul>
-												<p>Bulk mailing is always the case for the automation. With Python, I can sent personalized emails for many recipients.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Investment-Risk-Management-Program/" class="image"><img src="images/java_stock.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Investment-Risk-Management-Program/"><h4>Investment Risk Management Program</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-laptop-code">&nbsp&nbsp<b>Java Program</b></li>
-												</ul>
-												<p>Program calculates entry, risk and profit price of an investment in order to assess the risk to reward ratio.
-													Once ratio is greater than 3 than it means reward is 3 times greater than undertaken risk what allows you to make transaction.
-													Once ratio is lower than 3 then it doesn't allow you to make transaction.</p>
-											</div>
-										</article>
-
-
-								<!-- NEW SECTION -->
-
-										<h3 id="algorithm">Algorithms (2)</h3>
-										<article>
-											<a href="https://arturskrzeta.github.io/Supplier-Coordinator-Stable-Matching-Algorithm/" class="image"><img src="images/stable_match.png" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Supplier-Coordinator-Stable-Matching-Algorithm/"><h4>Stable Match Algorithm in Procurement</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-												</ul>
-												<p>Both Suppliers and Project Coordinators have their own preferences against each other.
-													Algorithm helps to match a coordinator with a supplier so that all the partnerships could remain stable and bring mutual benefit.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Optimal-Costs-in-Supply-Chain-Management/" class="image"><img src="images/optimal_costs.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Optimal-Costs-in-Supply-Chain-Management/"><h4>Optimal Costs of Goods Transportation</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-laptop-code">&nbsp&nbsp<b>C++ Program</b></li>
-												</ul>
-												<p>In today's world, smart Supply Chain Management has never been that important.
-													Finding optimal costs of supplies is sometimes the matter of to be or not to be for a company.
-													I used a very popular algorithm for finding the shortest paths between nodes in a graph.
-													 I tailored the algorithm to the procurement's needs.</p>
-											</div>
-										</article>
-
-								<!-- NEW SECTION -->
-
-										<h3 id="data_workflow">Data Workflow (6)</h3>
-										<article>
-											<a href="https://arturskrzeta.github.io/Consuming-Many-Data-Streams-At-Once/" class="image"><img src="images/map.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Consuming-Many-Data-Streams-At-Once/"><h4>Consuming Many Data Streams At Once</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Apache Kafka</li>
-													<li>PyKafka</li>
-												</ul>
-												<p>Processing data flowing in from different sources at once can be possible with Apache Kafka.
-													As a messaging central bus, Kafka bonds all independent microservices that produces data and redirect it to a consumer.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Apache-Airflow-for-Workflows/" class="image"><img src="images/airflow.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Apache-Airflow-for-Workflows/"><h4>Create-Schedule-Monitor Workflows</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>Apache Airflow</li>
-												</ul>
-												<p>Apache Airflow is the workflow management system to create, schedule and monitor workflows.
-													In the project, I build scheduling workflow for scraping webpage for getting currencies rates, processing it with expense data and mailing an outcome.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/TCP-for-Client-Server-with-Database-Modeling/" class="image"><img src="images/server-client.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/TCP-for-Client-Server-with-Database-Modeling/"><h4>Client-Server Data Exchange with TCP</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python Script</b></li>
-													<li>SQLite</li>
-													<li>Sockets</li>
-												</ul>
-												<p>TCP is the common transport protocol that ensures reliable exchange of data betwen connected programms accross the network.
-												In the project, I model the connection: client - server - database.
-												Data exchange between client and server is performed with TCP. Server saves client's data in the databse.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/GraphQL-instead-of-REST-for-API-Design/" class="image"><img src="images/graphql.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/GraphQL-instead-of-REST-for-API-Design/"><h4>GraphQL instead of REST for API Design</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-node-js">&nbsp&nbsp<b>NodeJS</b></li>
-													<li>GraphQL</li>
-												</ul>
-												<p>We can find GrapQL as an alternative for REST when developing API that boost web-app performance.
-													Instead of hitting many endpoints and getting all the data at once with REST, with GraphQL you can hit only one endpoint determining in query what data you actually need.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Data-Warehouse-CSV-Python-Tableau-Server-BA-New-Data/" class="image">
-												<img src="images/dashboard.JPG" alt="" style="padding-bottom: 10px; border-bottom: 1px solid #a1cec2a1; border-left: 1px solid #a1cec2a1;"/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Data-Warehouse-CSV-Python-Tableau-Server-BA-New-Data/"><h4>Data Warehousing for Business Insights</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-database">&nbsp&nbsp<b>Data Proecssing</b></li>
-													<li>CSV</li>
-													<li>Python</li>
-													<li>Pandas</li>
-													<li>Tableau</li>
-													<li>MS Access</li>
-												</ul>
-												<p>From data collecting to business insights process:<br>
-														1. Flat files.<br>
-														2. Python ETL.<br>
-														3. Data Warehouse.<br>
-														4. Tableau dashboard.<br>
-														5. Cloud server.<br>
-														6. Business Analysis.<br>
-												</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Data-Pipeline-with-Flask-and-SQLite-in-Python" class="image"><img src="images/pipeline.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Data-Pipeline-with-Flask-and-SQLite-in-Python/"><h4>Handling Data in Steps in Data Pipelines</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-database">&nbsp&nbsp<b>Data Proecssing</b></li>
-													<li>Python</li>
-													<li>Flask</li>
-													<li>SQLite</li>
-												</ul>
-												<p>Data Pipeline: <br>
-													1. Company A streams data to web-server.<br>
-													2. Company B requests web-server for receiving data stream.<br>
-													3. Company B process the inflowing data.<br>
-													4. Company B feeds database.
-												</p>
-											</div>
-										</article>
-
-								<!-- NEW SECTION -->
-
-										<h3 id="user_interface">User Interface (2)</h3>
-										<article>
-											<a href="https://arturskrzeta.github.io/UI-with-ReactJS/" class="image"><img src="images/react.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/UI-with-ReactJS/"><h4>ReactJS for building User Interfaces</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-react">&nbsp&nbsp<b>ReactJS</b></li>
-													<li>Postman</li>
-													<li>REST API</li>
-													<li>Json-server</li>
-												</ul>
-												<p>ReactJS is the JavaScript library for building fast and interactive User Interfaces for web-applications.
-													ReactJS reacts to each change of web-page element rendering only that HTML element instead of entire web-page.
-												 	This selective rendering gives a big performance boost.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Data-Vizualization-with-JavaScript/" class="image"><img src="images/data_visualization_js.JPG" alt="" /></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Data-Vizualization-with-JavaScript/"><h4>Data Visualization with JavaScript</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-js-square">&nbsp&nbsp<b>JavaScript</b></li>
-													<li>ReactJs</li>
-													<li>Chart.js</li>
-												</ul>
-												<p>Making usage of chart.js as open-source library for data visualization.
-													We can simply embed a chart into HTML structure rendering it in a canvas tag.</p>
-											</div>
-										</article>
-
-								<!-- NEW SECTION -->
-
-										<h3 id="devops">DevOps (4)</h3>
-										<article>
-											<a href="https://arturskrzeta.github.io/Application-in-a-Container/" class="image"><img src="images/docker.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Application-in-a-Container/"><h4>Application in a Container</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-docker">&nbsp&nbsp<b>Docker</b></li>
-													<li>DockerFile</li>
-													<li>Kubernetes</li>
-													<li>KubeCTL</li>
-												</ul>
-												<p>Wrapping your entire application's code along with all its dependencies and input files/data with one docker container makes it portable and runnable by another developer on its local machine.
-													Containers includes everything to create required environment to run application successfully.
-													That way, we ensure reproducibility and reliability of app's work regardless of whose computer runs the application.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/App-Version-Tracking-with-Git/" class="image"><img src="images/git.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/App-Version-Tracking-with-Git/"><h4>App Version Tracking with Git</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-git-square">&nbsp&nbsp<b>Git</b></li>
-													<li>GitHub</li>
-												</ul>
-												<p>Git allows us to track any changes in our project's files remembering who mase what and when.
-													Usually, used for coordinating work among developers co-working on source code during software development.
-													I use Git for versioning my data science projects as well as for pulling and pushing things on GitHub.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/App-Lifecycle-with-CICD/" class="image"><img src="images/cicd.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/App-Lifecycle-with-CICD/"><h4>App's Lifecycle with CICD</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-jenkins">&nbsp&nbsp<b>Jenkins</b></li>
-													<li>GitHub</li>
-													<li>DockerHub</li>
-													<li>CI/CD</li>
-												</ul>
-												<p>Continuous Integration and Continuous Delivery/Deployment is a set of good development practices when working on an application.
-													CI/CD pipelines ensure ongoing automation and continuous monitoring throughout the whole lifecycle of apps, starting from integration and testing phases and finishing with delivery and server deployment.
-												</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Ansible-for-VM-Provisioning" class="image"><img src="images/ansible.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Ansible-for-VM-Provisioning"><h4>Ansible for VM Provisioning</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-server">&nbsp&nbsp<b>Vagrant</b></li>
-													<li>Ansible</li>
-													<li>VirtualBox</li>
-													<li>IaC</li>
-												</ul>
-												<p>Ansible provides Infrastructure as Code solutions for automated provisioning through machine-readable files.
-													We just need to define, in humans-alike language, the state on how we want to configure our virtual machine and run it.</p>
-											</div>
-										</article>
-
-								<!-- NEW SECTION -->
-
-										<h3 id="programming_practices">Programming practices (4)</h3>
-										<!-- <article>
-											<a href="#" class="image"><img src="images/bigo.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="#"><h4>Big O Notation</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-code">&nbsp&nbsp<b>Big O</b></li>
-												</ul>
-												<p>In this section, I try my best to collect and describe and first of all put down my understanding on how to implement all the techniques that contribute to the clean code of an application.
-													I touch here both theoretical principles and python libraries that assists with feedback on Python's syntax.</p>
-											</div>
-										</article> -->
-										<article>
-											<a href="https://arturskrzeta.github.io/Keeping-a-Code-Clean/" class="image"><img src="images/cleancode.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Keeping-a-Code-Clean/"><h4>Keeping Python Code Clean</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-code">&nbsp&nbsp<b>Clean Code</b></li>
-													<li>SOLID</li>
-													<li>KIS</li>
-												</ul>
-												<p>In this section, I try my best to collect and describe and first of all put down my understanding on how to implement all the techniques that contribute to the clean code of an application.
-													I touch here both theoretical principles and python libraries that assists with feedback on Python's syntax.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Design-Patterns-in-Python/" class="image"><img src="images/designpatterns.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Design-Patterns-in-Python/"><h4>Design Patterns in Python</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-code">&nbsp&nbsp<b>Design Patterns</b></li>
-													<ii>OOP</li>
-												</ul>
-												<p>Common reusable solutions to common problems in an application design.
-														We can use them in form of templates that can be implemented and modified due to the app's requirements.
-														Design patterns are mostly used in the object-oriented programming where defines relationships and interactions between classes or objects.
-														There are different patterns according to the nature of the problem we want to solve.
-													</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/My-In-Depth-Python-Comprehension/" class="image"><img src="images/what_is_python.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/My-In-Depth-Python-Comprehension/"><h4>My In Depth Python Comprehension</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python</b></li>
-												</ul>
-												<p>In this section, I describe all my knowledge on Python I have managed to gather so far.
-														It contains Python pure architecture, concepts and language-specific properties.</p>
-											</div>
-										</article>
-										<article>
-											<a href="https://arturskrzeta.github.io/Functional-Programming-in-Python/" class="image"><img src="images/functional_programming.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Functional-Programming-in-Python/"><h4>Functional Programming in Python</h4></a>
-												<ul class="features">
-													<li class="icon brands fa-python">&nbsp&nbsp<b>Python</b></li>
-												</ul>
-												<p>Functional programming simplifies things to data input and result output avoiding any state changes that may have impact on the output.
-													Python itself is not a functional programming language strictly.
-													However, it has some features suitable for implementing programs in a functional style.</p>
-											</div>
-										</article>
-
-								<!-- NEW SECTION -->
-
-										<h3 id="cloud_services">Cloud Services (2)</h3>
-
-										<article>
-											<a href="https://arturskrzeta.github.io/OLAP-in-Snowflake/" class="image"><img src="images/snowflake.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/OLAP-in-Snowflake/"><h4>OLAP in Snowflake</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-cloud">&nbsp&nbsp<b>Data Warehouse</b></li>
-													<li>Snowflake</li>
-												</ul>
-												<p>Snowflake is the platform delivered as a service which means we don't have to worry about patches, upgrades or maintenance.
-												I like the way they describe it: <i>combines the power of data warehousing, the flexibility of big data platforms, and the elasticity of the cloud</i></p>
-											</div>
-										</article>
-
-										<article>
-											<a href="https://arturskrzeta.github.io/My-Clouds-Comprehension/" class="image"><img src="images/cloud.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/My-Clouds-Comprehension/"><h4>My Comprehension of AWS Services</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-cloud">&nbsp&nbsp<b>Cloud computing</b></li>
-													<li>AWS</li>
-												</ul>
-												<p>In this section I collect as much information as I manage to gain about cloud computing and cloud services with AWS.
-													It includes my understanding, insights, conclusions that I get during my learning process.</p>
-											</div>
-										</article>
-
-										<article>
-											<a href="https://arturskrzeta.github.io/Exploring-Clouds-on-GCP/" class="image"><img src="images/gcp.JPG" alt=""/></a>
-											<div class="inner">
-												<a href="https://arturskrzeta.github.io/Exploring-Clouds-on-GCP/"><h4>Exploring Clouds on GCP</h4></a>
-												<ul class="features">
-													<li class="icon solid fa-cloud">&nbsp&nbsp<b>Cloud computing</b></li>
-													<li>GCP</li>
-												</ul>
-												<p>I continue with learning "clouds" on the example of Google Cloud Platform's services.
-													I enclose my insights, schemas and explanation on how the things work as well as some differences between other cloud services providers.</p>
-											</div>
-										</article>
-
-									</div>
 								</div>
 							</section>
 
 						<!-- Four -->
 							<section id="four">
 								<div class="container">
-									<h3>Me</h3>
-									<p>A few words characterizing myself:</p>
-									<ul class="feature-icons">
-										<li class="icon solid fa-plus">Making the most of available technology to work with data.</li>
-										<li class="icon solid fa-plus">Trying to automate as much as possible.</li>
-										<li class="icon solid fa-plus">Wrapping it up with nice looking User Interface.</li>
-										<li class="icon solid fa-plus">Relying on manageable database.</li>
-										<li class="icon solid fa-plus">Being fascinated about Big Data and Cloud Computing.</li>
-										<li class="icon solid fa-plus">Spending free time at gym powerlifting.</li>
+									<h3>Setup</h3>
+
+									<h5>Following installation required:</h5>
 									<ul>
+										<li><a href="https://signup.snowflake.com/">Snowflake page.</a></li>
+									</ul>
+
 								</div>
 							</section>
 
-							<a href="#navi" class="anchor"><span style='font-size:16px;'>Up</span></a>
+							<section id="five">
+								<div class="container">
+									<h3>Source Code</h3>
+									<p>You can view the source code: <a href="#">HERE</a></p>
+									<p>&nbsp</p>
+								</div>
+							</section>
 
 					</div>
 
 				<!-- Footer -->
 					<section id="footer">
 						<div class="container">
-							<ul class="copyright">
-								<li>&copy; Artur Skrzeta Portfolio. All rights reserved.</li>
-							</ul>
+							<a href="https://arturskrzeta.github.io/" style="padding-bottom:10px;">Back to Portfolio</a>
 						</div>
 					</section>
 
 			</div>
 
 		<!-- Scripts -->
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-			<script src="assets/js/scrolla.js"></script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
