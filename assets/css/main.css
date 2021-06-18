@@ -206,7 +206,7 @@ img {
 	}
 
 	code {
-		background: #555;
+		background: #628388;
 		border-radius: 5px;
 		color: #fff;
 		font-family: "Source Code Pro", monospace;
@@ -217,12 +217,12 @@ img {
 
 	pre {
 		font-family: "Source Code Pro", monospace;
-		font-size: 0.8em;
+		font-size: 0.7em;
 		line-height: 1.6em;
 		color: white;
 		margin: 1em 0 0.5em 0;
 		padding: 0.5em 0 0.5em 1em;
-		background: #555;
+		background: #223639;
 		border-radius: 5px;
 	}
 
@@ -2487,6 +2487,9 @@ ul.features li {
 		width: 100%;
 	}
 
+td {
+  width: 25% ;
+}
 		table tbody tr {
 			border: solid 2px #f4f4f4;
 			border-left: 0;
@@ -2841,7 +2844,7 @@ ul.features li {
 						border: 0;
 						color: #ffffff !important;
 						display: block;
-						padding: 0.85em 0;
+						padding: 0.8em 0;
 						text-decoration: none;
 					}
 
