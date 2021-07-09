@@ -221,6 +221,7 @@
 											- In SELECT statement, we work with indexes which refer to a column number in the data source,<br>
 											- In SELECT statement, we can jump over an index if we want to avoid some columns or we can manipulate the data source columns sequence,<br>
 											- In SELECT statement, we can either use source column (original or transformed) or we can give a hard-coded value there,<br>
+											- For example the first line in SELECT takes 3rd column from data source and transforms it wth substr(),<br>
 											- Using metadata$filename gives us the name of current file's name,<br>
 											- with FILE FORMAT we tell Snowflake what is the structure of the data source, what is the delimiter there etc,<br>
 											- with FORCE equal to FALSE we tell Snowflake not to import the file agian if it was imported before.
