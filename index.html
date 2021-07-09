@@ -52,6 +52,19 @@
 										<p style="text-align: justify">Snowflake is the platform delivered as a service which means we don't have to worry about patches, upgrades or maintenance.
 										I like the way they describe it: <i>combines the power of data warehousing, the flexibility of big data platforms, and the elasticity of the cloud</i>.</p>
 
+										<h5>Navigate to AWS aspects:</h5>
+										<ul>
+											<li><a href="#snowflake_architecture">Snowflake architecture</a></li>
+											<li><a href="#snowflake_pipeline">Snowflake pipeline</a></li>
+											<li><a href="#snowflake_objects">Snowflake objects</a></li>
+											<li><a href="#olap">Online Analytical Processing</a></li>
+											<li><a href="#snowflake_workflow">Snowflake workflow</a></li>
+											<li><a href="#sql_scripting">Sql scripting</a></li>
+											<li><a href="#data_load">Data load</a></li>
+											<li><a href="#snow_sql">SnowSQL</a></li>
+											<li><a href="#snow_pipe">SnowPipe</a></li>
+										</ul>
+
 										<!-- <h5>6. Continuous monitoring:</h5>
 										<ul>
 											<li>...</li>
@@ -77,7 +90,7 @@
 							<section id="three">
 								<div class="container">
 									<h3>Demo</h3>
-									<h5>Snowflake architecture</h5>
+									<h5 id="snowflake_architecture">Snowflake architecture</h5>
 									<ul>
 										<li>In Snowflake's architecture, the key is a separation of storage, compute and services:
 											<br><br>
@@ -87,12 +100,12 @@
 											- EC2 Virtual Warehouse as a compute layer .<br>
 											- metadata, security, transactions and concurrency management as service layer.
 										</li>
-										<li>Building pipelines with Snowflake:
+										<li id="snowflake_pipeline">Building pipelines with Snowflake:
 											<br><br>
 											<img src="images/snowflake_pipeline.JPG">
 											<span style="font-size:12px">soruce: snowflake</span>
 										</li>
-										<li>Snowflake main elements:
+										<li id="snowflake_objects">Snowflake objects:
 												<br>
 												- Database - containing schemas, tables, views, stages, file formats, sequences. All the tables are created in PUBLIC schema by default.<br>
 												- Stage - a data lake like place from which data files are being copied into the tables.<br>
@@ -104,7 +117,7 @@
 
 									<h5>Snowflake mechanism:</h5>
 									<ul>
-										<li>Snowflake for OLAP:
+										<li id="olap">Snowflake for OLAP:
 											<br>
 											- snowflake supports <b>Online Analytical Processing (OLAP)</b> for scanning all of the data in columns in order to get aggregated values as opposed to <b>Online Transactional Processing (OLTP)</b> where we want to retrieve one or many rows from database.
 												The main purpose of OLAP is data analysis and when it comes to OLTP then main purpose is data processing (inserting, updating).
@@ -117,7 +130,7 @@
 											<br>
 											- using columnar storage makes sense when we want to analyze one or two specific columns and skip reading other ones.
 										</li>
-										<li>Snowflake workflow:
+										<li id="snowflake_workflow">Snowflake workflow:
 											<br>
 											- Dividing big tabular data into x-consecutive rows segments called micropartitions.<br>
 											- Reorganizing the data of each micropartition by flipping row store into columnar - column values of each row get stored together.<br>
@@ -128,27 +141,29 @@
 											- Reading a S3 file, it searches for a specific header first and then reads the only column we specified in the query.<br>
 											- It reads the only queried data ingnoring the rest of S3 files.
 										</li>
-										<li>Every action on db can be performed with sql script along with setting up stages, file formats,
+										<li id="sql_scripting">Every action on db can be performed with sql script along with setting up stages, file formats,
 												configuring warehouse, copying data to a table from a stage.
 												<br><br>
 												<img src="images/sql_script.JPG">
 												<br>
 												<img src="images/sql_script2.JPG">
 										</li>
-										<li>Data Loading consists of two parts:
+										<li id="data_load">Data Loading consists of two parts:
 											<br>
 											1. Staging the files into the place where Snowflake can retrieve data files from. We can have both internal and exteranl (S3, GSP) storages.<br>
 											2. Loding the data into a specific table.
 										</li>
-										<li>SnowSQL:
-											<br>
-											- the command line interface client for connecting to Snowflake,<br>
-											- allows to execute SQL queries to perform DDL and DML operations,<br>
-											- we can install it from Snowflake UI and there is info on how to connect at the end:
+									</ul>
+
+									<h5id="snow_sql">SnowSQL</h5>
+									<ul>
+										<li>The command line interface client for connecting to Snowflake.</li>
+										<li>Allows to execute SQL queries to perform DDL and DML operations</li>
+										<li>We can install it from Snowflake UI and there is info on how to connect at the end:
 											<br><br>
 											<img src="images/snowsql_installation.JPG">
 											<br>
-											- example:
+										<li>Example:
 											<br>
 											<code>USE DATABASE my_db;</code><br>
 											<code>CREATE OR REPLACE TABLE my_tbl {</code><br>&nbsp&nbsp&nbsp&nbsp
@@ -169,6 +184,11 @@
 										<li>We can learn a lot from the documentation:
 												<u><a href="https://docs.snowflake.com/en/">Snowflake documentation</a></u>
 										</li>
+									</ul>
+
+									<h5 id="snow_pipe">SnowPipe:</h5>
+									<ul>
+										<li>...</li>
 									</ul>
 
 									<!-- <h5>Message Broker:</h5>
