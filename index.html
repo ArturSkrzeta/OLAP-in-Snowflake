@@ -239,6 +239,19 @@ CREATE OR REPLACE STAGE "MY_DB"."MY_STAGE"."stage_name"
 </pre>
 <!-- end -->
 											- encryption is being used in order to encrypt the confidential data.<br>
+											- instead of passing credentials to each stage we can move on with so-called STORAGE INTEGRAION:<br>
+<!-- start -->
+<pre>
+CREATE STORAGE INTEGRATION "MY_DB"."MY_SCHEMA"."AWS_111111_Integration"
+TYPE = EXTERNAL_STAGE
+STORAGE_PROVIDER = S3
+ENABLED = TRUE
+STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::111111:role/my_role'
+STORAGE_ALLOWED_LOCATIONS = (
+'s3://bucket_name/',
+'s3://another_bucket_name/')
+</pre>
+<!-- end -->
 										</li>
 									</ul>
 
