@@ -204,9 +204,9 @@ AS
       stage_alias.$2,
       stage_alias.$3,
       replace(stage_alias.$5, ',', '.'),
-			'Artur',
-			metadata$filename,
-			CURRENT_TIMESTAMP()
+      'Artur',
+      metadata$filename,
+      CURRENT_TIMESTAMP()
     FROM
       @"MY_DB"."MY_STAGE"."s3_bucket_name" stage_alias
     )
