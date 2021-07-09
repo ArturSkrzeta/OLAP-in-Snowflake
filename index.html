@@ -188,8 +188,9 @@
 
 									<h5 id="snow_pipe">SnowPipe:</h5>
 									<ul>
+										<li>It loads data from a sources like AWS S3 bucket into a certain target table.</li>
+										<li></li>
 										<li>With SnowPipe we can perform whole ETL process:
-
 <!-- start -->
 <pre>
 CREATE PIPE my_pipe
@@ -210,6 +211,17 @@ FILE FORMAT = (format_name = "MY_DB"."MY_STAGE"."SAP_X")
 FORCE = FALSE;
 </pre>
 <!-- end -->
+											- at first, we create a pipe name and assign it to the COPY INTO,<br>
+											- each pipe definition starts with COPY INTO then we state a destination table according to the path:<br>
+											<code>database</code>.<code>stage</code>.<code>destination table</code><br>,
+											then we list all the destination columns that we want to fed with the data load.<br>
+											- In SELECT statement, we perform entire data manipulation where each line corresponds to a signle column listed in the COPY INTO line,<br>
+											- In SELECT statement, we work with indexes which refer to column number in the data source,<br>
+											- In SELECT statement, we can jump over an index if we want to avoid some columns or we can manipulate data source columns sequence,<br>
+											- In SELECT statement, we can either use source colum (original or transofmed one) or we can give a hard-coded value,<br>
+											- Using metadata$filename or ...,<br>
+											- 
+											- with FORCE equal to FALSE we tell Snowflake not to import the file agian if it was imported before.
 
 										</li>
 									</ul>
