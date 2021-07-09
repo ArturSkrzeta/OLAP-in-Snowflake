@@ -232,10 +232,10 @@
 											- to create the stage we need to provide S3 bucket's url along with credentials,<br>
 <!-- start -->
 <pre>
-create or replace stage "MY_DB"."MY_STAGE"."stage_name"
-  url='s3://bucket_name/folder_name'
-  credentials=(aws_key_id='.....' aws_secret_key='.....')
-  encryption=(type='AWS_SSE_KMS' kms_key_id = '......');
+CREATE OR REPLACE STAGE "MY_DB"."MY_STAGE"."stage_name"
+  URL='s3://bucket_name/folder_name'
+  CREDENTIALS=(aws_key_id='.....' aws_secret_key='.....')
+  ENXRYPTION=(type='AWS_SSE_KMS' kms_key_id = '......');
 </pre>
 <!-- end -->
 											- encryption is being used in order to encrypt the confidential data.<br>
