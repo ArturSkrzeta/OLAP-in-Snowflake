@@ -188,7 +188,32 @@
 
 									<h5 id="snow_pipe">SnowPipe:</h5>
 									<ul>
-										<li>...</li>
+										<li>...
+
+<!-- start -->
+<pre>
+CREATE PIPE my_pipe
+AUTO_INGEST = false
+AS
+    COPY INTO "MY_DB"."MY_STAGE"."tbl_my_table" (col1, col2, col3, col4, col5)
+    FROM (
+      SELECT
+			    ....
+			    ....
+			    ....
+			    ....
+			    ....
+
+
+      FROM
+			    @"MY_DB"."MY_STAGE"."s3_bucket_name" stage_alias
+    )
+FILE FORMAT = (format_name = "MY_DB"."MY_STAGE"."SAP_X")
+FORCE = FALSE;
+</pre>
+<!-- end -->
+
+										</li>
 									</ul>
 
 									<!-- <h5>Message Broker:</h5>
