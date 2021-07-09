@@ -192,25 +192,25 @@
 										<li>With SnowPipe we can perform whole ETL process:
 <!-- start -->
 <pre>
-CREATE PIPE my_pipe
-AUTO_INGEST = false
-AS
-  COPY INTO "MY_DB"."MY_STAGE"."tbl_my_table" (col1, col2, col3, col4, col5, col6, col7, col8)
-  FROM (
-    SELECT
-      substr(stage_alias.$3, 1, 7),
-      iff(stage_alias.$1 = 100, replace(stage_alias, '100', 'Done'), 'In progress'),
+<span style="color:#00ff45">CREATE PIPE</span> my_pipe
+<span style="color:#00ff45">AUTO_INGEST</span> = FALSE
+<span style="color:#00ff45">AS</span>
+<span style="color:#00ff45">COPY INTO</span> "MY_DB"."MY_STAGE"."tbl_my_table" (col1, col2, col3, col4, col5, col6, col7, col8)
+  <span style="color:#00ff45">FROM</span> (
+    <span style="color:#00ff45">SELECT</span>
+      <span style="color:#00ffea">substr</span>(stage_alias.$3, 1, 7),
+      <span style="color:#00ffea">iff</span>(stage_alias.$1 = 100, replace(stage_alias, '100', 'Done'), 'In progress'),
       stage_alias.$2,
       stage_alias.$3,
-      replace(stage_alias.$5, ',', '.'),
+      <span style="color:#00ffea">replace</span>(stage_alias.$5, ',', '.'),
       'Artur',
       metadata$filename,
-      CURRENT_TIMESTAMP()
-    FROM
+      <span style="color:#00ffea">CURRENT_TIMESTAMP</span>()
+    <span style="color:#00ff45">FROM</span>
       @"MY_DB"."MY_STAGE"."s3_bucket_name" stage_alias
     )
-FILE FORMAT = (format_name = "MY_DB"."MY_STAGE"."SAP_X")
-FORCE = FALSE;
+<span style="color:#00ff45">FILE FORMAT</span> = (format_name = "MY_DB"."MY_STAGE"."SAP_X")
+<span style="color:#00ff45">FORCE</span> = FALSE;
 </pre>
 <!-- end -->
 											- at first, we create a pipe name and assign it to the COPY INTO,<br>
