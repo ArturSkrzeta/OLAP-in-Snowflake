@@ -232,27 +232,37 @@
 											- to create the stage we need to provide S3 bucket's url along with credentials,<br>
 <!-- start -->
 <pre>
-CREATE OR REPLACE STAGE "MY_DB"."MY_STAGE"."stage_name"
-  URL='s3://bucket_name/folder_name'
-  CREDENTIALS=(aws_key_id='.....' aws_secret_key='.....')
-  ENXRYPTION=(type='AWS_SSE_KMS' kms_key_id = '......');
+<span style="color:#00ff45">CREATE OR REPLACE STAGE</span> "MY_DB"."MY_SCHEMA"."stage_name"
+  <span style="color:#00ff45">URL</span> = 's3://bucket_name/folder_name'
+  <span style="color:#00ff45">CREDENTIALS</span> = (aws_key_id='.....' aws_secret_key='.....')
+  <span style="color:#00ff45">ENXRYPTION</span> = (type='AWS_SSE_KMS' kms_key_id = '......');
 </pre>
 <!-- end -->
 											- encryption is being used in order to encrypt the confidential data.<br>
 											- instead of passing credentials to each stage we can move on with so-called STORAGE INTEGRAION:<br>
 <!-- start -->
 <pre>
-CREATE STORAGE INTEGRATION "MY_DB"."MY_SCHEMA"."AWS_111111_Integration"
-TYPE = EXTERNAL_STAGE
-STORAGE_PROVIDER = S3
-ENABLED = TRUE
-STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::111111:role/my_role'
-STORAGE_ALLOWED_LOCATIONS = (
-'s3://bucket_name/',
-'s3://another_bucket_name/')
+<span style="color:#00ff45">CREATE STORAGE INTEGRATION</span> "MY_DB"."MY_SCHEMA"."AWS_111111_Integration"
+<span style="color:#00ff45">TYPE</span> = EXTERNAL_STAGE
+<span style="color:#00ff45">STORAGE_PROVIDER</span> = S3
+<span style="color:#00ff45">ENABLED</span> = TRUE
+<span style="color:#00ff45">STORAGE_AWS_ROLE_ARN</span> = 'arn:aws:iam::111111:role/my_role'
+<span style="color:#00ff45">STORAGE_ALLOWED_LOCATIONS</span> = (
+  's3://bucket_name/',
+  's3://another_bucket_name/')
 </pre>
 <!-- end -->
+											- which we can use in CREAT OR REPLACE STAGE script:<br>
+<!-- start -->
+<pre>
+<span style="color:#00ff45">CREATE OR REPLACE STAGE</span> "MY_DB"."MY_STAGE"."stage_name"
+  <span style="color:#00ff45">URL</span> = 's3://bucket_name/folder_name'
+  <span style="color:#00ff45">STORAGE_INTEGRATION</span> = "MY_DB"."MY_SCHEMA"."AWS_111111_Integration"
+</pre>
+<!-- end -->
+											- ARN stands for Amazon Resource Name.
 										</li>
+										<li>With the snowpipe we can understand what are the all dependencies and refreneces to the Snowflake objects based on the source code itself.</li>
 									</ul>
 
 									<!-- <h5>Message Broker:</h5>
