@@ -265,10 +265,35 @@
 										<li>With the snowpipe we can understand what are the all dependencies and refreneces to the Snowflake objects based on the source code itself.</li>
 									</ul>
 
-									<!-- <h5>Message Broker:</h5>
+									<h5>Time Travel:</h5>
 									<ul>
-										<li></li>
-									</ul>-->
+										<li>Every time a DML operation is executed on a table, Snowflake saves previous versions of the table data. This allows to query earlier data versions using the AT | BEFORE clause.</li>
+										<li>The data retention period specifies the number of days for which this historical data is preserved and, therefore, Time Travel operations
+												(SELECT, CREATE … CLONE, UNDROP) can be performed on the data. The standard retention period is 1 day (24 hours). When the retention
+												period ends for an object, the historical data is moved into Snowflake Fail-safe (background process).
+										</li>
+										<li>The data retention period can be modified up to 90 days. It can be overridden using the DATA_RETENTION_TIME_IN_DAYS while creating table, schema or database.
+											<br>
+											<code>create table mytable(col1 number, col2 date) data_retention_time_in_days=90;</code><br>
+											<code>alter table mytable set data_retention_time_in_days=30;</code><br>
+											- If a retention period is specified for a database or schema, the period is inherited by default for all objects created in the database/schema.
+										</li>
+										<li>We can query a specified point in the table’s history within the retention period giving timestamp, offset from a current date or giving statement query ID.
+<!-- start -->
+<pre>
+<span style="color:#00ff45">-- timestamp</span>
+select * from my_table at(timestamp => 'Mon, 01 May 2015 16:20:00 -0700'::timestamp_tz);
+
+<span style="color:#00ff45">-- time offset from current date</span>
+select * from my_table at(offset => -60*5);
+
+<span style="color:#00ff45">-- statement id</span>
+select * from my_table before(statement => '8e5d0ca9-005e-44e6-b858-a8f5b37c5726');
+</pre>
+<!-- end -->
+											- Querying outside the data retention period for the table, the query fails and returns an error.
+										</li>
+									</ul>
 
 								</div>
 							</section>
