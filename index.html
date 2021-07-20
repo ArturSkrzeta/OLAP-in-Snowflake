@@ -63,6 +63,7 @@
 											<li><a href="#data_load">Data load</a></li>
 											<li><a href="#snow_sql">SnowSQL</a></li>
 											<li><a href="#snow_pipe">SnowPipe</a></li>
+											<li><a href="#time_travel">Time Travel</a></li>
 										</ul>
 
 										<!-- <h5>6. Continuous monitoring:</h5>
@@ -265,7 +266,7 @@
 										<li>With the snowpipe we can understand what are the all dependencies and refreneces to the Snowflake objects based on the source code itself.</li>
 									</ul>
 
-									<h5>Time Travel:</h5>
+									<h5 id="time_travel">Time Travel:</h5>
 									<ul>
 										<li>Every time a DML operation is executed on a table, Snowflake saves previous versions of the table data. This allows to query earlier data versions using the AT | BEFORE clause.</li>
 										<li>The data retention period specifies the number of days for which this historical data is preserved and, therefore, Time Travel operations
