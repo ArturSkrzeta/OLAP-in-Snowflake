@@ -302,7 +302,8 @@ select * from my_table before(statement => '8e5d0ca9-005e-44e6-b858-a8f5b37c5726
 										<li>We can use <code>COPY INTO location from tbl_name</code> command to copy the data from the Snowflake database table into one or more files in a Snowflake or external stage.</li>
 										<li>We can also unload the data into S3 Bucket directly:
 											<br>
-											<code>copy into s3://bucket_name/folder_name/ from mytable_name storage_integration = s3_int_name;</code>
+											<code>copy into s3://bucket_name/folder_name/</code><br>
+											<code> from mytable_name storage_integration = s3_int_name;</code>
 											<br>
 											- we must specify the URI for the S3 bucket and the storage integration or credentials for accessing the bucket in the COPY command.
 										</li>
