@@ -12,7 +12,7 @@
 		<!-- Header -->
 			<section id="header">
 				<header>
-					<span class="image avatar"><a href="https://arturskrzeta.github.io/"><img src="images/avatar.png" alt="" style="margin-bottom:0px"/></a></span>
+					<span class="image avatar"><a href="https://arturskrzeta.github.io/"><img src="images/avatar.png" alt="" style="margin-bottom:0px;"/></a></span>
 					<h1 id="logo"><a href="https://arturskrzeta.github.io/">Artur Skrzeta</a></h1>
 					<p>Data Analyst<br />
 					+5 years experience</p>
@@ -46,32 +46,2140 @@
 							<section id="one">
 								<div class="container">
 									<header class="major">
+										<h2>Learn SQL Application</h2>
 
-										<h2>OLAP in Snowflake</h2>
 										<h3>Intro</h3>
-										<p style="text-align: justify">Snowflake is the platform delivered as a service which means we don't have to worry about patches, upgrades or maintenance.
-										I like the way they describe it: <i>combines the power of data warehousing, the flexibility of big data platforms, and the elasticity of the cloud</i>.</p>
 
-										<h5>Navigate to Snowflake aspects:</h5>
+										<p style="text-align: justify;">SQL as declarative lanuguage is used to tell the machine what we want to get and machine needs to figure out the computation tasks to provide quieried result.
+											In this post I put my notes and examples that helps me to understand different aspects of SQL. There is also the application for learning SQL demonstrated in the <a href="#three"><u>Demo</u></a> section and its source code linked below.</p>
+
+										<h5>In this section I describe following concepts:</h5>
 										<ul>
-											<li><a href="#snowflake_architecture">Snowflake architecture</a></li>
-											<li><a href="#snowflake_pipeline">Snowflake pipeline</a></li>
-											<li><a href="#snowflake_objects">Snowflake objects</a></li>
-											<li><a href="#olap">Online Analytical Processing</a></li>
-											<li><a href="#snowflake_workflow">Snowflake workflow</a></li>
-											<li><a href="#sql_scripting">Sql scripting</a></li>
-											<li><a href="#data_load">Data load</a></li>
-											<li><a href="#snow_sql">SnowSQL</a></li>
-											<li><a href="#snow_pipe">SnowPipe</a></li>
-											<li><a href="#time_travel">Time Travel</a></li>
-											<li><a href="#bulk_unloading">Bulk Unloading</a></li>
+											<a href="#primary_and_foreign_key"><li>Primary and foreign key</li></a>
+											<a href="#query_types"><li>Query types</li></a>
+											<a href="#constraints"><li>Constraints</li></a>
+											<a href="#stored_procedures"><li>Stored procedures</li></a>
+											<a href="#normalization"><li>Normalization</li></a>
+											<a href="#one_to_many-many"><li>One-to-many</li></a>
+											<a href="#many_to_many"><li>Many-to-many</li></a>
+											<a href="#variables"><li>Variables</li></a>
+											<a href="#oltp_and_olap"><li>OLTP and OLAP</li></a>
+											<a href="#functions"><li>Functions</li></a>
+											<a href="#transaction"><li>Transaction</li></a>
+											<a href="#privileges"><li>Privileges</li></a>
+											<a href="#char_varchar_nvarchar"><li>Char vs varchar vs nvarchar</li></a>
+											<a href="#unique_no_distinct"><li>Unique records without DISTINCT</li></a>
+											<a href="#cte"><li>Common Table Expression</li></a>
+											<a href="#sqldelta"><li>SQL Delta</li></a>
+											<a href="#running_total"><li>Running Total</li></a>
 										</ul>
 
-										<!-- <h5>6. Continuous monitoring:</h5>
+										<h5>Also some SQL syntax elements:</h5>
 										<ul>
-											<li>...</li>
-											firewall configures some security rules. Accepting connection from trusted network and blocking connection from untrusted network.
-										</ul> -->
+											<a href="#selectinto"><li>SELECT INTO</li></a>
+											<a href="#like"><li>LIKE</li></a>
+											<a href="#index"><li>INDEX</li></a>
+											<a href="#view"><li>VIEW</li></a>
+											<a href="#distinct"><li>DISTINCT</li></a>
+											<a href="#count"><li>COUNT</li></a>
+											<a href="#join"><li>JOIN</li></a>
+											<a href="#self_join"><li>SELF JOIN</li></a>
+											<a href="#using"><li>USING</li></a>
+											<a href="#union"><li>UNION</li></a>
+											<a href="#except"><li>EXCEPT</li></a>
+											<a href="#intersect"><li>INTERSECT</li></a>
+											<a href="#order_by"><li>ORDER BY</li></a>
+											<a href="#limit"><li>LIMIT</li></a>
+											<a href="#top"><li>TOP</li></a>
+											<a href="#where"><li>WHERE</li></a>
+											<a href="#case"><li>CASE</li></a>
+											<a href="#group_by"><li>GROUP BY</li></a>
+											<a href="#having"><li>HAVING</li></a>
+											<a href="#in"><li>IN</li></a>
+											<a href="#over"><li>OVER</li></a>
+											<a href="#offset"><li>OFFSET</li></a>
+											<a href="#fetch"><li>FETCH</li></a>
+											<a href="#exist"><li>EXISTS</li></a>
+											<a href="#is_not_null"><li>IS NOT NULL</li></a>
+											<a href="#ifnull"><li>IFNULL</li></a>
+											<a href="#cast"><li>CAST</li></a>
+										</ul>
+
+										<h5>Terminology and general aspects</h5>
+										<ul>
+											<li id="primary_and_foreign_key"><b>Primary key</b> - a column or columns combination that idetifies a specific row uniquely. It implies NOT NULL constraint and hast to be UNIQUE.
+												In case of multiple columns as piramry key, we deal with so-called <b>composite key</b> that can encasulate even up to 32 columns.
+											</li>
+											<li><b>Foreign key</b> - a column that contains a primary key from another table's field. This way, we build the relationship between tables.
+												<br><br>
+												<table>
+												<tr style="background-color: #223639; color: #ffff;">
+													<td>
+													customers<br>
+													- <u>customer_id: <span style="color:#00ffea;">pk</span> integer</u><br>
+													- phone: string<br>
+													- email: string
+													</td>
+													<td>
+													orders<br>
+													- order_id: integer<br>
+													- status: string<br>
+													- <u>customer_id: <span style="color:#00ffea;">fk</span> integer</u>
+													</td>
+												</tr>
+												</table>
+												- In above example <b>pk</b> stands for primary key and <b>fk</b> stands for foreign key.<br>
+												- In one to many relationship: one customer can have many orders, so we can find one customer multiple times in the orders table.<br>
+												- As per one to many relationship, one order cannot have multiple customers.<br>
+												<span style="font-size:14px;">orders table</span>
+												<table style="font-size:16px;">
+													<thead>
+														<tr>
+															<th>order_id</th>
+															<th>status</th>
+															<th>customer_id</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>1</td>
+															<td>completed</td>
+															<td>1</td>
+														</tr>
+														<tr>
+															<td>2</td>
+															<td>completed</td>
+															<td>1</td>
+														</tr>
+														<tr>
+															<td>3</td>
+															<td>cancelled</td>
+															<td>3</td>
+														</tr>
+														<tr>
+															<td>4</td>
+															<td>pending</td>
+															<td>1</td>
+														</tr>
+													</tbody>
+												</table>
+											</li>
+											<li>Db engine executes query in the sequence as below:
+												<br>
+												1. FROM, JOIN - it determines data table(s).<br>
+												2. WHERE - records filtering.<br>
+												3. GROUP BY - records grouping.<br>
+												4. HAVING  - groups filtering.<br>
+												5. SELECT - columns filtering.<br>
+												6. ORDER BY - results sorting.<br>
+											</li>
+											<li id="query_types">There are different types of SQL queries:
+												<br>
+												1. <b>DQL</b> - Data Query Language</b>:<br>
+												&nbsp&nbsp&nbsp&nbsp&nbsp- <code>SELECT</code>.<br>
+												2. <b>DML</b> – Data Manipulation Language:<br>
+												&nbsp&nbsp&nbsp&nbsp&nbsp- <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>.<br>
+												3. <b>DDL</b> – Data Definition Language:<br>
+												&nbsp&nbsp&nbsp&nbsp&nbsp- <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>RENAME</code>, <code>TRUNCATE</code>.<br>
+												4. <b>DCL</b> – Data Control Language:<br>
+												&nbsp&nbsp&nbsp&nbsp&nbsp- <code>GRANT</code>, <code>REVOKE</code>.<br>
+												5. <b>TCL</b> - Transaction Control Language:<br>
+												&nbsp&nbsp&nbsp&nbsp&nbsp- <code>COMMIT</code>, <code>ROLLBACK</code>, <code>SAVEPOINT</code>.<br>
+											</li>
+											<li id="constraints"><b>Constraints</b> - we put them as the limits on the data types of the table. It can be specified while creating or altering the table statement.
+													Here they are:
+													<br>
+													- NOT NULL - prevents from keeping nulls in the column.<br>
+													- CHECK - limits the value range that can placed in the column for instance:<br>
+													 	&nbsp&nbsp&nbsp<code>Age INTEGER, CHECK (AGE>=18)</code>.<br>
+													- DEFAULT - provides default value to all records unless other value specified.<br>
+													- UNIQUE - prevents from storing duplicates within a column.<br>
+													- PRIMARY KEY - sets pk on a column.<br>
+													- FOREIGN KEY - sets fk indicating pk of a table in the relationship.<br>
+											</li>
+											<li><b>Data integrity</b> - defines the accuracy as well as the consistency of the data stored in a database.
+													Once data integrity ensured then any addition or deletion of data from the table will not create any mismatch in the relationship of the tables.
+											</li>
+											<li id="stored_procedures"><b>Stored procedure</b> - saved SQL code so that it can be reused anytime with or without parameters:
+												<br>
+												- stored procedure syntax:
+<!-- start -->
+<pre>
+CREATE PROCEDURE procedure_name
+AS
+sql_statement
+GO;
+</pre>
+<!-- end -->
+												- executing stored procedure:
+<!-- start-->
+<pre>
+EXEC procedure_name
+</pre>
+<!-- end -->
+												- here how it looks like with parameters:
+<!-- start -->
+<pre>
+CREATE PROCEDURE SelectAllEmployees <span style="background-color:#3976b3;">@City nvarchar(30)</span>, <span style="background-color:#3976b3;">@PostalCode nvarchar(10)</span>
+AS
+SELECT * FROM employees WHERE City = <span style="background-color:#3976b3;">@City</span> AND PostalCode = <span style="background-color:#3976b3;">@PostalCode</span>
+GO;
+</pre>
+<!-- end -->
+												- calling it with parameters:
+<!-- start -->
+<pre>
+EXEC SelectAllCustomers <span style="background-color:#3976b3;">@City = 'Cracow'</span>, <span style="background-color:#3976b3;">@PostalCode = '30-708'</span>;
+</pre>
+<!-- end -->
+												- They can be used as a modular programming which means creating once, storing and calling many times whenever required.<br>
+												- This supports faster overall query performance.<br>
+												- There is also such thing as <b>recursive stored procedure</b> which calls itself until it reaches some boundary condition. It allows to reuse the same code any number of times.
+											</li>
+										</ul>
+
+										<h5 id="char_varchar_nvarchar">Char vs varchar vs nvarchar</h5>
+										<ul>
+											<li>char:
+												<br>
+												- string storage with fixed size,<br>
+												- the max number of characters is 255,<br>
+												- because of fixed size, it uses static memoru allocation,<br>
+												- much faster than varchar.
+											</li>
+											<li>varchar:
+												<br>
+												- string storage with variable size,<br>
+												- the max number of character can reach up to 65535 characters,<br>
+												- because of variable size, it uses dynamic memory allocation,<br>
+												- much slower than char.
+											</li>
+											<li>nvarchar:
+												<br>
+												- while varchar stores data in non-Unicode encoding, nvarchar stores data in a Unicode encoding.<br>
+											</li>
+										</ul>
+
+										<h5 id="normalization">Normalization</h5>
+										<ul>
+											<li><b>Normalization</b> is the db designing process where we aim for minimizing any data redundancy.
+												Redundancy of data means there are multiple copies of the same information spread over multiple locations in the same database.
+											</li>
+											<li>There are 3 forms of the normalizaton where each consecutive normal form depends on the previous one:
+												<br>
+												✓ <b>First normal form (1 NF),</b><br>
+												✓ <b>Second normal form (2 NF),</b><br>
+												✓ <b>Third normal form (3 NF),</b><br>
+												where db is considered the third normal form if it meets the requirements of the first 3 normal forms.
+											</li>
+											<li>In <b>1 NF</b> wa aim to keep only atomic information. Here is the example which violates the 1NF as it contains more than one value for the department column:
+												<br><br>
+												<span>Assignment table</span>
+												<table>
+													<tr>
+														<td>assign_id</td>
+														<td>emp_name</td>
+														<td>emp_age</td>
+														<td>department</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>Artur</td>
+														<td>20</td>
+														<td>IT, DevOps</td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>John</td>
+														<td>40</td>
+														<td>IT, DevOps, DataLab</td>
+													</tr>
+												</table>
+												- Definitely we should be avoiding breaking down department column into a set of new columns like department1, department2, department3. This is what we call <b>repeating groups</b> and it's one of the biggest design error.<br>
+												- In order to reach 1 NF, we need to split the table into two tables so that each record can be unique and each cell contains an atomic, undividable value:
+												<br><br>
+												<span>Departments table and assignment table</span>
+												<table>
+													<tr>
+
+														<td>
+															<table style="width:15%;">
+																<tr>
+																	<td>dep_id</td>
+																	<td>dep_name</td>
+																</tr>
+																<tr>
+																	<td>1</td>
+																	<td>IT</td>
+																	<td>
+																</tr>
+																<tr>
+																	<td>2</td>
+																	<td>DevOps</td>
+																</tr>
+																<tr>
+																	<td>3</td>
+																	<td>DataLab</td>
+																</tr>
+															</table>
+														</td>
+
+														<td>
+															<table style="width:15%;">
+																<tr>
+																	<td>assign_id</td>
+																	<td>emp_name</td>
+																	<td>emp_age</td>
+																	<td>dep_id</td>
+																</tr>
+																<tr>
+																	<td>1</td>
+																	<td>Artur</td>
+																	<td>20</td>
+																	<td>1</td>
+																</tr>
+																<tr>
+																	<td>2</td>
+																	<td>Artur</td>
+																	<td>20</td>
+																	<td>2</td>
+																</tr>
+																<tr>
+																	<td>3</td>
+																	<td>John</td>
+																	<td>40</td>
+																	<td>1</td>
+																</tr>
+																<tr>
+																	<td>4</td>
+																	<td>John</td>
+																	<td>40</td>
+																	<td>2</td>
+																</tr>
+																<tr>
+																	<td>5</td>
+																	<td>John</td>
+																	<td>40</td>
+																	<td>3</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+
+												- We can move on and make the table in <b>2 NF</b> and <b>3 NF</b>.<br>
+												- In 2 NF, we care about having single column primary key. In our example, the assignment table has a single-column primary key i.e. <b>assign_id</b>.<br>
+												- In 3 NF, we get rid of any dependencies where non-key columns may depend on non-key columns.
+												 	Dependecy can exist only on primary key column.
+													In order to achieve it, we need to take the non-key column <b>emp_age</b> which depends on the non-key column <b>emp_name</b> into separate table named employees.
+												<br><br>
+												<span>Employees table and assignment table</span>
+												<table>
+													<tr>
+
+														<td>
+															<table style="width:15%;">
+																<tr>
+																	<td>emp_id</td>
+																	<td>emp_name</td>
+																	<td>emp_age</td>
+																</tr>
+																<tr>
+																	<td>1</td>
+																	<td>Artur</td>
+																	<td>20</td>
+																</tr>
+																<tr>
+																	<td>2</td>
+																	<td>John</td>
+																	<td>40</td>
+																</tr>
+															</table>
+														</td>
+
+														<td>
+															<table style="width:15%;">
+																<tr>
+																	<td>assign_id</td>
+																	<td>emp_id</td>
+																	<td>dep_id</td>
+																</tr>
+																<tr>
+																	<td>1</td>
+																	<td>1</td>
+																	<td>1</td>
+																</tr>
+																<tr>
+																	<td>2</td>
+																	<td>1</td>
+																	<td>2</td>
+																</tr>
+																<tr>
+																	<td>3</td>
+																	<td>2</td>
+																	<td>1</td>
+																</tr>
+																<tr>
+																	<td>4</td>
+																	<td>2</td>
+																	<td>2</td>
+																</tr>
+																<tr>
+																	<td>5</td>
+																	<td>2</td>
+																	<td>3</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+												- With that solution what we get is <b>many-to-many</b> relationship where many employees can be assigned to one or more departments.<br>
+												- Assignment table plays then a role of the <b>connector table</b> that manages many-to-many relationship.<br>
+												- Assignment table has following columns:
+													<br>
+													&nbsp&nbsp&nbsp✓&nbsp <b>assign_id</b> which is the primary key (unique),<br>
+													&nbsp&nbsp&nbsp✓&nbsp <b>emp_id</b> which is the foreign key (non-unique),<br>
+													&nbsp&nbsp&nbsp✓&nbsp <b>dep_id</b> which is the foreign key (non-unique).<br>
+											</li>
+											<li>When we care about keeping table normalized we get a set of benefits:
+												<br>
+												- better db organization,<br>
+												- more tables with smaller rows,<br>
+												- easy modification,<br>
+												- reduction of redundant and duplicate data.<br>
+												- ensuring data integrity.
+											</li>
+										</ul>
+
+										<h5 id="one_to_many">One-to-many relationship</h5>
+										<ul>
+											<li>When one record from table A can have multiple corresponding records in table B.</li>
+											<li>Lets take Products and Categories tables:
+												<br>
+												<img src="images/one_to_many.png" width="500"><span style="font-size:12px;">source: sqlpedia.pl</span><br>
+												- one category can be assigned to many products, however one product cannot be assigned to many categories.
+											</li>
+										</ul>
+
+										<h5 id="many_to_many">Many-to-many relationship</h5>
+										<ul>
+											<li>This kind of relationship can be handled by <b>connector table</b> that breaks relationship into two relationships of one-to-many.
+													As the example, let's take order system, where each product can be ordered many times in different orders.</li>
+											<li>Here are Orders and Products tables connecter with one-to-many relationships with Order Details table.
+												<br>
+												<img src="images/many_to_many.png" width="600"><span style="font-size:12px;">source: sqlpedia.pl</span>
+											</li>
+										</ul>
+
+										<h5 id="variables">Variables</h5>
+										<ul>
+											<li>We can set variable data type, assign a value to it, and use it in the code:
+<!-- start -->
+<pre>
+DECLARE <span style="color:#00ffea;">@TestVariable</span> AS VARCHAR(100)
+SET <span style="color:#00ffea;">@TestVariable</span> = 'This is an example string.'
+PRINT <span style="color:#00ffea;">@TestVariable</span>
+</pre>
+<!-- end -->
+											</li>
+											<li>We can display variable value with SELECT or PRINT statements.</li>
+											<li>We can also use SELECT statement in order to assing a value to a variable:
+<!-- start -->
+<pre>
+DECLARE <span style="color:#00ffea;">@CarName</span> AS NVARCHAR(50)
+SELECT <span style="color:#00ffea;">@CarName</span> = car_model
+FROM db.cars
+WHERE car_id = 1492
+PRINT <span style="color:#00ffea;">@CarName</span>
+</pre>
+<!-- end -->
+												- or:
+<!-- start -->
+<pre>
+DECLARE <span style="color:#00ffea;">@NumCars</span> AS INT
+SET <span style="color:#00ffea;">@NumCars</span> = (SELECT COUNT(*) FROM db.cars)
+</pre>
+<!-- end -->
+											</li>
+											<li>When we assign multiple-rows SELECT result to a variable, the assigned value to the variable will be the last row of the result set.</li>
+											<li>It's important to remember that local variable scope expires at the end of the batch which can be determined by <b>GO</b> statement.</li>
+											<li>Thus the lifecycle of variable <code>@TestVariable</code> determines with GO statement line.
+													In other words, the variable which is declared above the GO statement line can not be accessed under the GO statement.
+											</li>
+											<li>Variable scopes:
+												<table>
+													<thead>
+														<tr>
+															<td>Local Variable</td>
+															<td>Global Variable</td>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>A user declares the local variable.</td>
+															<td>The system maintains the global variable. A user cannot declare them.</td>
+														</tr>
+														<tr>
+															<td>By default, a local variable starts with @.</td>
+															<td>The global variable starts with @@.</td>
+														</tr>
+														<tr>
+															<td>Can be used or exists inside the function.</td>
+															<td>Can be used or exists throughout the program.</td>
+														</tr>
+													</tbody>
+												</table>
+											</li>
+										</ul>
+
+										<h5 id="oltp_and_olap">OLTP and OLAP</h5>
+										<table>
+											<thead>
+												<tr>
+													<td>Online Transaction Processing (OLTP) </td>
+													<td>Online Analytical Processing (OLAP)</td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Online database modifying system.</td>
+													<td>Online database data retrieving system.</td>
+												</tr>
+												<tr>
+													<td>Uses traditional DBMS.</td>
+													<td>Uses the data warehouse.</td>
+												</tr>
+												<tr>
+													<td>Insert, Update, and Delete operations.</td>
+													<td>Mostly select operations.</td>
+												</tr>
+												<tr>
+													<td>Queries are standardized and simple.</td>
+													<td>Complex queries involving aggregations.</td>
+												</tr>
+												<tr>
+													<td>Tables are normalized.</td>
+													<td>Tables are <u>not</u> normalized.</td>
+												</tr>
+												<tr>
+													<td>Transactions are the sources of data.</td>
+													<td>Different OLTP databases become the source of data for OLAP.</td>
+												</tr>
+												<tr>
+													<td>Maintains data integrity constraint.</td>
+													<td>Doesn't get frequently modified. Hence, data integrity is not an issue</td>
+												</tr>
+												<tr>
+													<td>Designed for real time business operations.</td>
+													<td>Designed for analysis of business measures.</td>
+												</tr>
+											</tbody>
+										</table>
+
+										<h5 id="functions">Functions</h5>
+										<ul>
+											<li>SQL has many built-in functions that can be categorised in two categories:
+												<table>
+													<thead>
+														<tr>
+															<td>Scalar function</td>
+															<td>Aggregate function</td>
+															<td>Analytic function</td>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Returns a single value from the given input value.</td>
+															<td>Performs calculations on a group of values and then return a single value.</td>
+															<td>Computes values over a group of rows and returns a single result for each row.</td>
+														</tr>
+														<tr>
+															<td>input: 1 record<br>output: 1 record</td>
+															<td>input: n records<br>output: 1 record</td>
+															<td>input: n records<br>output: n records</td>
+														</tr>
+														<tr>
+															<td>
+																LCASE()<br>
+																UCASE()<br>
+																LEN()<br>
+																MID() / SUBSTRING()<br>
+																LOCATE() / CHARINDEX()<br>
+																ROUND()<br>
+																NOW()<br>
+																FORMAT()<br>
+																INSTR()<br>
+																CONCAT()<br>
+																REPLACE()<br>
+																YEAR()
+															</td>
+															<td>
+																SUM()<br>
+																COUNT()<br>
+																AVG()<br>
+																MIN()<br>
+																MAX()<br>
+																FIRST()<br>
+																LAST()
+															</td>
+															<td>
+																...
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</li>
+											<li>Windows:
+												<br>
+												- Executes a specific function based on the moving window that encapsulates one or N records at a time,<br>
+												- Includes an OVER clause, which defines a moving window of rows around the row being evaluated.<br>
+<!-- start -->
+<pre>
+SELECT
+  [Month]
+  ,[SalesTerritoryKey]
+  ,[SalesAmount]
+  ,[WindowFunction] = SUM([SalesAmount])
+			    OVER (PARTITION BY [SalesTerritoryKey]
+			      	ORDER BY [Month]
+			      	ROWS BETWEEN 1 PRECEDING AND CURRENT ROW
+			  	)
+FROM    [CTE_source]
+ORDER BY [SalesTerritoryKey],[Month];
+</pre>
+<!-- end -->
+												<span style="font-size:14px;">mssqltips.com</span><br>
+												- For computing moving averages, rank items, cumulative sums.<br>
+												- Can be put in SELECT or ORDER BY lines.<br>
+												- There are 3 main terms when working with analytic functions: partition, window and current record:<br>
+												<br>
+												<img src="images/analytic_function_terms.JPG">
+												<span style="font-size:14px;">mssqltips.com</span>
+											</li>
+										</ul>
+
+										<h5>Window functions:</h5>
+										<ul>
+											<li>They allow to refer to a value of an indicated record different than the current one.</li>
+											<li>LAG:
+												<br>
+												- returns a value of a specific field from the preceiding record of a current partition,<br>
+												- when LAG function called for the first record of a current partition, it returns NULL,<br>
+												- example:
+<!-- start -->
+<pre>
+SELECT CAST(DueDate AS DATE) AS DueDate, OrderID, Total,
+		LAG(Total) OVER (PARTITION BY DueDate ORDER BY DueDate) AS PreviousDueDateTotal
+FROM tblSales
+ORDER BY DueDate
+</pre>
+<!-- end -->
+												<table>
+													<thead>
+														<td>DueDate</td>
+														<td>OrderId</td>
+														<td>Total</td>
+														<td>PreviousDueDateTotal</td>
+													</thead>
+													<tr>
+														<td>2008-06-14</td>
+														<td>71776</td>
+														<td>87.08</td>
+														<td>NULL</td>
+													</tr>
+													<tr>
+														<td>2008-06-14</td>
+														<td>71832</td>
+														<td>3953160.1</td>
+														<td>87.08</td>
+													</tr>
+													<tr>
+														<td>2008-06-14</td>
+														<td>71833</td>
+														<td>22</td>
+														<td>3953160.1</td>
+													</tr>
+													<tr>
+														<td>2008-06-17</td>
+														<td>71835</td>
+														<td>9102.11</td>
+														<td>NULL</td>
+													</tr>
+													<tr>
+														<td>2008-06-17</td>
+														<td>71835</td>
+														<td>5512.94</td>
+														<td>9102.11</td>
+													</tr>
+												</table>
+											</li>
+											<li>LEAD:
+												<br>
+												- returns a value of a specific field from the following record of a current partition,<br>
+												- when LEAD function called for the last record of a current partition, it returns NULL.
+											</li>
+											<li>FIRST_VALUE:
+												<br>
+												- returns the first value of a speciic field of a current partition,<br>
+											</li>
+											<li>LAST_VALUE:
+												<br>
+												- returns the last value of a specific field of a current partition.
+											</li>
+										</ul>
+
+										<h5>Rank functions:</h5>
+										<ul>
+											<li>ROW_NUMBER()
+<!-- start -->
+<pre>
+SELECT *
+FROM (
+  SELECT
+    *,
+    ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY emp_salary) r_numb
+  FROM employees) e
+WHERE e.r_numb < 2
+</pre>
+<!-- end -->
+												<table>
+													<tr>
+														<td>emp_id</td>
+														<td>emp_name</td>
+														<td>emp_salary</td>
+														<td>dept_name</td>
+														<td>r_numb</td>
+													</tr>
+													<tr>
+														<td>5</td>
+														<td>Krzysztof</td>
+														<td>7,100.00</td>
+														<td>Admin</td>
+														<td>1</td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>Johnny</td>
+														<td>9,600.00</td>
+														<td>Admin</td>
+														<td>2</td>
+													</tr>
+													<tr>
+														<td>4</td>
+														<td>Rick</td>
+														<td>5,500.00</td>
+														<td>HR</td>
+														<td>1</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>Artur</td>
+														<td>7,500.00</td>
+														<td>IT</td>
+														<td>1</td>
+													</tr>
+													<tr>
+														<td>6</td>
+														<td>Caroline</td>
+														<td>15,500.00</td>
+														<td>IT</td>
+														<td>2</td>
+													</tr>
+													<tr>
+														<td>...</td>
+														<td>...</td>
+														<td>...</td>
+														<td>...</td>
+														<td>...</td>
+													</tr>
+												</table>
+												- query shows first two employees with the smalles salary per department.
+											</li>
+											<li>RANK and DENS_RANK:
+												<br><br>
+												<img src="images/rank_functions.JPG"><br>
+												<span style="font-size:12px;">source: techTFQ</span>
+											</li>
+										</ul>
+
+										<h5>Analytic function:</h5>
+										<ul>
+											<li>NTILE(x), where x is number of equal ranges in which we want to classify the records:
+												<br>
+<!-- start -->
+<pre>
+SELECT
+	category_name,
+	month,
+	FORMAT(net_sales,'C','en-US') net_sales,
+	NTILE(<span style="color:#0aff09;">4</span>) OVER(
+		PARTITION BY category_name
+		ORDER BY net_sales DESC
+	) net_sales_group
+FROM
+	sales.vw_netsales_2017;
+</pre>
+<!-- end -->
+												- outcome:
+												<br>
+												<img src="images/ntile.png"><br>
+												<span style="font-size:12px;">source: techTFQ</span>
+											</li>
+										</ul>
+
+										<h5 id="transaction">Transaction</h5>
+										<ul>
+											<li>Single set of task performed on a database in logical manner.</li>
+											<li>It inlcudes operations like creating, updating, deleting.</li>
+											<li>There are 4 transaction controls:
+												<br>
+												- <b>commit</b>: saving all changes made by a transaction,<br>
+												- <b>rollback</b>: reverts all changes made by a transaction and the database remains as before,<br>
+												- <b>set transaction</b>: setting a transaction's name,<br>
+												- <b>savepoint</b>: sets the point where a transaction can roll back to.
+											</li>
+										</ul>
+
+										<h5 id="privileges">Privileges</h5>
+										<ul>
+											<li>A db admin can GRANT or REVOKE privileges to or from users of database.</li>
+											<li>GRANT command provides database access to a user:
+<!-- start -->
+<pre>
+GRANT SELECT
+ON employee
+TO user1
+</pre>
+<!-- end -->
+												- This command grants a SELECT permission on employee table to user1.<br>
+											</li>
+											<li>REVOKE removes database access from a user:
+<!-- start -->
+<pre>
+REVOKE SELECT
+ON employee
+FROM user1
+</pre>
+<!-- end -->
+												- This command will REVOKE a SELECT privilege on employee table from user1.<br>
+												- user1 will lost privilege on employee table only when everyone who granted the permission revokes it.
+											</li>
+										</ul>
+
+										<h5 id="selectinto">SELECT INTO</h5>
+										<ul>
+											<li>Statement that copies data from a table to the new one.
+<!-- start -->
+<pre>
+SELECT *
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+</pre>
+<!-- end -->
+											</li>
+											<table>
+												<thead>
+													<tr>
+														<td>SELECT INTO</td>
+														<td>INSERT INTO SELECT</td>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Used when the table doesn't exist.</td>
+														<td>Used when the table exists.</td>
+													</tr>
+													<tr>
+														<td>For single task like creating temporary table, ad hoc reporting or backup table.</td>
+														<td>Used regularly to appending rows to tables.</td>
+													</tr>
+													<tr>
+														<td>Copies all data with data types to the newly-created table.</td>
+														<td>Data types in source and target tables must match.</td>
+													</tr>
+												</tbody>
+											</table>
+											<li>Here is how to use INSERT INTO SELECT:
+<!-- start -->
+<pre>
+INSERT INTO Customers (CustomerName, City, Country)
+SELECT SupplierName, City, Country FROM Suppliers;
+WHERE Country='Poland';
+</pre>
+<!-- end -->
+											</li>
+										</ul>
+
+										<h5 id="like">LIKE</h5>
+										<ul>
+											<li>LIKE operator is used for pattern matching.</li>
+											<li>It can be used with wildcards:
+												<br>
+												- "%"" - matches zero or more characters.<br>
+<!-- start -->
+<pre>
+SELECT *
+FROM employees
+WHERE emp_surname LIKE 'S%'
+</pre>
+<!-- end -->
+												- "_" - matches exactly one character.
+											</li>
+										</ul>
+
+										<h5 id="view">VIEW</h5>
+										<ul>
+											<li>It's a virtual table based on the result of any SQL statement.</li>
+											<li>A view contains all you need in every other table: rows and columns and fields can come from one or more real tables.</li>
+											<li>While creating views, we can apply <code>WHERE</code> or <code>JOIN</code> statements to keep the data as if it comes from one single table.</li>
+											<li>Here is the syntax for view creating:
+<!-- start -->
+<pre>
+CREATE VIEW <span style="background-color:#ad5353;">view_name</span> AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+</pre>
+<!-- end -->
+												- end here is how to query a view:
+<!-- start -->
+<pre>
+SELECT * FROM <span style="background-color:#ad5353;">view_name</span>
+</pre>
+<!-- end -->
+											</li>
+											<li>With views we can restric users from being able to check some confidential data.
+													In a view we just define what columns are visible. The columns we want to keep invisible, we don't include them into the view while creating.
+													For example, lets say we have the employees table data schema:<br>
+													&nbsp&nbsp&nbsp- id: numeric<br>
+													&nbsp&nbsp&nbsp- first_name: string<br>
+													&nbsp&nbsp&nbsp- last_name: string<br>
+													&nbsp&nbsp&nbsp- salary: numeric<br>
+													Let's assume that column salary is confidential and has to be restricted from viewing:
+<!-- start -->
+<pre>
+CREATE VIEW <span style="background-color:#ad5353;">emloyess_details</span> AS
+SELECT first_name, last_name,
+FROM employess
+WHERE last_name LIKE 'S%';
+</pre>
+<!-- end -->
+												- When we wat to check salary somehow:
+												<!-- start -->
+<pre>
+SELECT last_name, salary
+FROM <span style="background-color:#ad5353;">emloyess_details</span>
+WHERE last_name LIKE 'S%';
+</pre>
+<!-- end -->
+												- Querying the view <code>emloyess_details</code> for <code>salary</code> field raises an error.
+											</li>
+											<li>It aslo simplifies queries hiding their complexity made with UNION, JOIN etc.</li>
+											<li>Let's have a look at differences between a view and the actual table:
+												<br>
+												- The difference between a view and a table is that views are definitions built on top of other tables (or views), and do not hold data themselves.<br>
+												- A view hides the complexity of the database tables from end users. Essentially we can think of views as a layer of abstraction on top of the database tables.<br>
+												- If data is changing in the underlying table, the same change is reflected in the view.<br>
+												- Views takes very little space to store, since they do not store actual data.<br>
+												- Views can include only certain columns in the table so that only the non-sensitive columns are included and exposed to the end user.
+											</li>
+										</ul>
+
+
+										<h5 id="index">INDEX</h5>
+										<ul>
+											<li>An index is used to speed up searching in the database by reducing records amount to be scanned.</li>
+											<li>An index helps to speed up <code>SELECT</code> queries and <code>WHERE</code> clauses, but it slows down data input, with the <code>UPDATE</code> and the <code>INSERT</code> statements.</li>
+											<li>In order to set an index we use <code>CREATE INDEX</code> statement, which allows us to name the index as well as to specify a table and a column that we want to get indexed:
+<!-- start -->
+<pre>
+CREATE INDEX index_name
+ON table_name (column_name);
+</pre>
+<!-- end -->
+											</li>
+											<li>Updating a table with indexes takes more time than updating a table without (because the indexes also need an update).
+													So, only create indexes on columns that will be frequently searched against.
+											</li>
+											<li>When not to use indexes:
+												<br>
+												- on small tables,<br>
+												- on tables that have frequent, large updates or insert operations,<br>
+												- on columns that contain a large number of NULLs,<br>
+												- on columns that are frequently manipulated.<br>
+											</li>
+											<li>Here is how to use it:
+												<br>
+												- creating index:
+<!-- start -->
+<pre>
+CREATE INDEX employees_last_name_idx
+ON employees (<span style="background-color:#3976b3;">last_name</span>);
+</pre>
+<!-- end -->
+												- using indexed column in the select query:
+<!-- start -->
+<pre>
+SELECT *
+FROM employees
+WHERE salary > 10000 AND
+    <span style="background-color:#3976b3;">last_name</span> = "Smith"
+</pre>
+<!-- end -->
+												- we use <code>last_name</code> indexed column within the WHERE caluse along with <code>salary</code> which speeds up performing the query.<br>
+												- It simply works like an index in the book where a specific sections or chapters are indexed with their headings.
+											</li>
+											<li>We can also index multiple columns, however it takes very long to set it up for the db engine.</li>
+											<li>We can say that there are two types of indexes:
+												<br>
+												<table>
+													<thead>
+														<tr>
+															<td>Clustered Index</td>
+															<td>Non-Clustered Index</td>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Defines the order of storing data in the table</td>
+															<td>Doesn't define the order of data inside the table</td>
+														</tr>
+														<tr>
+															<td>As data always can be stored in one way, there can be only one clustered index. When creating a table, the primary key constraint automatically creates index on that column.</td>
+															<td>In fact, non-clustered index is stored at different place than table data is stored. This allows for more than one non-clustered index per table.</td>
+														</tr>
+														<tr>
+															<td>Clustered indexes only sort tables. Therefore, they do not consume extra storage.</td>
+															<td>Non-clustered indexes are stored in a separate place from the actual table claiming more storage space.</td>
+														</tr>
+														<tr>
+															<td>Fast performance.</td>
+															<td>Slower performance as it requires additional lookup between index sotrage and acutal table.</td>
+														</tr>
+													</tbody>
+												</table>
+												- It is important to mention here that inside the table the data will be sorted by a clustered index.<br>
+												- However, inside the non-clustered index data is stored in the specified order.<br>
+												- The non-clustered index contains column values on which the index is created and the address of the corresponding records in the actual table.
+											</li>
+											<li>Here is how it works:
+													<br>
+													- When a query is run against indexed column, the database will first go to the index and look for the address of the corresponding row in the table.
+												 	It will then go to that row address in the table and fetch other column values.
+											</li>
+										</ul>
+
+										<h5 id="distinct">DISTINCT</h5>
+										<ul>
+											<li>Using when we wan to get unique values from a given column.
+<!-- start -->
+<pre>
+SELECT DISTINCT name
+FROM students
+</pre>
+<!-- end -->
+											</li>
+											<li id="count">Aggregating function COUNT() counts duplicates. To count only unique values we need to put DISTINCT prior to COUNT() argument:
+<!-- start -->
+<pre>
+SELECT COUNT(DISTINCT client_region)
+FROM tblSales
+</pre>
+<!-- end -->
+												- all aggreagating functions ignore NULL values by default,<br>
+												- however, with syntax: COUNT(*) we calculate both duplicates and nulls,<br>
+												- all aggreagating functions take all values including deuplicated ones - we can prevent this using DISTINCT keyword,<br>
+												- even though all aggregating functions can accept unique values, keyword DISTINCT is most often used with COUNT().
+											</li>
+										</ul>
+
+										<h5 id="join">JOIN</h5>
+										<ul>
+											<li>Join is the keyword needed when quering more than one table.</li>
+											<li>While joining, we need to define on what columns (of both tables) we will be keeping tables joined.</li>
+											<li>Usually, we use primary key of one table matching it with its corresponding foreign key in another table.</li>
+											<li>There are a few kind of joins:
+												<br>
+												- <b>Left join</b>: returns all the rows from the left table regardless if there is a match or a null from the right table.<br>
+												- <b>Right join</b>: returns all the rows from the right table regardless if there is a match or a null from the left table.<br>
+												- <b>Inner join</b>: returns rows when there is a match in rows between the tables.<br>
+												- <b>Full outer join</b>: returns all the rows from the left-hand side table and all the rows from the right-hand side table.<br>
+												- <b>Cross join</b>: joins every row of one table with every row of another table.
+											</li>
+											<li>Let's take two table schemas for an example:
+												<br><br>
+												<table>
+												<tr style="background-color: #223639; color: #ffff; font-size:18px;">
+													<td>
+													tblVideo<br>
+													- video_id: PRIMARY KEY integer<br>
+													- author_id: integer<br>
+													- video_duration: float
+													</td>
+													<td>
+													tblView<br>
+													- video_id: FOREIGN KEY integer<br>
+													- viewer_id: integer<br>
+													- viewer_timewatch: float
+													</td>
+												</tr>
+												</table>
+											</li>
+											<li>Inner join example:
+												<br>
+												<i><b>How many publishers have at least one viewer?</b></i>
+<!-- start -->
+<pre>
+SELECT COUNT(DISTINCT vd.author_id)
+FROM tblVideo vd
+INNER JOIN tblView vw
+ON vd.video_id = vw.video_id
+</pre>
+<!-- end -->
+													- It doesn't count authors whose videos are not in the tblView.<br>
+													- If I want to count disctinct author's id, I wouldn't need any JOINs and do select only on tblVideo.
+											</li>
+											<li id="order_by">Left join example:
+												<br>
+												- Here is the snippet of data schema:
+												<br>
+												<img src="images/sql_server.JPG" width="420"><span style="font-size:12px">source: toptal.com</span>
+<!-- strat -->
+<pre>
+SELECT i.Id, i.BillingDate, c.Name, r.Name AS ReferredByName
+FROM Invoices i
+ LEFT JOIN Customers c ON i.CustomerId = c.Id
+ LEFT JOIN Customers r ON c.ReferredBy = r.Id
+ORDER BY i.BillingDate ASC;
+</pre>
+<!-- end -->
+												- With LEFT JOIN we make sure that all the invoices will be returned no matter what (in case of any NULLs within Customers table).<br>
+												- First LEFT JOIN joins customer id pk with customer id fk in the Invoices table.<br>
+												- Second LEFT JOIN joins customer id pk with cusotmer id  fk in the Customer table.<br>
+												- ORDER BY orders outcome by date. We can append ASC/DESC if ascending or descending ordering.
+											</li>
+											<li>We can join multiple tables:
+<!-- start -->
+<pre>
+SELECT column1, column2
+FROM TableA
+JOIN TableB ON TableA.Column3 = TableB.Column3
+JOIN TableC ON TableA.Column4 = TableC.Column4
+</pre>
+<!-- stop -->
+											</li>
+											<li>We can also join a table with itself what we call <span id="self_join">self join</span>
+<!-- start -->
+<pre>
+SELECT DISTINCT E.FullName
+FROM EmployeeDetails E
+INNER JOIN EmployeeDetails M
+ON E.EmpID = M.ManagerID;
+</pre>
+<!-- stop -->
+												- We are using different aliases to differentiate tables on join.<br>
+												- This way we fetch those emps whose id are present in the ManagerID column.
+											</li>
+											<li>Selecting the columns on which join is applied:
+												<br>
+<!-- start -->
+<pre>
+SELECT t1.main_col AS col_A, t2.main_col AS col_B
+FROM tab1 t1
+FULL OUTER JOIN tab2 t2
+ON t1.main_col = t2.main_col
+</pre>
+<!-- stop -->
+													- we just need to alias the columns properly to fetch them boht separately.<br>
+													- result:<br>
+													<table>
+														<thead>
+															<tr>
+																<td>col_A</td>
+																<td>col_B</td>
+															</tr>
+														</thead>
+														<tr>
+															<td>Null</td>
+															<td>1231235</td>
+														</tr>
+														<tr>
+															<td>Null</td>
+															<td>5234214</td>
+														</tr>
+														<tr>
+															<td>4434431</td>
+															<td>4434431</td>
+														</tr>
+														<tr>
+															<td>2221222</td>
+															<td>2221222</td>
+														</tr>
+														<tr>
+															<td>9765675</td>
+															<td>Null</td>
+														</tr>
+														<tr>
+															<td>7654565</td>
+															<td>Null</td>
+														</tr>
+													</table>
+											</li>
+											<li>Cross join using 1 = 1 as join condition:
+												<br>
+												- It's simply doing a <b>cross join</b>, which selects all rows from the first table and all rows from the second table and shows as cartesian product, i.e. with all possibilities.<br>
+												- Putting in 1=1 is like saying "1=1 is always true, do don't eliminate anything".
+											</li>
+											<li>Multiple conditions in ON caluse:
+<!-- start -->
+<pre>
+SELECT u1.*
+FROM users u1
+JOIN users u2
+ON u1.user_id_sender = u2.user_id_sender
+AND u1.user_id_receiver = u2.user_id_receiver
+</pre>
+<!-- end -->
+												- we self join the same table of users,<br>
+												- we use combination of two columns as a combined key.<br>
+											</li>
+										</ul>
+
+										<h5 id="using">USING</h5>
+										<ul>
+											<li>USING clause comes in use while working with JOIN and can be used instead of ON clause.</li>
+											<li>When we use USING clause, that particular column name should be present in both tables, and the SELECT query will automatically join those tables using the given column name in USING clause.</li>
+											<li>Here comes the example:
+<!-- start -->
+<pre>
+SELECT e.emp_id, e.last_name, d.loc_id
+FROM emploees e
+JOIN departments d
+USING(dep_id);
+</pre>
+<!-- end -->
+												- in tables employees and departments, dep_id column is the mutual one.
+											</li>
+											<li>Another example with delete query:
+<!-- start -->
+<pre>
+DELETE FROM tab1
+USING tab2
+WHERE tab1.k = tab2.k
+</pre>
+<!-- end -->
+											</li>
+										</ul>
+
+										<h5 id="union">UNION</h5>
+										<ul>
+											<li>Merges the contents of two structurally-compatible tables into a single combined table removing duplicated records.</li>
+											<li>There is also UNION ALL that does the same things but keeps duplicated records.</li>
+											<li>Performance of UNION ALL is better than UNION, since UNION requires the server to do the additional work of removing any duplicate.</li>
+											<li>Here is how to use it:
+<!-- start -->
+<pre>
+SELECT employee_id, first_name, last_name, 'Employee' AS status
+FROM employees
+UNION
+SELECT visitor_id, first_name, last_name, 'Visitor' AS status
+FROM visitors
+</pre>
+<!-- stop -->
+												- note that colums selected from both tables have to be in sync with each other.
+											</li>
+											<li>We can use multiple UNION statements in a one query.</li>
+										</ul>
+
+										<h5 id="except">EXCEPT</h5>
+										<ul>
+											<li>Allows to fetch values from one table that are not in another table.
+<!-- start -->
+<pre>
+CREATE TABLE test_a(id INTEGER);
+INSERT INTO test_a(id) VALUES (10);
+INSERT INTO test_a(id) VALUES (20);
+INSERT INTO test_a(id) VALUES (30);
+INSERT INTO test_a(id) VALUES (40);
+INSERT INTO test_a(id) VALUES (50);
+
+CREATE TABLE test_b(id INTEGER);
+INSERT INTO test_b(id) VALUES (10);
+INSERT INTO test_b(id) VALUES (30);
+INSERT INTO test_b(id) VALUES (50);
+
+SELECT * FROM test_a
+EXCEPT
+SELECT * FROM test_b;
+
+----------------------
+20, 40
+</pre>
+<!-- end -->
+												- 20 and 40 are the values that are not present in test_b table.
+											</li>
+										</ul>
+
+										<h5 id="intersect">INTERSECT</h5>
+										<ul>
+											<li>Fetchs common records between two tables:
+<!-- start -->
+<pre>
+SELECT * FROM EmployeeSalary
+INTERSECT
+SELECT * FROM ManagerSalary;
+</pre>
+<!-- end -->
+											</li>
+										</ul>
+
+										<h5 id="limit">LIMIT</h5>
+										<ul>
+											<li>Limiting select query results to specific numbers of records:
+<!-- start -->
+<pre>
+SELECT *
+FROM (
+	SELECT *
+	FROM employees
+	ORDER BY salary DESC )
+LIMIT 10;
+</pre>
+<!-- end -->
+												- We fetch 10 highest salaries in employees tabel.<br>
+												- We use subquery meaning we emebd one select into another.
+											</li>
+										</ul>
+
+										<h5 id="top">TOP</h5>
+										<ul>
+											<li>We can select x top records:
+												<br>
+												- let's assume we have customers table and the fields customer_id,<br>
+												- let's fetch first 100 odd cutomer_id values,<br>
+												- <span id="where">there, we use WHERE clause to filter fetched rows, this clause allows AND as well as OR operators,</span>
+<!-- start -->
+<pre>
+SELECT TOP 100 customer_id
+FROM customers
+WHERE customer_id % 2 = 1
+ORDER BY user_id
+</pre>
+<!-- end -->
+												- Clause WHERE can also have BETWEEM operator:
+<!-- start -->
+<pre>
+SELECT *
+FROM employees
+WHERE date_of_joining BETWEEN '2020/01/01' AND '2020/12/31';
+</pre>
+<!-- end -->
+												- When it comes to dates, we can extract what we want:
+<!-- start -->
+<pre>
+SELECT *
+FROM employees
+WHERE YEAR(date_of_joining) = '2020'
+</pre>
+<!-- end -->
+											</li>
+										</ul>
+
+										<h5 id="group_by">GROUP BY</h5>
+										<ul>
+											<li>Groups rows into categories within a column we indicate:
+<!-- start -->
+<pre>
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 3;
+</pre>
+<!-- end -->
+												and then we can run any aggregating function for a particular category.<br>
+												- We count all customers for a specific country but we display countires where count is bigger than 3.<br>
+												- We use GROUP BY when some aggregating function in select line like COUNT, SUM, AVERAGE.<br>
+												- When using GROUP BY, in the select line we can use only aggregating functions and columns that are enclosed by GROUP BY.<br>
+												- We can create some sub-groups for example: <code>GROUP BY Country, Region</code><br>
+												- <span id="having">HAVING simply puts filter on COUNT(CustomerID) outcome column.</span>
+<!-- start -->
+<pre>
+COUNT(CustomerID)	Country
+9			Brazil
+11			France
+11			Germany
+5			Mexico
+5			Spain
+7			UK
+13			USA
+4			Venezuela
+</pre>
+<!-- end -->
+											</li>
+											<li>WHERE vs HAVING:
+												<br>
+												- When GROUP BY is not used, then WHERE and HAVING clauses works the same.<br>
+												- When  GROUP BY is used, then WHERE clause is used to filter records from a result and filtering works before any grouping. HAVING clause is used to filter values from a group.
+											</li>
+										</ul>
+
+
+										<h5>Referencing to the same table more than once:</h5>
+										<ul>
+											<li>Here is the employees table:
+												<br><br>
+												<table style="font-size:16px;">
+													<thead>
+														<tr>
+															<th>Emp_Id</th>
+															<th>Emp_name</th>
+															<th>Salary</th>
+															<th>Manager_Id</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>10</td>
+															<td>Anil</td>
+															<td>50000</td>
+															<td>18</td>
+														</tr>
+														<tr>
+															<td>11</td>
+															<td>Vikas</td>
+															<td>75000</td>
+															<td>16</td>
+														</tr>
+														<tr>
+															<td>12</td>
+															<td>Nisha</td>
+															<td>40000</td>
+															<td>18</td>
+														</tr>
+														<tr>
+															<td>13</td>
+															<td>Nidhi</td>
+															<td>60000</td>
+															<td>17</td>
+														</tr>
+														<tr>
+															<td>14</td>
+															<td>Priya</td>
+															<td>80000</td>
+															<td>18</td>
+														</tr>
+														<tr>
+															<td>15</td>
+															<td>Mohit</td>
+															<td>45000</td>
+															<td>18</td>
+														</tr>
+														<tr>
+															<td>16</td>
+															<td>Rajesh</td>
+															<td>90000</td>
+															<td>Null</td>
+														</tr>
+														<tr>
+															<td>17</td>
+															<td>Raman</td>
+															<td>55000</td>
+															<td>16</td>
+														</tr>
+														<tr>
+															<td>18</td>
+															<td>Santosh</td>
+															<td>65000</td>
+															<td>17</td>
+														</tr>
+													</tbody>
+												</table>
+											</li>
+											<li>Lets fetch all rows with WHERE clause on <b>a.manager_id = b.emp_id</b>:
+<!-- start -->
+<pre>
+SELECT *
+FROM Employee a, Employee b
+WHERE a.manager_id = b.emp_id
+</pre>
+<!-- end -->
+												<table class="employees_query" style="font-size:16px;">
+													<tbody>
+														<tr>
+															<td>10</td>
+															<td>Anil</td>
+															<td>50000</td>
+															<td>18</td>
+															<td>18</td>
+															<td>Santosh</td>
+															<td>65000</td>
+															<td>17</td>
+														</tr>
+														<tr>
+															<td>11</td>
+															<td>Vikas</td>
+															<td>75000</td>
+															<td>16</td>
+															<td>16</td>
+															<td>Rajesh</td>
+															<td>90000</td>
+															<td>Null</td>
+														</tr>
+														<tr>
+															<td>12</td>
+															<td>Nisha</td>
+															<td>40000</td>
+															<td>18</td>
+															<td>18</td>
+															<td>Santosh</td>
+															<td>65000</td>
+															<td>17</td>
+														</tr>
+														<tr>
+															<td>13</td>
+															<td>Nidhi</td>
+															<td>60000</td>
+															<td>17</td>
+															<td>17</td>
+															<td>Raman</td>
+															<td>55000</td>
+															<td>16</td>
+														</tr>
+														<tr>
+															<td>14</td>
+															<td>Priya</td>
+															<td>80000</td>
+															<td>18</td>
+															<td>18</td>
+															<td>Santosh</td>
+															<td>65000</td>
+															<td>17</td>
+														</tr>
+														<tr>
+															<td>15</td>
+															<td>Mohit</td>
+															<td>45000</td>
+															<td>18</td>
+															<td>18</td>
+															<td>Santosh</td>
+															<td>65000</td>
+															<td>17</td>
+														</tr>
+														<tr>
+															<td>17</td>
+															<td>Raman</td>
+															<td>55000</td>
+															<td>16</td>
+															<td>16</td>
+															<td>Rajesh</td>
+															<td>90000</td>
+															<td>Null</td>
+														</tr>
+														<tr>
+															<td>18</td>
+															<td>Santosh</td>
+															<td>65000</td>
+															<td>17</td>
+															<td>17</td>
+															<td>Raman</td>
+															<td>55000</td>
+															<td>16</td>
+														</tr>
+													</tbody>
+												</table>
+												- Note there is no Rajesh in the outcome as he has no manager above him. Rajesh appears only as the manager for other employees.
+											</li>
+											<li>Let's group managers counting average salary:
+<!-- start -->
+<pre>
+SELECT b.emp_id AS "Manager_Id", b.emp_name AS "Manager", AVG(b.salary) AS "Avg_Salary_Under_Manager"
+FROM employees a, employees b
+WHERE a.manager_id = b.emp_id
+GROUP BY b.emp_id
+ORDER BY b.emp_id;
+</pre>
+<!-- end -->
+												<table style="font-size:16px;">
+													<tbody>
+														<tr>
+															<th>Manager_Id</th>
+															<th>Manager</th>
+															<th>Average_Salary_Under_Manager</th>
+														</tr>
+														<tr>
+															<td>16</td>
+															<td>Rajesh</td>
+															<td>65000</td>
+														</tr>
+														<tr>
+															<td>17</td>
+															<td>Raman</td>
+															<td>62500</td>
+														</tr>
+														<tr>
+															<td>18</td>
+															<td>Santosh</td>
+															<td>53750</td>
+														</tr>
+													</tbody>
+												</table>
+											</li>
+										</ul>
+
+										<h5 id="case">CASE</h5>
+										<ul>
+											<li>We can use Case to give some conditons:
+												<br>
+												- assuming we have students table and lastname filed and we want to update some records:<br>
+<!-- start -->
+<pre>
+UPDATE dbo.students
+SET lastname =  CASE
+	 WHEN lastname = 'aaa' THEN 'bbb'
+	 WHEN lastname = 'ccc' THEN 'ddd'
+	 WHEN lastname = 'eee' THEN 'fff'
+	 ELSE lastname
+	END
+WHERE lastname IN ('aaa', 'ccc', 'eee')
+</pre>
+<!-- end -->
+												- it's very important to enclose WHERE clause in the queries,<br>
+												- if we omit the WHERE clause, all records will get updated.
+											</li>
+											<li>Embeded CASE WHEN in SUM():
+												<br>
+												- using orders table we have fields like ship_country and status,<br>
+												- we want to show the number of shipped orders by country,<br>
+												- the order is shipped if the status is “shipped” or “delivered:<br>
+<!-- start -->
+<pre>
+SELECT ship_country,
+    SUM(CASE
+      WHEN status = 'shipped' OR status = 'delivered' THEN 1
+      ELSE 0
+      END) AS order_shipped
+FROM orders
+GROUP BY ship_country;
+</pre>
+<!-- end -->
+												- the code assigns 1 to all records where the status is either "shipped" or "delivered",<br>
+												- rest of the records with different status get 0 assigned.<br>
+												- another example to count percentage:
+												<br>
+<!-- start -->
+<pre>
+SELECT SUM(CASE
+      WHEN CAST(order_cost AS INT) > 500
+        THEN 1
+      ELSE 0
+      END) * 100.0 / COUNT(*) AS percentage_orders_over_500
+FROM orders
+</pre>
+												<!-- end -->
+											</li>
+										</ul>
+
+										<h5 id="in">IN</h5>
+										<ul>
+											<li>The IN operator allows to specify multiple values in a WHERE clause.</li>
+											<li>If taken value 'Apple' is in one of given columns then we take rows into results.</li><br>
+												<table style="font-size:16px;">
+													<tr>
+														<td>Id</td>
+														<td>Col1</td>
+														<td>Col2</td>
+														<td>Col3</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>Apple</td>
+														<td>Null</td>
+														<td>Orange</td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>Orange</td>
+														<td>Apple</td>
+														<td>Strawberry</td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>Strawberry</td>
+														<td>Apple</td>
+														<td>Orange</td>
+													</tr>
+												</table>
+<!-- start -->
+<pre>
+SELECT *
+FROM table
+WHERE Col1 IN ("Apple", "Strawberry")
+</pre>
+<!-- end -->
+												- as the result, we receive 2 records: first and third one.
+											</li>
+											<li>We can also exclude records by using <b>NOT IN</b>:
+<!-- start -->
+<pre>
+SELECT *
+FROM table
+WHERE Col1 NOT IN ("Apple", "Strawberry")
+</pre>
+<!-- end -->
+												- then we get the second record only.
+											</li>
+										</ul>
+
+										<h5 id="over">OVER</h5>
+										<ul>
+											<li>A <b>window function</b> is an SQL function where the input values are taken from a "window" of one or more rows into the results set of a SELECT statement.
+													Window functions are distinguished from other SQL functions by the presence of an <b>OVER clause</b>.
+											</li>
+											<li>OVER clause has been added to SQL Server and can be used to determine which rows from the query are applied to the function.</li>
+											<li><b>PARTITION BY clause</b> is used to divide the result set from the query into data subsets, or partitions.
+													PARTITION BY clause is not used, the entire result set from the query is the partition that will be used.
+													The window function being used is applied to each partition separately, and the computation that the function performs is restarted for each partition.
+													Lets have a look at example without OVER and with OVER applied:
+<!-- start -->
+<pre>
+SELECT
+    emp_id,
+    emp_name,
+    dept_name,
+    emp_salary,
+    MAX(emp_salary) OVER () as max_salary
+FROM employee
+</pre>
+<!-- end -->						<br>
+												<table>
+													<tr>
+														<td>emp_id</td>
+														<td>emp_name</td>
+														<td>emp_salary</td>
+														<td>dept_name</td>
+														<td>max_salary</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>Artur</td>
+														<td>7,500.00</td>
+														<td>IT</td>
+														<td>15,500.00</td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>Robert</td>
+														<td>10,000.00</td>
+														<td>Admin</td>
+														<td>15,500.00</td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>Johnny</td>
+														<td>9,600.00</td>
+														<td>Admin</td>
+														<td>15,500.00</td>
+													</tr>
+													<tr>
+														<td>4</td>
+														<td>Rick</td>
+														<td>5,500.00</td>
+														<td>HR</td>
+														<td>15,500.00</td>
+													</tr>
+													<tr>
+														<td>5</td>
+														<td>Krzysztof</td>
+														<td>7,100.00</td>
+														<td>Admin</td>
+														<td>15,500.00</td>
+													</tr>
+													<tr>
+														<td>6</td>
+														<td>Caroline</td>
+														<td>15,500.00</td>
+														<td>IT</td>
+														<td>15,500.00</td>
+													</tr>
+													<tr>
+														<td>...</td>
+														<td>...</td>
+														<td>...</td>
+														<td>...</td>
+														<td>...</td>
+													</tr>
+												</table>
+												<span style="font-size:12px;">source: sqlservercentral.com</span><br>
+												- This query returns the maximum salary of all records for each record.<br>
+												- Since a PARTITION BY clause was not used, the entire result set was treated as a single partition.<br>
+												- Let's apply PARTITION BY clause:
+<!-- start -->
+<pre>
+SELECT
+    emp_id,
+    emp_name,
+    dept_name,
+    emp_salary,
+    MAX(emp_salary) OVER (PARTITION BY dept_name ORDER BY emp_salary) as max_salary
+FROM employee
+</pre>
+<!-- end -->
+												<table>
+													<tr>
+														<td>emp_id</td>
+														<td>emp_name</td>
+														<td>emp_salary</td>
+														<td>dept_name</td>
+														<td>max_salary</td>
+													</tr>
+													<tr>
+														<td>5</td>
+														<td>Krzysztof</td>
+														<td>7,100.00</td>
+														<td>Admin</td>
+														<td>10,000.00</td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>Johnny</td>
+														<td>9,600.00</td>
+														<td>Admin</td>
+														<td>10,000.00</td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>Robert</td>
+														<td>10,000.00</td>
+														<td>Admin</td>
+														<td>10,000.00</td>
+													</tr>
+													<tr>
+														<td>4</td>
+														<td>Rick</td>
+														<td>5,500.00</td>
+														<td>HR</td>
+														<td>5,500.00</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>Artur</td>
+														<td>7,500.00</td>
+														<td>IT</td>
+														<td>15,500.00</td>
+													</tr>
+													<tr>
+														<td>6</td>
+														<td>Caroline</td>
+														<td>15,500.00</td>
+														<td>IT</td>
+														<td>15,500.00</td>
+													</tr>
+													<tr>
+														<td>...</td>
+														<td>...</td>
+														<td>...</td>
+														<td>...</td>
+														<td>...</td>
+													</tr>
+												</table>
+												<span style="font-size:12px; margin-top: -20px;">source: sqlservercentral.com</span><br>
+												- Above query has a PARTITION BY clause of the <b>dept_name</b> column, so the max function takes all records assigned to a particular department.<br>
+												- Additionaly, ORDER BY orders records by emp_salary ascendingly within each partition.
+											</li>
+										</ul>
+
+										<h5 id="offset">OFFSET</h5>
+										<ul>
+											<li>The OFFSET clause specifies the number of rows to skip before starting to return rows from the query.
+													The <span id="fetch">FETCH</span> clause specifies the number of rows to return after the OFFSET clause has been processed.</li>
+											<li>We must use the OFFSET and FETCH clauses with the ORDER BY clause.</li>
+											<li>Skipping the first 10 products and selecting the next 10 products:
+<!-- start -->
+<pre>
+SELECT product, price
+FROM products
+ORDER BY price, product
+OFFSET 10 ROWS
+FETCH NEXT 10 ROWS ONLY;
+</pre>
+<!-- end -->
+											</li>
+										</ul>
+
+										<h5 id="exist">EXISTS</h5>
+										<ul>
+											<li>The EXISTS operator is used to test for the existence of any record in a subquery.</li>
+											<li>The EXISTS operator returns true if the subquery returns one or more records:
+<!-- start -->
+<pre>
+SELECT SupplierName
+FROM Suppliers
+WHERE EXISTS (
+  SELECT ProductName
+  FROM Products
+  WHERE Products.SupplierID = Suppliers.SupplierID AND Price < 20)
+</pre>
+<!-- end -->
+											- Above query returns TRUE and lists the suppliers with a product price less than 20:
+										</ul>
+
+										<h5 id="is_not_null">IS NOT NULL</h5>
+										<ul>
+											<li>In order to ensure not getting Nulls in a queried column we use IS NOT NULL in WHERE clause:
+<!-- start -->
+<pre>
+SELECT emp_id, salary
+FROM employees
+WHERE salary IS NOT NULL
+</pre>
+<!-- end -->
+											</li>
+											<li>We can also filter Nulls from multiple columns:
+<!-- start -->
+<pre>
+SELECT emp_id, salary, emp_position
+FROM employees
+WHERE
+  (salary IS NOT NULL
+  AND
+  emp_position IS NOT NULL)
+</pre>
+<!-- end -->
+											</li>
+										</ul>
+
+										<h5 id="ifnull">IFNULL</h5>
+										<ul>
+											<li>It's a control flow function that accpets two arguments:
+<!-- start -->
+<pre>
+SELECT IFNULL(expression_1,expression_2);
+</pre>
+<!-- end -->
+												- function returns expression_1 if expression_1 is not NULL, otherwise, it returns expression_2.
+											</li>
+										</ul>
+
+
+										<h5 id="cast">CAST</h5>
+										<ul>
+											<li>We can use CAST in order to convert data types into other ones.
+<!-- start -->
+<pre>
+SELECT CAST(11.25 AS int)
+------
+11
+</pre>
+<!-- end -->
+												- in the example above we convert <b>float type</b> into <b>int type</b>.
+											</li>
+										</ul>
+
+										<h5 id="unique_no_distinct">Unique records without DISTINCT</h5>
+										<ul>
+											<li>We can use GROUP BY in order to eliminate duplicates from a query result:
+<!-- start -->
+<pre>
+SELECT surname
+FROM employees
+GROUP BY surname
+</pre>
+<!-- end -->
+												- it works because GROUP BY groups all the duplicated values of a specific column into one value (group).
+											</li>
+											<li>Another option is self joining the table and using NOT EXISTS in the WHERE clause:
+<!-- start -->
+<pre>
+SELECT emp_name, emp_address, emp_sex, emp_salary
+FROM employees e1
+WHERE NOT EXISTS (SELECT 1
+         FROM employees e2
+         WHERE e2.emp_name = e1.emp_name AND
+               e2.emp_address = e1.emp_address AND
+               e2.emp_sex = e1.emp_sex AND
+               e2.create_date >= e1.create_date)
+</pre>
+<!-- end -->
+												- <code>SELECT 1</code> in the subquery returns constant 1 for every row in the table only when condition in the second WHERE clause is met,<br>
+												- selecting constant 1 is useful when we want to cheaply determine if record matches condition in the WHERE clause.
+											</li>
+										</ul>
+
+										<h5 id="cte">Common Table Expression (CTE):</h5>
+										<ul>
+											<li>It's a named temporary result set that exists within the scope of a single statement and that can be referred to later within that statement, possibly multiple times.</li>
+											<li>Improves the readability of sql statements.</li>
+											<li>When CTE is helpful:
+												<br>
+												- needing to reference a derived table multiple times in a single query,<br>
+												- an alternative to creating a view in the database,<br>
+												- performing the same calculation multiple times over across multiple query components.<br>
+											</li>
+											<li>Starts with <b>WITH</b> keyword:
+<!-- start -->
+<pre>
+-- define CTE:
+WITH Cost_by_Month AS
+(SELECT campaign_id AS campaign,
+    TO_CHAR(created_date, 'YYYY-MM') AS month,
+    SUM(cost) AS monthly_cost
+FROM marketing
+WHERE created_date BETWEEN NOW() - INTERVAL '3 MONTH' AND NOW()
+GROUP BY 1, 2
+ORDER BY 1, 2)
+
+-- use CTE in subsequent query:
+SELECT campaign, avg(monthly_cost) as "Avg Monthly Cost"
+FROM Cost_by_Month
+GROUP BY campaign
+ORDER BY campaign
+</pre>
+<!-- end -->
+												<span style="font-size:14px;">source: chartio.com</span>
+											</li>
+										</ul>
+
+										<h5 id="sqldelta">SQL Delta:</h5>
+										<ul>
+											<li>It performs three main functions:
+												<br>
+												- comparing and optionally synchronizing the structure (schema) of two SQL databases,<br>
+												- comparing the data in tables (and optionally views) of both the databases,<br>
+												- displaying the schema of a database.
+											</li>
+											<li>SQL Delta can generate update scripts to synchronize one database with other database, for both structure and data.</li>
+											<li>SQL Delta provides various structure and comparison reports which are saved as HTML. Itpresents an overview of the objects highlighting different, added or deleted.</li>
+										</ul>
+
+										<h5 id="running_total">Running Total</h5>
+										<ul>
+											<li>Here I want to apply running total without any window functions:
+												<br>
+												- we apply the self inner join:<br>
+<!-- start -->
+<pre>
+SELECT t1.ID, t2.ID
+FROM demo t1
+INNER JOIN demo t2
+ON t1.ID >= t2.ID
+</pre>
+<!-- end -->
+												- there are two join conditions in order to get proper set of data:<br>
+												1) <b>T1.InvoiceID >= T2.InvoiceID</b> to mix each following invoice id with the rest of prior ones.
+												If there was "=" in the join condition we woul get one by one assigment like: 1 - 1, 2 - 2, 3 - 3 etc...<br>
+												2) <b>T1.TransactionDate = T2.TransactionDate</b> to include records on the same transaction date.<br>
+<!-- start -->
+<pre>
+SELECT   T1.InvoiceID
+         ,T2.InvoiceID
+         ,T1.TransactionDate
+FROM     Sales.CustomerTransactions T1
+         INNER JOIN Sales.CustomerTransactions T2
+         ON T1.InvoiceID >= T2.InvoiceID
+         AND  T1.TransactionDate = T2.TransactionDate
+ORDER BY T1.InvoiceID
+</pre>
+<!-- end -->
+												<span style="font-size:14px;">source: essentialsql.com</span><br>
+												<table>
+													<tr>
+														<td>InvoiceID</td>
+														<td>InvoiceID</td>
+														<td>TransactionDate</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>1</td>
+														<td>2021-01-01</td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>1</td>
+														<td>2021-01-01</td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>2</td>
+														<td>2021-01-01</td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>1</td>
+														<td>2021-01-01</td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>2</td>
+														<td>2021-01-01</td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>3</td>
+														<td>2021-01-01</td>
+													</tr>
+												</table>
+											</li>
+											<li>As we want to calculate the running total we need to get an amount for each invoice and all invoices before:
+												<br>
+<!-- start -->
+<pre>
+SELECT   T1.InvoiceID
+         ,T1.TransactionDate
+         ,T1.TransactionAmount
+         ,Sum(T2.TransactionAmount) RunningTotal
+FROM     Sales.CustomerTransactions T1
+         INNER JOIN Sales.CustomerTransactions T2
+         ON T1.InvoiceID >= T2.InvoiceID
+         AND  T1.TransactionDate = T2.TransactionDate
+GROUP BY T1.InvoiceID
+         ,T1.TransactionDate
+         ,T1.TransactionAmount
+ORDER BY T1.InvoiceID
+         ,T1.TransactionAmount
+</pre>
+<!-- end -->
+												<span style="font-size:14px;">source: essentialsql.com</span><br>
+											</li>
+											<li>We calculate running total on <b>T2.TransactionAmount</b>:
+												<br>
+												<img src="images/running_total.JPG"><span style="font-size:14px;">source: essentialsql.com</span><br>
+											</li>
+											<li>Here is how can we achieve it with OVER caluse:
+<!-- start -->
+<pre>
+SELECT   InvoiceID
+         ,TransactionDate
+         ,TransactionAmount
+         ,SUM(TransactionAmount) OVER(PARTITION BY TransactionDate) RunningTotal
+FROM     Sales.CustomerTransactions T1
+WHERE    TransactionTypeID = 1
+ORDER BY InvoiceID
+         ,TransactionAmount
+</pre>
+<!-- end -->
+												and here is the result:
+												<br>
+												<img src="images/over_1.JPG"><br>
+												<span style="font-size:14px;">source: essentialsql.com</span><br>
+<!-- start -->
+<pre>
+SELECT   InvoiceID
+         ,TransactionDate
+         ,TransactionAmount
+         ,SUM(TransactionAmount) OVER(PARTITION BY TransactionDate ORDER BY InvoiceID) RunningTotal
+FROM     Sales.CustomerTransactions T1
+WHERE    TransactionTypeID = 1
+ORDER BY InvoiceID
+         ,TransactionAmount
+</pre>
+<!-- end -->
+												when ORDER BY added, we get the expected:
+												<br>
+												<img src="images/over_2.JPG"><br>
+												<span style="font-size:14px;">source: essentialsql.com</span><br>
+											</li>
+										</ul>
 
 									</header>
 								</div>
@@ -83,7 +2191,7 @@
 									<h3>Features</h3>
 									<p>App includes following features:</p>
 									<ul class="feature-icons">
-										<li class="icon solid fa-check">Snowflake</li>
+										<li class="icon solid fa-check">SQL</li>
 									</ul>
 								</div>
 							</section>
@@ -92,234 +2200,21 @@
 							<section id="three">
 								<div class="container">
 									<h3>Demo</h3>
-									<h5 id="snowflake_architecture">Snowflake architecture</h5>
+
+									<h5>Application:</h5>
+									<img src="images/sql_learn.gif">
 									<ul>
-										<li>In Snowflake's architecture, the key is a separation of storage, compute and services:
-											<br><br>
-											<img src="images/snowflake_architecture.png" width="640"><span style="font-size:12px">soruce: snowflake</span>
-											<br>
-											- S3 as a storage layer (Google Cloud Storage or Azure Blob Storage),<br>
-											- EC2 Virtual Warehouse as a compute layer .<br>
-											- metadata, security, transactions and concurrency management as service layer.
-										</li>
-										<li id="snowflake_pipeline">Building pipelines with Snowflake:
-											<br><br>
-											<img src="images/snowflake_pipeline.JPG">
-											<span style="font-size:12px">soruce: snowflake</span>
-										</li>
-										<li id="snowflake_objects">Snowflake objects:
-												<br>
-												- Database - containing schemas, tables, views, stages, file formats, sequences. All the tables are created in PUBLIC schema by default.<br>
-												- Stage - a data lake like place from which data files are being copied into the tables.<br>
-												- File format - we need to define format of the files bieng stored at stage.<br>
-												- Warehouse - computing enginge.<br>
-												- Worksheet - a place where we can proceed with writing or loading ready SQL scripts.<br>
-										</li>
+										<li>User click Get Questions button what pulls questions down to the application.</li>
+										<li>Each question and answer is hidden. We can click on the proper links to unhide question.</li>
+										<li>User can unhide question first, formulate its answer, then unhide the app's answer in order to comapre.</li>
 									</ul>
 
-									<h5>Snowflake mechanism:</h5>
+									<h5>Features:</h5>
 									<ul>
-										<li id="olap">Snowflake for OLAP:
-											<br>
-											- snowflake supports <b>Online Analytical Processing (OLAP)</b> for scanning all of the data in columns in order to get aggregated values as opposed to <b>Online Transactional Processing (OLTP)</b> where we want to retrieve one or many rows from database.
-												The main purpose of OLAP is data analysis and when it comes to OLTP then main purpose is data processing (inserting, updating).
-											<br><br>
-											<img src="images/olap.JPG" style="border: 1px solid gray;" width="420"><span style="font-size:12px">soruce: Data Council</span>
-											<br>
-											- while a classic databases like PostgreSQL or MySQL are type of <b>raw store</b> (OLTP) that keeps data linearly row by row, from left to right, from top to bottom, Snowflake supports <b>columnar store</b> (OLAP) which allows to traverse entire columns one by one.
-											<br><br>
-											<img src="images/columnstore.JPG" style="border: 1px solid gray;" width="640"><span style="font-size:12px">soruce: Data Council</span>
-											<br>
-											- using columnar storage makes sense when we want to analyze one or two specific columns and skip reading other ones.
-										</li>
-										<li id="snowflake_workflow">Snowflake workflow:
-											<br>
-											- Dividing big tabular data into x-consecutive rows segments called micropartitions.<br>
-											- Reorganizing the data of each micropartition by flipping row store into columnar - column values of each row get stored together.<br>
-											- Adding a header to each micropartition. Header contains metadata of given micropartition and columns it contains.<br>
-											- Micropartitions are being stored in S3 as the immutable files.<br>
-											- All the information about micropartitions are being stored in Sknowflake's metadata layer.<br>
-											- When query comes in, metadata layer knows which micropartition in S3 belongs to the queried table.<br>
-											- Reading a S3 file, it searches for a specific header first and then reads the only column we specified in the query.<br>
-											- It reads the only queried data ingnoring the rest of S3 files.
-										</li>
-										<li id="sql_scripting">Every action on db can be performed with sql script along with setting up stages, file formats,
-												configuring warehouse, copying data to a table from a stage.
-												<br><br>
-												<img src="images/sql_script.JPG">
-												<br>
-												<img src="images/sql_script2.JPG">
-										</li>
-										<li id="data_load">Data Loading consists of two parts:
-											<br>
-											1. Staging the files into the place where Snowflake can retrieve data files from. We can have both internal and exteranl (S3, GSP) storages.<br>
-											2. Loding the data into a specific table.
-										</li>
-									</ul>
-
-									<h5id="snow_sql">SnowSQL</h5>
-									<ul>
-										<li>The command line interface client for connecting to Snowflake.</li>
-										<li>Allows to execute SQL queries to perform DDL and DML operations</li>
-										<li>We can install it from Snowflake UI and there is info on how to connect at the end:
-											<br><br>
-											<img src="images/snowsql_installation.JPG">
-											<br>
-										<li>Example:
-											<br>
-											<code>USE DATABASE my_db;</code><br>
-											<code>CREATE OR REPLACE TABLE my_tbl {</code><br>&nbsp&nbsp&nbsp&nbsp
-												<code>...</code><br>
-											<code>};</code><br>
-											<code>CREATE STAGE csvfiles;</code><br>
-											<code>PUT file:///tmp/load/abc*.csv @csvfiles;</code><br>
-											<code>LIST @csvfiles;</code><br>
-											<code>CREATE WAREHOUSE IF NOT EXISTS "dataload" WAREHOUSE.SIZE = "Large"</code><br>&nbsp&nbsp&nbsp&nbsp
-												<code>AUTOSUSPEND = 300 AUTO_RESUME = TRUE;</code><br>
-											<code>USE WAREHUSE dataload;</code><br>
-											<code>COPY INTO my_tbl</code><br>&nbsp&nbsp&nbsp&nbsp
-												<code>FROM @csvfiles</code><br>&nbsp&nbsp&nbsp&nbsp
-												<code>PATTERN = '.*file0[1-4].csv.gz'</code><br>&nbsp&nbsp&nbsp&nbsp
-												<code>ON_ERROR = 'skip_file';</code><br>
-											<code>SELECT * FROM my_tbl LIMIT 10;</code>
-										</li>
-										<li>We can learn a lot from the documentation:
-												<u><a href="https://docs.snowflake.com/en/">Snowflake documentation</a></u>
-										</li>
-									</ul>
-
-									<h5 id="snow_pipe">SnowPipe:</h5>
-									<ul>
-										<li>It loads data from a sources like AWS S3 bucket into a certain target table.</li>
-										<li>With SnowPipe we can perform whole ETL process:
-<!-- start -->
-<pre>
-<span style="color:#00ff45">CREATE PIPE</span> my_pipe
-<span style="color:#00ff45">AUTO_INGEST</span> = FALSE
-<span style="color:#00ff45">AS</span>
-<span style="color:#00ff45">COPY INTO</span> "MY_DB"."MY_STAGE"."tbl_my_table" (col1, col2, col3, col4, col5, col6, col7, col8)
-  <span style="color:#00ff45">FROM</span> (
-    <span style="color:#00ff45">SELECT</span>
-      <span style="color:#00ffea">substr</span>(stage_alias.$3, 1, 7),
-      <span style="color:#00ffea">iff</span>(stage_alias.$1 = 100, replace(stage_alias, '100', 'Done'), 'In progress'),
-      stage_alias.$2,
-      stage_alias.$3,
-      <span style="color:#00ffea">replace</span>(stage_alias.$5, ',', '.'),
-      'Artur',
-      metadata$filename,
-      <span style="color:#00ffea">CURRENT_TIMESTAMP</span>()
-    <span style="color:#00ff45">FROM</span>
-      @"MY_DB"."MY_STAGE"."s3_bucket_name" stage_alias
-    )
-<span style="color:#00ff45">FILE FORMAT</span> = (format_name = "MY_DB"."MY_STAGE"."SAP_X")
-<span style="color:#00ff45">FORCE</span> = FALSE;
-</pre>
-<!-- end -->
-											- at first, we create a pipe name and assign it to the COPY INTO,<br>
-											- each pipe definition starts with COPY INTO then we state a destination table according to the path:<br>
-											<code>database</code>.<code>stage</code>.<code>destination table</code>,<br>
-											then we list all the destination columns that we want to feed with the data load.<br>
-											- In SELECT statement, we perform entire data manipulation where each line corresponds to a signle column listed in the COPY INTO line,<br>
-											- In SELECT statement, we work with indexes which refer to a column number in the data source,<br>
-											- In SELECT statement, we can jump over an index if we want to avoid some columns or we can manipulate the data source columns sequence,<br>
-											- In SELECT statement, we can either use source column (original or transformed) or we can give a hard-coded value there,<br>
-											- For example the first line in SELECT takes 3rd column from data source and transforms it with substr(),<br>
-											- Using metadata$filename gives us the name of current file's name,<br>
-											- with FILE FORMAT we tell Snowflake what is the structure of the data source, what is the delimiter there etc,<br>
-											- with FORCE equal to FALSE we tell Snowflake not to import the file agian if it was imported before.
-										</li>
-										<li>AWS stage:
-											<br>
-											- in the example above we use the external stage of AWS S3,<br>
-											- to create the stage we need to provide S3 bucket's url along with credentials,<br>
-<!-- start -->
-<pre>
-<span style="color:#00ff45">CREATE OR REPLACE STAGE</span> "MY_DB"."MY_SCHEMA"."stage_name"
-  <span style="color:#00ff45">URL</span> = 's3://bucket_name/folder_name'
-  <span style="color:#00ff45">CREDENTIALS</span> = (aws_key_id='.....' aws_secret_key='.....')
-  <span style="color:#00ff45">ENXRYPTION</span> = (type='AWS_SSE_KMS' kms_key_id = '......');
-</pre>
-<!-- end -->
-											- encryption is being used in order to encrypt the confidential data.<br>
-											- instead of passing credentials to each stage we can move on with so-called STORAGE INTEGRAION:<br>
-<!-- start -->
-<pre>
-<span style="color:#00ff45">CREATE STORAGE INTEGRATION</span> "MY_DB"."MY_SCHEMA"."AWS_111111_Integration"
-<span style="color:#00ff45">TYPE</span> = EXTERNAL_STAGE
-<span style="color:#00ff45">STORAGE_PROVIDER</span> = S3
-<span style="color:#00ff45">ENABLED</span> = TRUE
-<span style="color:#00ff45">STORAGE_AWS_ROLE_ARN</span> = 'arn:aws:iam::111111:role/my_role'
-<span style="color:#00ff45">STORAGE_ALLOWED_LOCATIONS</span> = (
-  's3://bucket_name/',
-  's3://another_bucket_name/')
-</pre>
-<!-- end -->
-											- which we can use in CREAT OR REPLACE STAGE script:<br>
-<!-- start -->
-<pre>
-<span style="color:#00ff45">CREATE OR REPLACE STAGE</span> "MY_DB"."MY_STAGE"."stage_name"
-  <span style="color:#00ff45">URL</span> = 's3://bucket_name/folder_name'
-  <span style="color:#00ff45">STORAGE_INTEGRATION</span> = "MY_DB"."MY_SCHEMA"."AWS_111111_Integration"
-</pre>
-<!-- end -->
-											- ARN stands for Amazon Resource Name.
-										</li>
-										<li>With the snowpipe we can understand what are the all dependencies and refreneces to the Snowflake objects based on the source code itself.</li>
-									</ul>
-
-									<h5 id="time_travel">Time Travel:</h5>
-									<ul>
-										<li>Every time a DML operation is executed on a table, Snowflake saves previous versions of the table data. This allows to query earlier data versions using the AT | BEFORE clause.</li>
-										<li>The data retention period specifies the number of days for which this historical data is preserved and, therefore, Time Travel operations
-												(SELECT, CREATE … CLONE, UNDROP) can be performed on the data. The standard retention period is 1 day (24 hours). When the retention
-												period ends for an object, the historical data is moved into Snowflake Fail-safe (background process).
-										</li>
-										<li>The data retention period can be modified up to 90 days. It can be overridden using the DATA_RETENTION_TIME_IN_DAYS while creating table, schema or database.
-											<br>
-											<code>create table mytable(col1 number, col2 date) data_retention_time_in_days=90;</code><br>
-											<code>alter table mytable set data_retention_time_in_days=30;</code><br>
-											- If a retention period is specified for a database or schema, the period is inherited by default for all objects created in the database/schema.
-										</li>
-										<li>We can query a specified point in the table’s history within the retention period giving timestamp, offset from a current date or giving statement query ID.
-<!-- start -->
-<pre>
-<span style="color:#00ff45">-- timestamp</span>
-select * from my_table at(timestamp => 'Mon, 01 May 2015 16:20:00 -0700'::timestamp_tz);
-
-<span style="color:#00ff45">-- time offset from current date</span>
-select * from my_table at(offset => -60*5);
-
-<span style="color:#00ff45">-- statement id</span>
-select * from my_table before(statement => '8e5d0ca9-005e-44e6-b858-a8f5b37c5726');
-</pre>
-<!-- end -->
-											- Querying outside the data retention period for the table, the query fails and returns an error.
-										</li>
-									</ul>
-
-									<h5 id="bulk_unloading">Bulk Unloading</h5>
-									<ul>
-										<li>We can use <code>COPY INTO location from tbl_name</code> command to copy the data from the Snowflake database table into one or more files in a Snowflake or external stage.</li>
-										<li>We can also unload the data into S3 Bucket directly:
-											<br>
-											<code>copy into s3://bucket_name/folder_name/</code><br>
-											<code> from mytable_name storage_integration = s3_int_name;</code>
-											<br>
-											- we must specify the URI for the S3 bucket and the storage integration or credentials for accessing the bucket in the COPY command.
-										</li>
-										<li>Unloading to a File:
-											<br>
-<!-- start -->
-<pre>
-copy into @mystage/myfile.csv.gz from mytable
-file_format = (type=csv compression='gzip')
-single=true
-max_file_size=4900000000;
-</pre>
-<!-- end -->
-											<span style="font-size:12px;">source: docs.snowflake.com</span><br>
-											- loading table data to a single file named myfile.csv in a named stage.
-										</li>
+										<li>NodeJS - server-side API sevice to handle application's HTTP requests.</li>
+										<li>MongoDB Atlas - server connects cloud data storage where I keep question-answer documents that are pulled to application.</li>
+										<li>RactJS - front-end.</li>
+										<li>ExpressJS - web framework that supports building API interfaces.</li>
 									</ul>
 
 								</div>
@@ -329,19 +2224,19 @@ max_file_size=4900000000;
 							<section id="four">
 								<div class="container">
 									<h3>Setup</h3>
-
-									<h5>Following installation required:</h5>
+									<h5>No specific installation required.</h5>
 									<ul>
-										<li><a href="https://signup.snowflake.com/">Snowflake page.</a></li>
+										<li>npm</li>
+										<li>ReactJs</li>
+										<li>ExpressJS</li>
 									</ul>
-
 								</div>
 							</section>
 
 							<section id="five">
 								<div class="container">
 									<h3>Source Code</h3>
-									<p>You can view the source code: <a href="#">HERE</a></p>
+									<p>You can view the source code: <a href="https://github.com/ArturSkrzeta/Learn-SQL-Application/tree/main/project">HERE</a></p>
 									<p>&nbsp</p>
 								</div>
 							</section>
@@ -358,6 +2253,8 @@ max_file_size=4900000000;
 			</div>
 
 		<!-- Scripts -->
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="assets/js/scrolla.js"></script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
