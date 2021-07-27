@@ -65,6 +65,7 @@
 											<li><a href="#snow_pipe">SnowPipe</a></li>
 											<li><a href="#time_travel">Time Travel</a></li>
 											<li><a href="#bulk_unloading">Bulk Unloading</a></li>
+											<li><a href="#record_update">Record update</a></li>
 										</ul>
 
 										<!-- <h5>6. Continuous monitoring:</h5>
@@ -320,6 +321,14 @@ max_file_size=4900000000;
 											<span style="font-size:12px;">source: docs.snowflake.com</span><br>
 											- loading table data to a single file named myfile.csv in a named stage.
 										</li>
+									</ul>
+
+									<h5 id="record_update">Record update:</h5>
+									<ul>
+										<li>When update statement sent to a cloud database, there is no change to an existing record. Actually, a new record is being inserted with an updated value(s) instead.
+											There is also the metadata that controlls which one of those records is the most updated. The old records are being kept in the storage and kept available so that we can go back to these if needed.
+										</li>
+										<li>This is unlike sql sever database for example, where update statement changes the records value in place.</li>
 									</ul>
 
 								</div>
