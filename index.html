@@ -335,6 +335,54 @@ max_file_size=4900000000;
 										<li>This is unlike sql sever database for example, where update statement changes the records value in place.</li>
 									</ul>
 
+									<h5>Stored procedures:</h5>
+									<ul>
+										<li>A stored procedure returns a single value only.</li>
+										<li>Although we run SELECT inside a stored procedure, the results must be used within the stored procedure, or be narrowed to a single value and then eturned.</li>
+										<li>Language used in JavaScript that provides the control structures (branching and looping) and SQL statements are executed by calling functions in a JavaScript API.</li>
+										<li>Example procedue that takes one variable from an user:
+<!-- start -->
+<pre>
+CREATE OR REPLACE PROCEDURE procedure_name (
+    <span style="color:#00ff45">project_name</span> varchar
+)
+RETURNS ARRAY
+LANGUAGE javascript
+AS
+$$
+
+    var query = "SELECT MANAGER_NAME FROM PROJECTS WHERE PROJECT_NAME = ?";
+    var statement = snowflake.createStatement({sqlText: query, binds: [<span style="color:#00ff45">PROJECT_NAME</span>]});
+    var resultSet = statement.execute();
+
+    var arr = [];
+
+    while (resultSet.next())(
+      arr.push(resultSet.GetColumnValue(1));
+    )
+
+    return arr;
+
+$$;
+
+
+CALL procedure_name('asap_project')
+</pre>
+<!-- end -->
+											- When defining a stored procedure we need to declare the type of returned vlaue, here ARRAY.<br>
+											- If we want to return different type depending on flow control we can declare returned value as VARIANT.<br>
+											- $$ id the delimiter for the beginning and end of the stored procedure.<br>
+											- The variable: resultSet holds the outcome of SELECT statement.<br>
+											- In order to access each row from the resultSet, we need to iterate it calling resultSet.next() one time for each record.<br>
+											- As far there are records still available, resultSet.next() returns TRUE in the while loop.<br>
+											- With <code>arr.push(resultSet)</code> we put all record's columns into the array.<br>
+											- We can narrow down the result to one column only with the following: <code>arr.push(resultSet.GetColumnValue(1))</code>
+										</li>
+										<li>IMPORTANT to note, we can pass variable names into procedrue in either upper or lower case but using these variables inside a procedure we need to use them with upper cases.
+												This is because SQL by default converts columns in upper case.
+										</li>
+									</ul>
+
 								</div>
 							</section>
 
