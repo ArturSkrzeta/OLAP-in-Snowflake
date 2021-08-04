@@ -372,7 +372,7 @@ CALL procedure_name('asap_project')
 											- When defining a stored procedure we need to declare the type of returned vlaue, here ARRAY.<br>
 											- If we want to return different type depending on flow control we can declare returned value as VARIANT.<br>
 											- $$ id the delimiter for the beginning and end of the stored procedure.<br>
-											- With API object's function: snowflake.createStatement() we pass JSON object with two key-value pairs.<br>
+											- With Javascript API global object's function: snowflake.createStatement() we pass JSON object with two key-value pairs.<br>
 											- With binds key we bind '?' in the SELECT statement with passed variables.<br>
 											- We can either bind variables with query or we can concat variables in a SELECT statment like:
 												<code>"SELECT MANAGER_NAME FROM PROJECTS WHERE</code><br>
