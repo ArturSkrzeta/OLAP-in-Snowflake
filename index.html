@@ -67,6 +67,7 @@
 											<li><a href="#bulk_unloading">Bulk Unloading</a></li>
 											<li><a href="#update_statement">Update Statement</a></li>
 											<li><a href="#stored_procedure">Stored procedure</a></li>
+											<li><a href="#variables">Variables</a></li>
 										</ul>
 
 										<!-- <h5>6. Continuous monitoring:</h5>
@@ -387,6 +388,35 @@ CALL procedure_name('asap_project')
 										</li>
 										<li>IMPORTANT to note, we can pass variable names into procedrue in either upper or lower case but using these variables inside a procedure we need to use them with upper cases.
 												This is because SQL by default converts columns in upper case.
+										</li>
+									</ul>
+
+									<h5 id="variables">Variables</h5>
+									<ul>
+										<li>We can make an usage of variables:
+<!-- start -->
+<pre>
+SET name = 'Artur'
+
+SHOW VARIABLES;
+
+SELECT *
+FROM employees
+WHERE employee+_name = $name
+</pre>
+<!-- end -->
+											- calling variable we need to precede it with dollar sign.
+										</li>
+										<li>When variable sores the name of db object we need to wrap it in indetifier() function:
+<!-- start -->
+
+<pre>
+SET my_table_name = "employees"
+
+SELECT * FROM IDENTIFIER($my_table_name);
+DROP TABLE IDENTIFIER($my_table_name);
+</pre>
+<!-- end -->
 										</li>
 									</ul>
 
