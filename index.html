@@ -392,7 +392,7 @@ CALL procedure_name('asap_project')
 										<li>We can execute many sql statements within one procedure:
 <!-- start -->
 <pre>
-CREATE OR REPLACE PROCEDURE my_procedure()
+CREATE OR REPLACE PROCEDURE "my_db"."my_schema".my_procedure()
 RETURNS string
 LANGUAGE javascript
 AS
@@ -403,28 +403,27 @@ $$
 // 2nd one contains unique item with the item_status defined
 
 //  Creating temporary table with all categories per Item
-    var tbl_products = '"DB_DEV_ANALYTICS"."PS_AN_FERDI_POC"."tbl_products"';
-    var tbl_tools = '"DB_DEV_ANALYTICS"."PS_AN_FERDI_POC"."tbl_tools"';
-    var tbl_items = '"DB_DEV_ANALYTICS"."PS_AN_FERDI_POC"."tbl_items"';
-    var tbl_things = '"DB_DEV_ANALYTICS"."PS_AN_FERDI_POC"."tbl_things"';
+    var tbl_products = '"my_db"."my_schema"."tbl_products"';
+    var tbl_tools = '"my_db"."my_schema"."tbl_tools"';
+    var tbl_items = '"my_db"."my_schema"."tbl_items"';
+    var tbl_things = '"my_db"."my_schema"."tbl_things"';
     var tbl_temporary_name = 'tbl_temp_all_categories"';
 
-		var tbl_temporary_definition = "";
-    tbl_temporary_definition += "CREATE OR REPLACE TABLE " + tbl_temporary_name + " AS ";
-    tbl_temporary_definition += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_debitors + " ";
-    tbl_temporary_definition += "UNION ";
-    tbl_temporary_definition += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_creditors + " ";
-    tbl_temporary_definition += "UNION ";
-    tbl_temporary_definition += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_profitloss + " ";
-    tbl_temporary_definition += "UNION ";
-    tbl_temporary_definition += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_fxaccounts;
-    // + currima
+		var tbl_temp_def = "";
+    tbl_temp_def += "CREATE OR REPLACE TABLE " + tbl_temporary_name + " AS ";
+    tbl_temp_def += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_debitors + " ";
+    tbl_temp_def += "UNION ";
+    tbl_temp_def += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_creditors + " ";
+    tbl_temp_def += "UNION ";
+    tbl_temp_def += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_profitloss + " ";
+    tbl_temp_def += "UNION ";
+    tbl_temp_def += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_fxaccounts;
 
     // example
-    // PSP  |   Classifier      | others
-    // 123  |   Turnover        | ...
-    // 123  |   different       | ...
-    // 123  |   different_2     | ...
+    // ITEM  	|   Classifier      | others
+    // 123  	|   Turnover        | ...
+    // 123  	|   different       | ...
+    // 123  	|   different_2     | ...
     // 678  |   something       | ...
     // 678  |   something2      | ...
     // 111  |   Turnover        | ...
