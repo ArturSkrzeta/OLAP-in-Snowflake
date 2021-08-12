@@ -389,6 +389,52 @@ CALL procedure_name('asap_project')
 										<li>IMPORTANT to note, we can pass variable names into procedrue in either upper or lower case but using these variables inside a procedure we need to use them with upper cases.
 												This is because SQL by default converts columns in upper case.
 										</li>
+										<li>We can execute many sql statements within one procedure:
+<!-- start -->
+<pre>
+CREATE OR REPLACE PROCEDURE my_procedure()
+RETURNS string
+LANGUAGE javascript
+AS
+$$
+
+// Creating 2 temporary tables:
+// 1st one contains all items with a single category assigned (there may be duplicates)
+// 2nd one contains unique item with the item_status defined
+
+//  Creating temporary table with all categories per Item
+    var tbl_products = '"DB_DEV_ANALYTICS"."PS_AN_FERDI_POC"."tbl_products"';
+    var tbl_tools = '"DB_DEV_ANALYTICS"."PS_AN_FERDI_POC"."tbl_tools"';
+    var tbl_items = '"DB_DEV_ANALYTICS"."PS_AN_FERDI_POC"."tbl_items"';
+    var tbl_things = '"DB_DEV_ANALYTICS"."PS_AN_FERDI_POC"."tbl_things"';
+    var tbl_temporary_name = 'tbl_temp_all_categories"';
+
+		var tbl_temporary_definition = "";
+    tbl_temporary_definition += "CREATE OR REPLACE TABLE " + tbl_temporary_name + " AS ";
+    tbl_temporary_definition += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_debitors + " ";
+    tbl_temporary_definition += "UNION ";
+    tbl_temporary_definition += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_creditors + " ";
+    tbl_temporary_definition += "UNION ";
+    tbl_temporary_definition += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_profitloss + " ";
+    tbl_temporary_definition += "UNION ";
+    tbl_temporary_definition += "SELECT PSP, CLASSIFIER, PROJECT_NUMBER, DATA_SRC FROM " + tbl_fxaccounts;
+    // + currima
+
+    // example
+    // PSP  |   Classifier      | others
+    // 123  |   Turnover        | ...
+    // 123  |   different       | ...
+    // 123  |   different_2     | ...
+    // 678  |   something       | ...
+    // 678  |   something2      | ...
+    // 111  |   Turnover        | ...
+
+$$;
+
+CALL procedure_name('asap_project')
+</pre>
+<!-- end -->
+										</li>
 									</ul>
 
 									<h5 id="variables">Variables</h5>
