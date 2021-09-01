@@ -337,7 +337,7 @@ LANGUAGE javascript
 AS
 $$
 
-    var tbl_arr = [
+    var <span style="color:#00ff45">tbl_arr</span> = [
                     'tbl_clients',
                     'tbl_products',
                     'tbl_vendors',
@@ -346,42 +346,39 @@ $$
                     'tbl_premium_products',
                  ];
 
-    var tbl_arr_length = tbl_arr.length;
+    var <span style="color:#00ff45">tbl_arr_length</span> = tbl_arr.length;
 
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var <span style="color:#00ff45">today</span> = new Date();
+    var <span style="color:#00ff45">date</span> = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
     for (var i = 0; i < tbl_arr_length; i++){
 
-      var table_name = tbl_arr[i];
-      var file_name = date + "_" + table_name + '_data_new_test';
+      var <span style="color:#00ff45">table_name</span>  = tbl_arr[i];
+      var <span style="color:#00ff45">file_name</span>  = <span style="color:#00ff45">date</span> + "_" + <span style="color:#00ff45">table_name</span>  + '_data_new_test';
 
-      var s3_bucket_url = 's3://my_backup/db-backup/' + file_name;
-      var full_table_name = '"db_name"."db_schema"."' + table_name + '"';
-      var storage_integration_name = '"db_name.db_schema.AWS_12345_Integration"'
+      var <span style="color:#00ff45">s3_bucket_url</span>  = 's3://my_backup/db-backup/' + <span style="color:#00ff45">file_name</span>;
+      var <span style="color:#00ff45">full_table_name</span>  = '"db_name"."db_schema"."' + <span style="color:#00ff45">table_name</span> + '"';
+      var <span style="color:#00ff45">storage_integration_name</span>  = '"db_name.db_schema.AWS_12345_Integration"'
 
-      var sql = "";
-      sql += "COPY INTO " + s3_bucket_url + " ";
-      sql += "FROM " + full_table_name + " ";
-      sql += "STORAGE_INTEGRATION = " + storage_integration_name + " ";
-      sql += "FILE_FORMAT = ( TYPE = CSV null_if=('Null') field_optionally_enclosed_by='\"');";
+      var <span style="color:#00ff45">sql</span>  = "";
+      <span style="color:#00ff45">sql</span>  += "COPY INTO " + <span style="color:#00ff45">s3_bucket_url</span> + " ";
+      <span style="color:#00ff45">sql</span>  += "FROM " + <span style="color:#00ff45">full_table_name</span> + " ";
+      <span style="color:#00ff45">sql</span>  += "STORAGE_INTEGRATION = " + <span style="color:#00ff45">storage_integration_name</span> + " ";
+      <span style="color:#00ff45">sql</span>  += "FILE_FORMAT = ( TYPE = CSV null_if=('Null') field_optionally_enclosed_by='\"');";
 
-      var sql_command = snowflake.createStatement({sqlText: sql});
+      var <span style="color:#00ff45">sql_command</span>  = snowflake.createStatement({sqlText: <span style="color:#00ff45">sql</span>});
 
-			try {
-				var sql_result = sql_command.execute();
-			}
-			catch (e) {
-				return = 'bulk unloading failed: ' + e;
-			}
-
-		};
-
+      try {
+          var <span style="color:#00ff45">sql_result</span>  = <span style="color:#00ff45">sql_command</span>.execute();
+      }
+      catch (<span style="color:#00ff45">e</span>) {
+          return = 'bulk unloading failed: ' + <span style="color:#00ff45">e</span>;
+      };
 
     };
 
     result = 'DONE'
-    return result;
+    return <span style="color:#00ff45">result</span> ;
 
 $$;
 </pre>
