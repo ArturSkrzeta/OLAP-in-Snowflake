@@ -306,7 +306,8 @@ select * from my_table before(statement => '8e5d0ca9-005e-44e6-b858-a8f5b37c5726
 										<li>We can also unload the data into S3 Bucket directly:
 											<br>
 											<code>copy into 's3://bucket_name/folder_name/'</code><br>
-											<code> from mytable_name storage_integration = s3_int_name;</code>
+											<code>from mytable_name</code><br>
+											<code>storage_integration = s3_int_name;</code>
 											<br>
 											- we must specify the URI for the S3 bucket and the storage integration or credentials for accessing the bucket in the COPY command:
 											<br>
@@ -326,6 +327,56 @@ max_file_size=4900000000;
 <!-- end -->
 											<span style="font-size:12px;">source: docs.snowflake.com</span><br>
 											- loading table data to a single file named myfile.csv in a named stage.
+										</li>
+										<li>Bulk unloading with the stored procedure:
+<!-- start -->
+<pre>
+CREATE OR REPLACE PROCEDURE "db_name"."db_schema".unload_procedure()
+RETURNS string
+LANGUAGE javascript
+AS
+$$
+
+    var tbl_arr = [
+                    'tbl_clients',
+                    'tbl_products',
+                    'tbl_vendors',
+                    'tbl_employees',
+                    'tbl_discounts',
+                    'tbl_premium_products',
+                 ];
+
+    var tbl_arr_length = tbl_arr.length;
+
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+    for (var i = 0; i < tbl_arr_length; i++){
+
+      var table_name = tbl_arr[i];
+      var file_name = date + "_" + table_name + '_data_new_test';
+
+      var s3_bucket_url = 's3://my_backup/db-backup/' + file_name;
+      var full_table_name = '"db_name"."db_schema"."' + table_name + '"';
+      var storage_integration_name = '"db_name.db_schema.AWS_12345_Integration"'
+
+      var sql = "";
+      sql += "COPY INTO " + s3_bucket_url + " ";
+      sql += "FROM " + full_table_name + " ";
+      sql += "STORAGE_INTEGRATION = " + storage_integration_name + " ";
+      sql += "FILE_FORMAT = ( TYPE = CSV null_if=('Null') field_optionally_enclosed_by='\"');";
+
+      var sql_command = snowflake.createStatement({sqlText: sql});
+      var sql_result = sql_command.execute();
+
+    };
+
+    result = 'DONE'
+    return result;
+
+$$;
+</pre>
+<!-- end -->
 										</li>
 									</ul>
 
