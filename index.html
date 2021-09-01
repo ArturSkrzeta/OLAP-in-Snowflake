@@ -354,7 +354,7 @@ $$
     for (var i = 0; i < tbl_arr_length; i++){
 
       var <span style="color:#00ff45">table_name</span>  = tbl_arr[i];
-      var <span style="color:#00ff45">file_name</span>  = <span style="color:#00ff45">date</span> + "_" + <span style="color:#00ff45">table_name</span>  + '_data_new_test';
+      var <span style="color:#00ff45">file_name</span>  = <span style="color:#00ff45">date</span> + "_" + <span style="color:#00ff45">table_name</span>;
 
       var <span style="color:#00ff45">s3_bucket_url</span>  = 's3://my_backup/db-backup/' + <span style="color:#00ff45">file_name</span>;
       var <span style="color:#00ff45">full_table_name</span>  = '"db_name"."db_schema"."' + <span style="color:#00ff45">table_name</span> + '"';
@@ -383,6 +383,9 @@ $$
 $$;
 </pre>
 <!-- end -->
+											- the procedure loops through all of the tables in the database,<br>
+											- within in the loop, it gives a file a name of the table along with the timestamp beign concatinated which is meant to build the S3 bucket's url,<br>
+											- the rest of the loop is responsible for buildin the sql statement and executing it within try-catch block.
 										</li>
 									</ul>
 
