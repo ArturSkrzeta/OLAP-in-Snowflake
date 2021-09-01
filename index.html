@@ -367,7 +367,16 @@ $$
       sql += "FILE_FORMAT = ( TYPE = CSV null_if=('Null') field_optionally_enclosed_by='\"');";
 
       var sql_command = snowflake.createStatement({sqlText: sql});
-      var sql_result = sql_command.execute();
+
+			try {
+				var sql_result = sql_command.execute();
+			}
+			catch (e) {
+				return = 'bulk unloading failed: ' + e;
+			}
+
+		};
+
 
     };
 
