@@ -495,17 +495,17 @@ $$
 
     // example
     // ------------------------------------------------------------------------------
-    // ITEM |   Classifier      | ... | DATA_SRC    | ... |   IF_CURRIMA_SOMEWHERE   |
+    // ITEM |   Classifier      | ... | DATA_SRC    | ... |   IF_SPARE_SOMEWHERE   	|
     // ------------------------------------------------------------------------------
-    // 111  |   Spare           | ... | ERP         | ... |   0                      |
+    // 111  |   Spare           | ... | ERP         | ... |   0                     |
     // ------------------------------------------------------------------------------
-    // 123  |   Spare           | ... | ERP         | ... |   0                      |
-    // 123  |   different       | ... | ERP         | ... |   0                      |
-    // 123  |   different_2     | ... | ERP         | ... |   0                      |
+    // 123  |   Spare           | ... | ERP         | ... |   0                     |
+    // 123  |   different       | ... | ERP         | ... |   0                     |
+    // 123  |   different_2     | ... | ERP         | ... |   0                     |
     // ------------------------------------------------------------------------------
-    // 999  |   something       | ... | ERP         | ... |   1                      |
-    // 999  |   something_2     | ... | ERP         | ... |   1                      |
-    // 999  |   Spare           | ... | SSYSTEM     | ... |   1                      |
+    // 999  |   something       | ... | ERP         | ... |   1                     |
+    // 999  |   something_2     | ... | ERP         | ... |   1                     |
+    // 999  |   Spare           | ... | SSYSTEM     | ... |   1                     |
 
     var sql_command = snowflake.createStatement({sqlText: tbl_temporary_definition});
 
@@ -563,7 +563,7 @@ $$
 
 //  Insert for testing -> ITEM 666111 should appear in the tbl_items_master at the end of procedure - if so then test passed - omment out when want to skip
 //    var insert_text = "INSERT INTO " + tbl_temporary_name +
-	" (ITEM, CATEGORY, PROJECT_NUMBER, DATA_SRC) VALUES('666111', 'Spare', '12345', 'SSYSTEM_B')";
+	" (ITEM, CATEGORY, PART_NUMBER, DATA_SRC) VALUES('666111', 'Spare', '12345', 'SSYSTEM_B')";
 //    var stmt_insertIntoTblProjectsMaster_command = snowflake.createStatement({sqlText: insert_text});
 //    var res = stmt_insertIntoTblProjectsMaster_command.execute();
 
@@ -589,7 +589,7 @@ $$
     tbl_temporary_definition += "SUM(CASE WHEN CATEGORY = 'Spare' THEN 1 ELSE 0 END)
 			OVER(PARTITION BY ITEM ORDER BY ITEM) AS if_spare, ";
     tbl_temporary_definition += "COUNT(*) OVER(PARTITION BY ITEM ORDER BY ITEM) AS count, ";
-    tbl_temporary_definition += case_logic + "AS order_status ";
+    tbl_temporary_definition += case_logic + " AS order_status ";
     tbl_temporary_definition += "FROM " + tbl_temporary_name;
 
     var sql_command = snowflake.createStatement({sqlText: tbl_temporary_definition});
@@ -616,7 +616,7 @@ $$
     var tbl_items_master = '"db_name"."schema_name"."tbl_items_master"';
     var tbl_erpdata = "ERP ";
     var insert_text = "INSERT INTO " + tbl_items_master +
-			" (ITEM, PROJECT_NUMBER, ORDER_STATUS, ABC, BUDGET, USER_ID, EDIT_TIMESTAMP) ";
+			" (ITEM, PART_NUMBER, ORDER_STATUS, ABC, BUDGET, USER_ID, EDIT_TIMESTAMP) ";
 
     var outer_query = "";
     outer_query += "SELECT DISTINCT erpdata.ITEM, ";
@@ -636,7 +636,7 @@ $$
 			iff(erpdata.DATA_SRC_FILENAME like 'SSYSTEM%',
 			iff(erpdata.DATA_SRC_FILENAME like '%SSYSTEM_A%', 'A100', 'B300'),
 			'tbd')), ";
-    outer_query += "left(erpdata.PROJECT_NUMBER,5), ";
+    outer_query += "left(erpdata.PART_NUMBER,5), ";
     outer_query += "'system' user_id, ";
     outer_query += 'current_timestamp()' + " ";
 
@@ -648,7 +648,7 @@ $$
 
     // inner_query example result:
     // ---------------------------------------------------------------------------
-    // ITEM  | CATEGORY     |   PROJECT_NUMBER  |  DATA_SRC  |  ORDER_STATUS
+    // ITEM  | CATEGORY     |   PART_NUMBER  |  DATA_SRC  |  ORDER_STATUS
     // ---------------------------------------------------------------------------
     // 123  | Spare         |        ...        |    ...     |  open
     // ---------------------------------------------------------------------------
