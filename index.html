@@ -459,10 +459,10 @@ AS
 $$
 
 // Creating 2 temporary tables:
-// 1st one contains all ITEM with a single classifier assigned (there may be duplicates)
+// 1st one contains all ITEM with a single category assigned (there may be duplicates)
 // 2nd one contains unique ITEM with order_status defined
 
-//  Creating temporary table with all classifiers per ITEM
+//  Creating temporary table with all categories per ITEM
 
     var tbl_products = '"db_name"."schema_name"."tbl_products"';
     var tbl_tools = '"db_name"."schema_name"."tbl_tools"';
@@ -495,7 +495,7 @@ $$
 
     // example
     // ------------------------------------------------------------------------------
-    // ITEM |   Classifier      | ... | DATA_SRC    | ... |   IF_SPARE_SOMEWHERE   	|
+    // ITEM |   CATEGORY      	| ... | DATA_SRC    | ... |   IF_SPARE_SOMEWHERE   	|
     // ------------------------------------------------------------------------------
     // 111  |   Spare           | ... | ERP         | ... |   0                     |
     // ------------------------------------------------------------------------------
@@ -551,7 +551,7 @@ $$
 
     // example:
     // --------------------------------------------------
-    // ITEM   |   Classifier      | ... | DATA_SRC  | ...
+    // ITEM   |   CATEGORY	      | ... | DATA_SRC  | ...
     // --------------------------------------------------
     // 111    |   Spare           | ... | ERP       | ...
     // --------------------------------------------------
@@ -563,7 +563,7 @@ $$
 
 //  Insert for testing -> ITEM 666111 should appear in the tbl_items_master at the end of procedure - if so then test passed - omment out when want to skip
 //    var insert_text = "INSERT INTO " + tbl_temporary_name +
-	" (ITEM, CATEGORY, PART_NUMBER, DATA_SRC) VALUES('666111', 'Spare', '12345', 'SSYSTEM_B')";
+//	" (ITEM, CATEGORY, PART_NUMBER, DATA_SRC) VALUES('666111', 'Spare', '12345', 'SSYSTEM_B')";
 //    var stmt_insertIntoTblProjectsMaster_command = snowflake.createStatement({sqlText: insert_text});
 //    var res = stmt_insertIntoTblProjectsMaster_command.execute();
 
