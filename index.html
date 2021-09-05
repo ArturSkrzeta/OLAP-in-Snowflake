@@ -68,6 +68,7 @@
 											<li><a href="#update_statement">Update Statement</a></li>
 											<li><a href="#stored_procedure">Stored procedure</a></li>
 											<li><a href="#variables">Variables</a></li>
+											<li><a href="#variables">Streams</a></li>
 										</ul>
 
 										<!-- <h5>6. Continuous monitoring:</h5>
@@ -160,7 +161,22 @@
 										</li>
 									</ul>
 
-									<h5id="snow_sql">SnowSQL</h5>
+									<h5 id="snow_sql">Quering Snowlake's table:</h5>
+									<ul>
+										<li>We can either qury table jaki that:
+											<br>
+											<code>USE DATABSE my_db;</code><br>
+											<code>USE SCHEMA my_schema;</code><br>
+											<code>SELECT * FROM my_table;</code>
+										</li>
+										<li>or like that:
+											<br>
+											<code>SELECT * FROM my_db.my_schema.my_table</code>
+										</li>
+									</ul>
+
+
+									<h5 id="snow_sql">SnowSQL</h5>
 									<ul>
 										<li>The command line interface client for connecting to Snowflake.</li>
 										<li>Allows to execute SQL queries to perform DDL and DML operations</li>
@@ -725,6 +741,30 @@ SELECT * FROM IDENTIFIER($my_table_name);
 DROP TABLE IDENTIFIER($my_table_name);
 </pre>
 <!-- end -->
+										</li>
+									</ul>
+
+
+									<h5>Streams:</h5>
+									<ul>
+										<li>Make it easy to grab just the new data in a table as they take a snapshot of all rows in a table at a point in time.</li>
+										<li>Stream records any DML changes to a table as well as metadata about each change.</li>
+										<li>Stream itself doesn't contain any data. It stores only an offset for the souce table and returns captured records using the versioning history.
+											<br>
+											<img src="images/stream.jpg"><br><span style="font-size:12px">soruce: Joyce Kay Avila</span>
+										</li>
+										<li>Here is how to create a stream based on a table:
+											<br>
+											<code>USE DATABSE my_db;</code><br>
+											<code>USE SCHEMA my_schema;</code><br>
+											<code>CREATE OR REPLACE STREAM my_stream ON TABLE my_table</code>
+										</li>
+										<li>A stream can be queried just like a table:
+											<br>
+											<code>SELECT * FROM my_stream;</code>
+											<br>
+											- if there wasn't any data upload then <b>my_stream</b> is returns nothing.<br>
+											- when we upload 3 records to <b>my_table</b> then <b>my_stream</b> returns exactly the same 3 records along with the metadata.
 										</li>
 									</ul>
 
