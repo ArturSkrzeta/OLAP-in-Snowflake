@@ -764,7 +764,8 @@ DROP TABLE IDENTIFIER($my_table_name);
 											<code>SELECT * FROM my_stream;</code>
 											<br>
 											- if there wasn't any data upload then <b>my_stream</b> is returns nothing.<br>
-											- when we upload 3 records to <b>my_table</b> then <b>my_stream</b> returns exactly the same 3 records along with the metadata.
+											- when we upload 3 records to <b>my_table</b> then <b>my_stream</b> returns exactly the same 3 records along with the metadata.<br>
+											- so stream will be always empty as long as there is no DML yet since the stream was created.
 										</li>
 									</ul>
 
