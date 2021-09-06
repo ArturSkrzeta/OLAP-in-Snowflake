@@ -748,8 +748,13 @@ DROP TABLE IDENTIFIER($my_table_name);
 									<h5>Streams:</h5>
 									<ul>
 										<li>Make it easy to grab just the new data in a table as they take a snapshot of all rows in a table at a point in time.</li>
-										<li>Stream records any DML changes to a table as well as metadata about each change.</li>
-										<li>Stream itself doesn't contain any data. It stores only an offset for the souce table and returns captured records using the versioning history.
+										<li>Stream records any DML changes to a table as well as metadata about each change:
+											<br>
+											- <code>METADATA$ACTION</code><br>
+											- <code>METADATA$ISUDATE</code><br>
+											- <code>METADATA$ROWID</code>
+										</li>
+										<li>Stream itself doesn't contain any data. It stores only an offset for the souce table and returns Change Data Capture (CDC) records using the versioning history.
 											<br>
 											<img src="images/stream.JPG"><br><span style="font-size:12px">soruce: Joyce Kay Avila</span>
 										</li>
@@ -775,6 +780,14 @@ DROP TABLE IDENTIFIER($my_table_name);
 										</li>
 									</ul>
 
+									<h5>Tasks:</h5>
+									<ul>
+										<li>Object that can schedule a SQL statement to be automtically executed as a recurring event.</li>
+										<li>Task can either execute a single SQL or call to a stored procedure.</li>
+										<li>There is no any event that triggers a task as it runs relying on the schedule.</li>
+
+									</ul>
+
 								</div>
 							</section>
 
@@ -794,7 +807,7 @@ DROP TABLE IDENTIFIER($my_table_name);
 							<section id="five">
 								<div class="container">
 									<h3>Source Code</h3>
-									<p>You can view the source code: <a href="#">HERE</a></p>
+									<p>You can view the source code: <a href="https://github.com/ArturSkrzeta/OLAP-in-Snowflake/tree/main/script">HERE</a></p>
 									<p>&nbsp</p>
 								</div>
 							</section>
