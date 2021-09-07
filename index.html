@@ -890,9 +890,6 @@ Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
 ---------------------------------------------------------------------------------------------------
      |                               	|                   |                    |
 ---------------------------------------------------------------------------------------------------
-
-
-
 </pre>
 <!-- end -->
 											- only freshest data that has been loaded to RATING_EVENTS table will exist in the STREAM_A stream,<br>
@@ -906,9 +903,7 @@ Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
 									<ul>
 										<li>Object that can schedule a SQL statement to be automtically executed as a recurring event.</li>
 										<li>Task can either execute a single SQL or call to a stored procedure.</li>
-										<li>There is no any event that triggers a task as it runs relying on the schedule.</li>
-										<li>Also it can be run in response to another task finishing - so tasks can be chained together.</li>
-										<li> ... :
+										<li>There is no any event that triggers a task as it runs relying on the schedule:
 <!-- start -->
 <pre>
 CREATE OR REPLACE TASK <span style="color:#ff9b00">EVENT_RATINGS_TASK</span>
@@ -934,6 +929,7 @@ ALTER TASK <span style="color:#ff9b00">EVENT_RATINGS_TASK</span> RESUME;
 											- When the task is run, it executes insert query.<br>
 											- When tasks are created, they are off - we need to resume them to activet it.
 										</li>
+										<li>Also it can be run in response to another task finishing - so tasks can be chained together.</li>
 									</ul>
 
 								</div>
