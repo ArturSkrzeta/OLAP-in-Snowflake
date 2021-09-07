@@ -69,6 +69,7 @@
 											<li><a href="#stored_procedure">Stored procedure</a></li>
 											<li><a href="#variables">Variables</a></li>
 											<li><a href="#variables">Streams</a></li>
+											<li><a href="#tasks">Tasks</a></li>
 										</ul>
 
 										<!-- <h5>6. Continuous monitoring:</h5>
@@ -744,7 +745,7 @@ DROP TABLE IDENTIFIER($my_table_name);
 									</ul>
 
 
-									<h5>Streams:</h5>
+									<h5 id="streams">Streams:</h5>
 									<ul>
 										<li>Make it easy to grab just the new data in a table as they take a snapshot of all rows in a table at a point in time.</li>
 										<li>Stream records any DML changes to a table as well as metadata about each change:
@@ -901,7 +902,7 @@ Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
 										</li>
 									</ul>
 
-									<h5>Tasks:</h5>
+									<h5 id="tasks">Tasks:</h5>
 									<ul>
 										<li>Object that can schedule a SQL statement to be automtically executed as a recurring event.</li>
 										<li>Task can either execute a single SQL or call to a stored procedure.</li>
