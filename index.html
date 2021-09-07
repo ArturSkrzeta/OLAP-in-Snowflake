@@ -789,14 +789,16 @@ CREATE OR REPLACE TABLE <span style="color:#00ff45">RATING_EVENTS</span>(
 );
 
 CREATE OR REPLACE STREAM <span style="color:#00ffea">STREAM_A</span> ON TABLE <span style="color:#00ff45">RATING_EVENTS</span>;
+CREATE OR REPLACE STREAM <span style="color:#ff00c6">STREAM_B</span> ON TABLE <span style="color:#00ff45">RATING_EVENTS</span>;
 
 INSERT INTO <span style="color:#00ff45">RATING_EVENTS</span>(RAW_DATA) SELECT PARSE_JSON(' {'event_id': 1, 'rating': 10} ');
 
-SELECT * FROM <span style="color:#00ffea">STREAM_A</span>
+SELECT * FROM <span style="color:#00ffea">STREAM_A</span>;
 
 Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
 ---------------------------------------------------------------------------------------------------
 1    |  {'event_id': 1, 'rating': 10}	|  INSERT           |  FALSE             |  123456
+---------------------------------------------------------------------------------------------------
 
 INSERT INTO MAIN_TABLE(EVENT_ID, EVENT_TITLE, RATING)(
   SELECT
@@ -805,19 +807,98 @@ INSERT INTO MAIN_TABLE(EVENT_ID, EVENT_TITLE, RATING)(
     <span style="color:#00ffea">STREAM_A</span>.RAW_DATA:"rating" AS RATING
   FROM
     <span style="color:#00ffea">STREAM_A</span>
-)
+);
 
-SELECT * FROM <span style="color:#00ffea">STREAM_A</span>
+SELECT * FROM <span style="color:#00ffea">STREAM_A</span>;
 
 Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
 ---------------------------------------------------------------------------------------------------
      |                               	|                   |                    |
+---------------------------------------------------------------------------------------------------
+
+
+SELECT * FROM <span style="color:#ff00c6">STREAM_B</span>;
+
+Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
+---------------------------------------------------------------------------------------------------
+1    |  {'event_id': 1, 'rating': 10}	|  INSERT           |  FALSE             |  123456
+---------------------------------------------------------------------------------------------------
+
+
+INSERT INTO <span style="color:#00ff45">RATING_EVENTS</span>(RAW_DATA) SELECT PARSE_JSON(' {'event_id': 2, 'rating': 09} ');
+INSERT INTO <span style="color:#00ff45">RATING_EVENTS</span>(RAW_DATA) SELECT PARSE_JSON(' {'event_id': 3, 'rating': 05} ');
+
+
+SELECT * FROM <span style="color:#00ffea">STREAM_A</span>;
+
+Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
+---------------------------------------------------------------------------------------------------
+2    |  {'event_id': 2, 'rating': 09}	|  INSERT           |  FALSE             |  123457
+---------------------------------------------------------------------------------------------------
+3    |  {'event_id': 3, 'rating': 05}	|  INSERT           |  FALSE             |  123458
+---------------------------------------------------------------------------------------------------
+
+SELECT * FROM <span style="color:#ff00c6">STREAM_B</span>;
+
+Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
+---------------------------------------------------------------------------------------------------
+1    |  {'event_id': 1, 'rating': 10}	|  INSERT           |  FALSE             |  123456
+---------------------------------------------------------------------------------------------------
+2    |  {'event_id': 2, 'rating': 09}	|  INSERT           |  FALSE             |  123457
+---------------------------------------------------------------------------------------------------
+3    |  {'event_id': 3, 'rating': 05}	|  INSERT           |  FALSE             |  123458
+---------------------------------------------------------------------------------------------------
+
+
+
+INSERT INTO MAIN_TABLE(EVENT_ID, EVENT_TITLE, RATING)(
+  SELECT
+    <span style="color:#00ffea">STREAM_A</span>.RAW_DATA:"event_id" AS EVENT_ID
+    'Random_title' AS EVENT_TITLE
+    <span style="color:#00ffea">STREAM_A</span>.RAW_DATA:"rating" AS RATING
+  FROM
+    <span style="color:#00ffea">STREAM_A</span>
+);
+
+SELECT * FROM <span style="color:#00ffea">STREAM_A</span>;
+
+Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
+---------------------------------------------------------------------------------------------------
+     |                               	|                   |                    |
+---------------------------------------------------------------------------------------------------
+
+
+
+DELETE FROM <span style="color:#00ff45">RATING_EVENTS</span> WHERE RAW_DATA:"rating" IS NOT NULL;
+
+
+SELECT * FROM <span style="color:#00ffea">STREAM_A</span>;
+
+Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
+---------------------------------------------------------------------------------------------------
+1    |  {'event_id': 1, 'rating': 10}	|  DELETE           |  FALSE             |  123456
+---------------------------------------------------------------------------------------------------
+2    |  {'event_id': 2, 'rating': 09}	|  DELETE           |  FALSE             |  123457
+---------------------------------------------------------------------------------------------------
+3    |  {'event_id': 3, 'rating': 05}	|  DELETE           |  FALSE             |  123458
+---------------------------------------------------------------------------------------------------
+
+
+SELECT * FROM <span style="color:#ff00c6">STREAM_B</span>;
+
+Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
+---------------------------------------------------------------------------------------------------
+     |                               	|                   |                    |
+---------------------------------------------------------------------------------------------------
+
+
 
 </pre>
 <!-- end -->
-											- when reading from a stream and inserting the data somewhere else, it's getting empty,<br>
+											- only freshest data that has been loaded to RATING_EVENTS table will exist in the STREAM_A stream,<br>
+											- when reading from a stream (STREAM_A) and inserting the data somewhere else (MAIN_TABLE), it's getting cleared out,<br>
 											- that way we can be inserting to the MAIN_TABLE and we will not ever insert any duplicated data,<br>
-											-
+											- very powerful where there is a non-stop stream of the data and there is no way to idnetify any new record (no timestamp).
 										</li>
 									</ul>
 
