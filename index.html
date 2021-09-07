@@ -785,7 +785,7 @@ DROP TABLE IDENTIFIER($my_table_name);
 											 - ...
 <pre>
 CREATE OR REPLACE TABLE <span style="color:#00ff45">RATING_EVENTS</span>(
-	RAW_DATA VARIANT
+  RAW_DATA VARIANT
 );
 
 CREATE OR REPLACE STREAM <span style="color:#00ffea">STREAM_A</span> ON TABLE <span style="color:#00ff45">RATING_EVENTS</span>;
@@ -798,8 +798,25 @@ Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
 ---------------------------------------------------------------------------------------------------
 1    |  {'event_id': 1, 'rating': 10}	|  INSERT           |  FALSE             |  123456
 
+INSERT INTO MAIN_TABLE(EVENT_ID, EVENT_TITLE, RATING)(
+  SELECT
+    <span style="color:#00ffea">STREAM_A</span>.RAW_DATA:"event_id" AS EVENT_ID
+    'Random_title' AS EVENT_TITLE
+    <span style="color:#00ffea">STREAM_A</span>.RAW_DATA:"rating" AS RATING
+  FROM
+    <span style="color:#00ffea">STREAM_A</span>
+)
+
+SELECT * FROM <span style="color:#00ffea">STREAM_A</span>
+
+Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
+---------------------------------------------------------------------------------------------------
+     |                               	|                   |                    |
+
 </pre>
 <!-- end -->
+											- when reading from a stream and inserting the data somewhere else, it's getting empty,<br>
+											- that way we can be inserting to the MAIN_TABLE and we will not ever insert any duplicated data,<br>
 											-
 										</li>
 									</ul>
