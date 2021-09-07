@@ -931,14 +931,14 @@ ALTER TASK <span style="color:#ff9b00">EVENT_RATINGS_TASK</span> RESUME;
 										<li>Also it can be run in response to another task finishing - so tasks can be chained together:
 <!-- start -->
 <pre>
-CREATE OR REPLACE TASK <span style="color:#ff9b00">TASK_1</span>
+CREATE OR REPLACE TASK <span style="color:#f9ff00">TASK_1</span>
   WAREHOUSE = My_Warehouse
-  AFTER TASK_2
+  AFTER <span style="color:#19ff00">TASK_2</span>
 AS
   INSERT INTO MAIN_TABLE(EVENT_ID, EVENT_TITLE, RATING) SELECT * FROM my_table;
 </pre>
 <!-- end -->
-											- this way we can create a sequence of tasks by specifing the exisitng TASK_2 as the predecessor that triggers TASK_2 if run successfully.
+											- this way we can create a sequence of tasks by specifing the exisitng TASK_2 as the predecessor that triggers TASK_1 if run successfully.
 										</li>
 									</ul>
 
