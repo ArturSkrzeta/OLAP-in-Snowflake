@@ -908,7 +908,7 @@ Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
 <pre>
 CREATE OR REPLACE TASK <span style="color:#ff9b00">EVENT_RATINGS_TASK</span>
   WAREHOUSE = My_Warehouse
-  SCHEDULE = '...' // we can set it to every minute even
+  SCHEDULE = '5 minute' // we can set it to every minute even
 WHEN
   SYSTEM$STREAM_HAS_DATA('STREAM_A') // checking if stream has data
 AS
@@ -924,12 +924,22 @@ AS
 ALTER TASK <span style="color:#ff9b00">EVENT_RATINGS_TASK</span> RESUME;
 </pre>
 <!-- end -->
-
 											- Line <code>SYSTEM$STREAM_HAS_DATA('STREAM_A')</code> checks if stream has data - if so the the task gets trigered.<br>
 											- When the task is run, it executes insert query.<br>
 											- When tasks are created, they are off - we need to resume them to activet it.
 										</li>
-										<li>Also it can be run in response to another task finishing - so tasks can be chained together.</li>
+										<li>Also it can be run in response to another task finishing - so tasks can be chained together:
+<!-- start -->
+<pre>
+CREATE OR REPLACE TASK <span style="color:#ff9b00">TASK_1</span>
+  WAREHOUSE = My_Warehouse
+  AFTER TASK_2
+AS
+  INSERT INTO MAIN_TABLE(EVENT_ID, EVENT_TITLE, RATING) SELECT * FROM my_table;
+</pre>
+<!-- end -->
+											- this way we can create a sequence of tasks by specifing the exisitng TASK_2 as the predecessor that triggers TASK_2 if run successfully.
+										</li>
 									</ul>
 
 								</div>
