@@ -733,7 +733,6 @@ WHERE employee_name = $name
 										</li>
 										<li>When variable sores the name of db object we need to wrap it in indetifier() function:
 <!-- start -->
-
 <pre>
 SET my_table_name = "employees"
 
@@ -908,6 +907,32 @@ Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
 										<li>Task can either execute a single SQL or call to a stored procedure.</li>
 										<li>There is no any event that triggers a task as it runs relying on the schedule.</li>
 										<li>Also it can be run in response to another task finishing - so tasks can be chained together.</li>
+										<li> ... :
+<!-- start -->
+<pre>
+CREATE OR REPLACE TASK <span style="color:#ff9b00">EVENT_RATINGS_TASK</span>
+  WAREHOUSE = My_Warehouse
+  SCHEDULE = '...' // we can set it to every minute even
+WHEN
+  SYSTEM$STREAM_HAS_DATA('STREAM_A') // checking if stream has data
+AS
+  INSERT INTO MAIN_TABLE(EVENT_ID, EVENT_TITLE, RATING)(
+    SELECT
+      <span style="color:#00ffea">STREAM_A</span>.RAW_DATA:"event_id" AS EVENT_ID
+      Random_title' AS EVENT_TITLE
+      <span style="color:#00ffea">STREAM_A</span>.RAW_DATA:"rating" AS RATING
+    FROM
+      <span style="color:#00ffea">STREAM_A</span>
+);
+
+ALTER TASK <span style="color:#ff9b00">EVENT_RATINGS_TASK</span> RESUME;
+</pre>
+<!-- end -->
+
+											- Line <code>SYSTEM$STREAM_HAS_DATA('STREAM_A')</code> checks if stream has data - if so the the task gets trigered.<br>
+											- When the task is run, it executes insert query.<br>
+											- When tasks are created, they are off - we need to resume them to activet it.
+										</li>
 									</ul>
 
 								</div>
