@@ -778,6 +778,30 @@ DROP TABLE IDENTIFIER($my_table_name);
 											<br>
 											and there was a data upload to <b>my_table</b>, then <b>my_stream</b> will be epmty again because of the replacement.
 										</li>
+										<li>We can use them in continuous processing as a queues that are the palces we put the work to be taken form that queue and done.
+											 Taking data from tat queue is as simple as selecting a regular table:
+											 <br>
+											 - we put a stram on a table that is being updated regularly,<br>
+											 - ...
+<pre>
+CREATE OR REPLACE TABLE <span style="color:#00ff45">RATING_EVENTS</span>(
+	RAW_DATA VARIANT
+);
+
+CREATE OR REPLACE STREAM <span style="color:#00ffea">STREAM_A</span> ON TABLE <span style="color:#00ff45">RATING_EVENTS</span>;
+
+INSERT INTO <span style="color:#00ff45">RATING_EVENTS</span>(RAW_DATA) SELECT PARSE_JSON(' {'event_id': 1, 'rating': 10} ');
+
+SELECT * FROM <span style="color:#00ffea">STREAM_A</span>
+
+Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
+---------------------------------------------------------------------------------------------------
+1    |  {'event_id': 1, 'rating': 10}	|  INSERT           |  FALSE             |  123456
+
+</pre>
+<!-- end -->
+											-
+										</li>
 									</ul>
 
 									<h5>Tasks:</h5>
@@ -785,7 +809,7 @@ DROP TABLE IDENTIFIER($my_table_name);
 										<li>Object that can schedule a SQL statement to be automtically executed as a recurring event.</li>
 										<li>Task can either execute a single SQL or call to a stored procedure.</li>
 										<li>There is no any event that triggers a task as it runs relying on the schedule.</li>
-
+										<li>Also it can be run in response to another task finishing - so tasks can be chained together.</li>
 									</ul>
 
 								</div>
