@@ -27,9 +27,9 @@ var tbl_items_master = '"DB_NAME"."MY_SCHEMA"."TBL_ITEMS_MASTER"';
 
   var inner_query += "";
   inner_query += "SELECT *, COUNT(*) OVER(PARTITION BY ITEM ORDER BY ITEM) ITEM_COUNT FROM ("
-  inner_query += "SELECT ITEM, CATEGORY, CCY, DATA_SRC, DATA_SRC_FILENAME, 'TBL_PRODUCTS' AS TABLE FROM " + tbl_products + " ";
+  inner_query += "SELECT ITEM, CATEGORY, CCY, DATA_SRC, DATA_SRC_FILENAME, 'TBL_PRODUCTS' AS TABLE_NAME FROM " + tbl_products + " ";
   inner_query += "UNION ";
-  inner_query += "SELECT ITEM, 'Spare', CCY, DATA_SRC, DATA_SRC_FILENAME, 'TBL_SPARE_PARTS' AS TABLE FROM " + tbl_spare_parts + ") ";
+  inner_query += "SELECT ITEM, 'Spare', CCY, DATA_SRC, DATA_SRC_FILENAME, 'TBL_SPARE_PARTS' AS TABLE_NAME FROM " + tbl_spare_parts + ") ";
   inner_query += "WHERE ITEM_COUNT = 1 OR (ITEM_COUNT > 1 AND TABLE = 'TBL_SPARE_PARTS') "
 
   sql_insert = insert_tex + "FROM (" + inner_query + ") AS i;";
