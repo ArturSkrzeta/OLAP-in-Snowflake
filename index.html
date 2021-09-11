@@ -70,6 +70,7 @@
 											<li><a href="#variables">Variables</a></li>
 											<li><a href="#variables">Streams</a></li>
 											<li><a href="#tasks">Tasks</a></li>
+											<li><a href="#parse_json">Parse JSON</a></li>
 										</ul>
 
 										<!-- <h5>6. Continuous monitoring:</h5>
@@ -939,6 +940,26 @@ AS
 </pre>
 <!-- end -->
 											- this way we can create a sequence of tasks by specifing the exisitng <b>TASK_1</b> as the predecessor that triggers <b>TASK_2</b> if run successfully.
+										</li>
+									</ul>
+
+									<h5 id="parse_json">Parse JSON</h5>
+									<ul>
+										<li>Parsin json not workin in standard way:
+
+<!-- start -->
+<pre>
+INSERT INTO table1 (id, varchar1, variant1)
+	VALUES (4, 'Fourier', parse_json('{ "key1": "value1", "key2": "value2" }'));
+</pre>
+<!-- end -->
+											- it has to be implemented with SELECT query instead:
+<!-- start -->
+<pre>
+INSERT INTO table1 (id, varchar1, variant1)
+	SELECT 4, 'Fourier', parse_json('{ "key1": "value1", "key2": "value2" }');
+</pre>
+<!-- end -->
 										</li>
 									</ul>
 
