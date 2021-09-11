@@ -20,6 +20,7 @@ var tbl_items_master = '"DB_NAME"."MY_SCHEMA"."TBL_ITEMS_MASTER"';
   insert_text += "SELECT DISTINCT i.ITEM, ";
   insert_text += "CONCAT(i.ITEM, '_', i.CCY), "
   insert_text += "IFF(i.CATEGORY LIKE 'SPARE%', 10000, 2000), ";
+  insert_text += "LEFT(ITEM, 5), "
   insert_text += "IFF(i.TABLE LIKE 'tbl_products%', 'tbl_products', 'tbl_spare_parts'), "
   insert_text += "'system', ";
   insert_text += 'current_timestamp()' + " ";
