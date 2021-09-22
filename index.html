@@ -276,7 +276,7 @@
 <span style="color:#00ff45">CREATE OR REPLACE STAGE</span> "MY_DB"."MY_SCHEMA"."stage_name"
   <span style="color:#00ff45">URL</span> = 's3://bucket_name/folder_name'
   <span style="color:#00ff45">CREDENTIALS</span> = (aws_key_id='.....' aws_secret_key='.....')
-  <span style="color:#00ff45">ENXRYPTION</span> = (type='AWS_SSE_KMS' kms_key_id = '......');
+  <span style="color:#00ff45">ENCRYPTION</span> = (type='AWS_SSE_KMS' kms_key_id = '......');
 </pre>
 <!-- end -->
 											- encryption is being used in order to encrypt the confidential data.<br>
