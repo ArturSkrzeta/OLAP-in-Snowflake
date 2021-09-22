@@ -215,7 +215,7 @@
 										<li>With SnowPipe we can perform whole ETL process:
 <!-- start -->
 <pre>
-<span style="color:#00ff45">CREATE PIPE</span> my_pipe
+<span style="color:#00ff45">CREATE PIPE</span> my_db.my_stage.my_pipe
 <span style="color:#00ff45">AUTO_INGEST</span> = FALSE
 <span style="color:#00ff45">AS</span>
 <span style="color:#00ff45">COPY INTO</span> "MY_DB"."MY_STAGE"."tbl_my_table" (col1, col2, col3, col4, col5, col6, col7, col8)
@@ -245,9 +245,27 @@
 											- In SELECT statement, we can jump over an index if we want to avoid some columns or we can manipulate the data source columns sequence,<br>
 											- In SELECT statement, we can either use source column (original or transformed) or we can give a hard-coded value there,<br>
 											- For example the first line in SELECT takes 3rd column from data source and transforms it with substr(),<br>
-											- Using metadata$filename gives us the name of current file's name,<br>
+											- Using <code>metadata$filename</code> gives us the name of current file's name,<br>
 											- with FILE FORMAT we tell Snowflake what is the structure of the data source, what is the delimiter there etc,<br>
-											- with FORCE equal to FALSE we tell Snowflake not to import the file agian if it was imported before.
+											- with <code>FORCE = FALSE</code> we tell Snowflake not to import the file agian if it was imported before,<br>
+											- with <code>AUTO_INGEST = TRUE</code> we ensure automatic dtata ingestion from S3 file when newly-created,<br>
+										</li>
+										<li>Integration S3 with Snowflake:
+											<br>
+											1. Creating snowpipe.<br>
+											2. Displaying pipes with <code>SHOW pipes;</code>.<br>
+										 	3. We take value from field notification_channel:
+											<br><br>
+											<img src="images/notification_channel.png">
+											<br>
+											4. We paste it as SQS queue ARN in S3 Event Notification - one of the S3 property where we can set the connection with Snowflake.<br>
+											5. Setting all types of object creation:
+											<br><br>
+											<img src="images/event_notification_types.png">
+											<br>
+											6. Providing SQS ARN:
+											<br><br>
+											<img src="images/event_notification_destination.png">
 										</li>
 										<li>AWS stage:
 											<br>
