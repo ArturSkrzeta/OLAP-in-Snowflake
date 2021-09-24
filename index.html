@@ -980,6 +980,19 @@ INSERT INTO table1 (id, varchar1, variant1)
 										</li>
 									</ul>
 
+									<h5>Example integration with Amazon services:</h5>
+									<ul>
+										<li>We can build the entire process flow of ETL within AWS and loading processed data into Snowglake table:
+											<br>
+											1. S3 (raw data).
+											2. Lambda function (ETL).
+											3. S3 (processed data).
+											4. Event notification.
+											4. Snowpipe.
+											5. Snowflake table.
+										</li>
+									</ul>
+
 								</div>
 							</section>
 
