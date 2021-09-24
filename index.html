@@ -797,11 +797,10 @@ DROP TABLE IDENTIFIER($my_table_name);
 											<br>
 											and there was a data upload to <b>my_table</b>, then <b>my_stream</b> will be epmty again because of the replacement.
 										</li>
-										<li>We can use them in continuous processing as a queues that are the palces we put the work to be taken form that queue and done.
-											 Taking data from tat queue is as simple as selecting a regular table:
+										<li>We can use them in continuous processing as a queues that are the palces we put the work to be taken from that queue and done.
+											 Taking data from that queue is as simple as selecting a regular table:
 											 <br>
 											 - we put a stram on a table that is being updated regularly,<br>
-											 - ...
 <pre>
 CREATE OR REPLACE TABLE <span style="color:#00ff45">RATING_EVENTS</span>(
   RAW_DATA VARIANT
@@ -943,7 +942,7 @@ AS
 ALTER TASK <span style="color:#ff9b00">EVENT_RATINGS_TASK</span> RESUME;
 </pre>
 <!-- end -->
-											- Line <code>SYSTEM$STREAM_HAS_DATA('STREAM_A')</code> checks if stream has data - if so the the task gets trigered.<br>
+											- Line <code>SYSTEM$STREAM_HAS_DATA('STREAM_A')</code> checks if stream has data - if so then the task gets trigered.<br>
 											- When the task is run, it executes insert query.<br>
 											- When tasks are created, they are off - we need to resume them to activet it.
 										</li>
