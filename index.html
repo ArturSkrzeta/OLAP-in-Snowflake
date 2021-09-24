@@ -985,15 +985,18 @@ INSERT INTO table1 (id, varchar1, variant1)
 									<ul>
 										<li>We can build the entire process flow of ETL within AWS and loading processed data into Snowglake table:
 											<br>
-											1. S3 (raw data).
-											2. Lambda function (ETL).
-											3. S3 (processed data).
-											4. Event notification.
-											4. Snowpipe.
+											1. S3 (raw data).<br>
+											2. Lambda function (ETL).<br>
+											3. S3 (processed data).<br>
+											4. Event notification (triggers data pipe).<br>
+											4. Snowpipe (loads data into db's table).<br>
 											5. Snowflake table.
 										</li>
 										<li>At best, S3 reagion should be as the same as Snowflake account.</li>
 										<li>We can keep all the code along with dependencies (modules) in the another s3 so that we can run it as lambda function.
+												<br><br>
+												<img src="images/lambda_code_from_S3.png" width="700">
+												<br>
 												The whole package should be encapsulated in a zip file.
 										</li>
 									</ul>
