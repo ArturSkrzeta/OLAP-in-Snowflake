@@ -983,7 +983,7 @@ INSERT INTO table1 (id, varchar1, variant1)
 
 									<h5 id="amazon">Example integration with Amazon services:</h5>
 									<ul>
-										<li>We can build the entire process flow of ETL within AWS and loading processed data into Snowglake table:
+										<li>We can build the entire process flow of ETL within AWS and loading processed data into Snowflake table:
 											<br>
 											1. S3 (raw data).<br>
 											2. Lambda function (ETL).<br>
@@ -998,6 +998,27 @@ INSERT INTO table1 (id, varchar1, variant1)
 												<img src="images/lambda_code_from_S3.png" width="700">
 												<br>
 												The whole package should be encapsulated in a zip file.
+										</li>
+										<li>We need to set up the trust relationship between our AWS account and Snowflake's AWS account:
+											<br>
+											- with trust relationship, Snowflake can use or assume a role to access S3 data,<br>
+											- the role that we stay in the full controll of in AWS - we allow another AWS account to use that role,<br>
+											- due to Amazon's documentation:
+											<br>
+<!-- start -->
+<pre>
+You can use IAM roles to delegate access to your AWS resources.
+With IAM roles, you can establish trust relationships between your trusting account
+and other AWS trusted accounts.
+The trusting account owns the resource to be accessed and the trusted account contains
+the users who need access to the resource (..)
+the trusting account might allow the trusted account to create new resources,
+such as creating new objects in an Amazon S3 bucket (..)
+After you create the trust relationship, an IAM user or an application from the trusted account
+can use the AWS Security Token Service (AWS STS). This operation provides temporary
+security credentials that enable access to AWS resources 
+</pre>
+<!-- end -->
 										</li>
 									</ul>
 
