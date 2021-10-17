@@ -72,6 +72,7 @@
 											<li><a href="#tasks">Tasks</a></li>
 											<li><a href="#parse_json">Parse JSON</a></li>
 											<li><a href="#amazon">Integration with AWS</a></li>
+											<li><a href="#sap">Integration with SAP</a></li>
 										</ul>
 
 										<!-- <h5>6. Continuous monitoring:</h5>
@@ -914,7 +915,21 @@ Row  |  RAW_DATA			|  METADATA$ACTION  |  METADATA$ISUDATE  |  METADATA$ROW_ID
 											- only freshest data that has been loaded to RATING_EVENTS table will exist in the STREAM_A stream,<br>
 											- when reading from a stream (STREAM_A) and inserting the data somewhere else (MAIN_TABLE), it's getting cleared out,<br>
 											- that way we can be inserting to the MAIN_TABLE and we will not ever insert any duplicated data,<br>
-											- very powerful where there is a non-stop stream of the data and there is no way to idnetify any new record (no timestamp).
+											- this is what the stream is, to catch the delta (newly-inserted data) being a temporary placeholder for it, and inserting that delta into destination table getting stram cleared out,<br>
+											- very powerful where there is a non-stop stream of the data and there is no way to idnetify any new record (no timestamp).<br>
+											- each record in the stream has its own metadata row id.
+										</li>
+										<li>When updating a record in a main table here is what happens in the related stream:
+											<br>
+											- two records appear in the stream - first record with old value(s) labeled as DELETE, second record with new value(s) labeled as INSERT.<br>
+											- When I make another update but with yet another new value (different then preciously) then stream gets two records
+												- first record with old original value(s) labeled as DELETE, second record with the latest update value(s).<br>
+											- When I make another update but reverting to old value(s) (the same as it was or they were originally) then stream gets cleared out from that records.
+										</li>
+										<li>
+
+
+
 										</li>
 									</ul>
 
@@ -1019,6 +1034,29 @@ can use the AWS Security Token Service (AWS STS). This operation provides tempor
 security credentials that enable access to AWS resources.</i>
 </pre>
 <!-- end -->
+										</li>
+									</ul>
+
+									<h5 id="sap">Integration with SAP</h5>
+									<ul>
+										<li>Here is the whole integration from system flat files into data visualization:
+											<br>
+											<b>I. SAP:</b><br>
+											&nbsp&nbsp&nbsp1. Proxy.<br>
+											<b>II. VPC - AWS account:</b><br>
+											&nbsp&nbsp&nbsp1. AWS Family Transfer SFTP server (SFTP users or each connection).<br>
+											&nbsp&nbsp&nbsp2. IAM write role (one for all buckets).<br>
+											&nbsp&nbsp&nbsp4. KMS encryption (individual for each bucket).<br>
+											&nbsp&nbsp&nbsp5. S3 buckets.<br>
+											&nbsp&nbsp&nbsp6. SQS notification (event of new file).<br>
+											&nbsp&nbsp&nbsp7. KMS encryption (individual for each bucket).<br>
+											&nbsp&nbsp&nbsp8. IAM read role (individual for each bucket).<br>
+											<b>III. Snowflake AWS account:</b><br>
+											&nbsp&nbsp&nbsp1. IAM read role from Trust Relationship.<br>
+											&nbsp&nbsp&nbsp2. Storage Integration object.<br>
+											&nbsp&nbsp&nbsp3. Stage object.<br>
+											&nbsp&nbsp&nbsp4. Snowpipe.<br>
+											&nbsp&nbsp&nbsp5. Table object.
 										</li>
 									</ul>
 
