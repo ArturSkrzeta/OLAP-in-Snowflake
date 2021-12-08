@@ -1,0 +1,38 @@
+CREATE OR REPLACE TABLE "$DB_ANALYTICS"."PS_AN_FERDI_POC"."T_TBL_ROW_LEVEL_USERS"(
+  GID varchar(9) not null,
+  ARE varchar(4) default null,
+  ROLE varchar(5) default 'user',
+  FIRST_NAME varchar(25) default null,
+  LAST_NAME varchar(30) default null
+) data_retention_time_in_days=30;
+
+CREATE OR REPLACE STAGE "$DB_ANALYTICS"."PS_AN_FERDI_POC"."STG_S3_ROW_LEVEL_USERS"
+  url='s3://$S3_ENV.snowtabfx.nfcp-tool/row_level_users/'
+  storage_integration = "$DB_ANALYTICS.PS_AN_FERDI_POC.AWS_191229304603_Integration"
+  encryption=(type='AWS_SSE_KMS' kms_key_id='$KMS_ENV');
+
+CREATE OR REPLACE FILE FORMAT "$DB_ANALYTICS"."PS_AN_FERDI_POC".FF_ROW_LEVEL_USERS
+  COMPRESSION = 'AUTO' 
+  FIELD_DELIMITER = ',' 
+  RECORD_DELIMITER = '\n' 
+  SKIP_HEADER = 1 
+  FIELD_OPTIONALLY_ENCLOSED_BY = 'NONE' 
+  TRIM_SPACE = FALSE 
+  ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE 
+  ESCAPE = 'NONE' 
+  ESCAPE_UNENCLOSED_FIELD = 'NONE' 
+  DATE_FORMAT = 'AUTO' 
+  TIMESTAMP_FORMAT = 'AUTO' 
+  NULL_IF = ('\\N');
+  
+CREATE OR REPLACE PIPE "$DB_ANALYTICS"."PS_AN_FERDI_POC".SP_LOAD_ROW_LEVEL_USERS
+auto_ingest = true 
+as
+copy into "$DB_ANALYTICS"."PS_AN_FERDI_POC"."T_TBL_ROW_LEVEL_USERS" (GID, ARE, ROLE, FIRST_NAME, LAST_NAME)
+from (
+  select stage_z00.$1, stage_z00.$2, stage_z00.$3, stage_z00.$4, stage_z00.$5
+from @"$DB_ANALYTICS"."PS_AN_FERDI_POC"."STG_S3_ROW_LEVEL_USERS" stage_z00)
+file_format = (format_name = "$DB_ANALYTICS"."PS_AN_FERDI_POC"."FF_ROW_LEVEL_USERS");
+
+CREATE OR REPLACE VIEW "$DB_ACCESS"."PS_AN_FERDI_POC"."V_VIEW_ROW_LEVEL_USERS" AS
+    SELECT GID, ARE, ROLE FROM "$DB_ANALYTICS"."PS_AN_FERDI_POC"."T_TBL_ROW_LEVEL_USERS";
